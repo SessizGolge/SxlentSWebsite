@@ -1,0 +1,154 @@
+.about-container {
+  text-align: center;
+  margin-top: 150px;
+  animation: riseFade 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes riseFade {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* profil foto */
+.pfp {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e754ff;
+  box-shadow: 0 0 12px #e754ff, 0 0 28px #ff8aff50;
+  animation: pfpFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes pfpFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* sosyal grid */
+.socials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 400px;
+  margin: 40px auto 0;
+}
+
+.box {
+  position: relative;
+  height: 70px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  overflow: hidden;
+  transition: 0.25s;
+  text-shadow: 0 0 8px #fff;
+  border: 2px solid #ffffff20;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.75;
+  z-index: -1;
+  transition: 0.25s;
+}
+
+.box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 18px currentColor;
+}
+
+.box:hover::before {
+  opacity: 0.82;
+}
+
+/* ========= PLATFORM RENKLERİ + GİFLER ========= */
+.yt { color: #ff3b3b; }
+.yt::before { background-image: url("https://cdn.pixabay.com/animation/2023/03/24/18/16/18-16-28-807_512.gif"); }
+
+.dc { color: #5865f2; }
+.dc::before { background-image: url("https://gifdb.com/images/high/discord-icon-start-up-f41wavy07pz2w3qk.webp"); }
+
+.ig { color: #ff66d8; }
+.ig::before { background-image: url("https://i.gifer.com/UDeR.gif"); }
+
+.tt { color: #00f2ea; }
+.tt::before { background-image: url("https://i.pinimg.com/originals/80/78/a2/8078a2862bcb5e9041ffbc12f79f2bae.gif"); }
+
+.sp { color: #1db954; }
+.sp::before { background-image: url("https://cdn.dribbble.com/userupload/21518263/file/original-8953c5cfc4bf26578308d60adb6069e6.gif"); }
+
+.ym { color: #ff2a2a; }
+.ym::before { background-image: url("https://cdn.dribbble.com/userupload/35508327/file/original-1d71d94a3f287377cf613891bfe18d69.gif"); }
+
+.bl { color: #ff0000; }
+.bl::before { background-image: url("https://play-lh.googleusercontent.com/Ya_1ZQbIncEu01-Scy-Q5d01eTO7dsF49boHVBO0at-OOGzpBiDCEpPTJZkfptIZRNQ=w3840-h2160"); }
+
+.it { color: #fa4e4e; }
+.it::before { background-image: url("https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/04/Itch.io_.jpg"); }
+
+
+/* Responsive grid */
+@media (max-width: 500px) {
+  .socials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .socials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Profil blok hareketi */
+.profile-block {
+  display: inline-block;
+  text-align: center;
+  animation: floatBlock 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBlock {
+  0%   { transform: translateY(0px) scale(1); }
+  50%  { transform: translateY(-12px) scale(1.02); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+/* Text glow */
+.full-name {
+  color: #ff8aff;
+  text-shadow: 0 0 6px #ff8aff, 0 0 12px #e754ff50;
+  transition: 0.3s;
+}
+
+.profile-block:hover .full-name {
+  text-shadow: 0 0 12px #ff8aff, 0 0 28px #e754ff, 0 0 40px #ff66d8;
+  transform: scale(1.05);
+}
+
+.nav a {
+  color: #ff8aff;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 17px;
+  transition: 0.2s;
+  text-shadow: 0 0 5px #ff8aff50; /* glow mor-pembe */
+}
+
+.nav a:hover {
+  color: #ff66ff;
+  text-shadow: 0 0 12px #ff8aff, 0 0 24px #e754ff;
+  transform: translateY(-2px) scale(1.05);
+}
+

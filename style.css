@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000; /* tamamen siyah */
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+}
+
+@keyframes headerFade {
+  from { opacity: 0; transform: translateY(-25px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #e754ff;
+  text-shadow: 0 0 6px #e754ff, 0 0 12px #ff8aff50;
+  animation: neonPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes neonPulse {
+  0%, 100% { text-shadow: 0 0 4px #e754ff; }
+  50%      { text-shadow: 0 0 10px #ff8aff, 0 0 18px #e754ff; }
+}
+
+/* NAV with profile pic */
+.nav a.me-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff8aff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 17px;
+  text-shadow: 0 0 6px #ff8aff50;
+  transition: 0.2s;
+}
+
+.nav a.me-link:hover {
+  color: #ff66ff;
+  text-shadow: 0 0 12px #ff8aff, 0 0 24px #e754ff;
+  transform: translateY(-2px) scale(1.05);
+}
+
+.nav-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #ff8aff;
+  object-fit: cover;
+  box-shadow: 0 0 6px #ff8aff, 0 0 12px #e754ff50;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  margin: 0 auto;
+  flex: none; /* flex büyümesini durdurduk */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* dikey ortala */
+  align-items: center;     /* yatay ortala */
+  animation: heroEntry 1.2s cubic-bezier(.18,.89,.32,1.28) forwards;
+  opacity: 0;
+  height: 80vh; /* sayfanın giriş kısmını kaplasın */
+  padding-top: 70px; /* header boşluğu */
+}
+
+@keyframes heroEntry {
+  0% { opacity: 0; transform: scale(0.7) translateY(40px); filter: blur(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.hero h1 {
+  font-size: 48px;
+  text-shadow: 
+    0 0 12px #e754ff,
+    0 0 24px #ff5fe0,
+    0 0 40px #800080;
+  position: relative;
+  display: inline-block; /* kutu yerine inline-block */
+  /* overflow: hidden;  eskiyi kaldırıyoruz */
+  margin-bottom: 16px;
+  padding: 0; /* kutu padding’i kaldır */
+}
+
+.hero h1:hover {
+  animation: jitter 0.12s infinite;
+}
+
+@keyframes jitter {
+  0% { transform: translate(1px, -1px) rotate(-0.5deg); }
+  50% { transform: translate(-1px, 1px) rotate(0.5deg); }
+  100% { transform: translate(1px, 0px) rotate(0deg); }
+}
+
+.hero p {
+  margin-top: 16px;
+  font-size: 20px;
+  color: #ff8aff;
+  text-shadow: 0 0 8px #ff8aff50;
+}
+
+.home-title {
+  font-size: 48px;
+  text-shadow: 
+    0 0 12px #e754ff,
+    0 0 24px #ff5fe0,
+    0 0 40px #800080;
+  position: relative;
+  overflow: visible; /* artık glow kutu sınırında kesilmeyecek */
+  margin-bottom: 16px;
+}
+
+.home-title:hover {
+  animation: jitter 0.12s infinite;
+}
+
+.home-subtitle {
+  font-size: 20px;
+  color: #ff8aff;
+  text-shadow: 0 0 8px #ff8aff50;
+}
+
+/* POSTS CONTAINER */
+.posts-container {
+  max-width: 1200px;
+  margin: 40px auto 80px; /* üstten hero boşluğu, altta ekstra boşluk */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Son post alt boşluk eklemek istersen buraya */
+.posts-container::after {
+  content: "";
+  display: block;
+  height: 80px; /* alt boşluk */
+}
+
+/* Post animasyonu */
+.post {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  color: #fff;
+  text-shadow: 0 0 6px #ff8aff50;
+  transition: 0.3s;
+  opacity: 0; /* başlangıç gizli */
+  transform: translateY(20px); /* hafif aşağıdan başlasın */
+  animation: postFadeUp 0.6s forwards;
+}
+
+@keyframes postFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.post:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 18px #ff8aff50;
+}
+
+.post-img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.post-text {
+  font-size: 16px;
+  margin-bottom: 6px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  flex: 1; /* kutuyu doldur */
+}
+
+.post-date {
+  font-size: 12px;
+  color: #ff8aff80;
+  margin-top: 6px;
+}
+
+.post-link-text {
+  font-size: 12px;
+  color: #00f2ea;
+  margin-top: 6px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* her şeyin arkasında */
+  pointer-events: none; /* mouse etkileşimini engelle */
+}
+
