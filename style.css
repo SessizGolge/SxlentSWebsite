@@ -231,12 +231,35 @@ body {
   pointer-events: none; /* mouse etkileşimini engelle */
 }
 
+/* ===== MOBILE HERO ADJUSTMENTS ===== */
 @media (max-width: 768px) {
+  .hero {
+    height: auto; /* yüksekliği içeriğe göre ayarla */
+    padding: 100px 20px 40px 20px; /* header + biraz boşluk */
+  }
+
+  .hero h1 {
+    font-size: 32px; /* daha küçük başlık */
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 16px; /* alt başlık biraz küçülsün */
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .header {
+    padding: 0 20px; /* header kenar boşluklarını küçült */
+  }
+
   .posts-container {
-    grid-template-columns: 1fr; /* tek kolon yap */
-    gap: 16px; /* arayı biraz kısalt */
+    grid-template-columns: 1fr; /* tek kolon */
+    gap: 16px;
   }
 }
+
 
 @media (min-width: 769px) and (max-width: 1200px) {
   .posts-container {
