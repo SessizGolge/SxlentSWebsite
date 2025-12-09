@@ -231,3 +231,15 @@ body {
   pointer-events: none; /* mouse etkileşimini engelle */
 }
 
+@media (max-width: 768px) {
+  .posts-container {
+    grid-template-columns: 1fr; /* tek kolon yap */
+    gap: 16px; /* arayı biraz kısalt */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .posts-container {
+    grid-template-columns: repeat(2, 1fr); /* tablet için 2 kolon */
+  }
+}
