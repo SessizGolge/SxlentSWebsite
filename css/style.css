@@ -97,21 +97,20 @@ body {
   100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
 }
 
-.hero h1 {
-  font-size: 48px;
+.hero h1,
+.home-title {
+  transition: transform 0.12s ease, text-shadow 0.12s ease;
+}
+
+.hero h1:hover,
+.home-title:hover {
+  animation: jitter 0.12s infinite;
+  animation-fill-mode: forwards; /* animasyon bitiminde stil sabit kalır */
+  opacity: 1 !important;        /* hover’da kaybolmayı engeller */
   text-shadow: 
     0 0 12px #e754ff,
     0 0 24px #ff5fe0,
-    0 0 40px #800080;
-  position: relative;
-  display: inline-block; /* kutu yerine inline-block */
-  /* overflow: hidden;  eskiyi kaldırıyoruz */
-  margin-bottom: 16px;
-  padding: 0; /* kutu padding’i kaldır */
-}
-
-.hero h1:hover {
-  animation: jitter 0.12s infinite;
+    0 0 40px #800080;          /* glow hover’da sabit */
 }
 
 @keyframes jitter {
