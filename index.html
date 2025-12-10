@@ -22,14 +22,6 @@
   </nav>
 </header>
 
-<div id="devPanel" style="display:none; position:fixed; bottom:20px; right:20px; background:#111; padding:16px; border-radius:12px; color:white; z-index:1001; width:300px;">
-  <h3>Dev Mode</h3>
-  <input type="text" id="postText" placeholder="Post text" style="width:100%; margin-bottom:8px;">
-  <input type="text" id="postImg" placeholder="Image URL (optional)" style="width:100%; margin-bottom:8px;">
-  <input type="text" id="postLink" placeholder="Link (optional)" style="width:100%; margin-bottom:8px;">
-  <button id="addPostBtn" style="width:100%; padding:8px; background:#ff66ff; border:none; border-radius:6px; cursor:pointer;">Add Post</button>
-</div>
-
 <div class="hero">
   <h1 class="home-title">Welcome!</h1>
   <p class="home-subtitle">This is my little chilling zone. I usually upload some posts here. Take a look below!</p>
@@ -39,38 +31,8 @@
 <div class="posts-container" id="postsContainer">
   <!-- JS buraya postları ekleyecek -->
 </div>
-<!-- + Buton (admin) -->
-<button id="adminAddBtn" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;font-size:24px;border-radius:50%;background:#ff8aff;color:#000;border:none;cursor:pointer;z-index:1000;">+</button>
-
-<script>
-const adminBtn = document.getElementById("adminAddBtn");
-adminBtn.addEventListener("click", async () => {
-  const key = prompt("Enter admin password:");
-  if(!key) return;
-
-  try {
-    const res = await fetch("http://localhost:3000/checkKey", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key })
-    });
-
-    if(res.ok){
-      window.location.href = "addPost.html";
-    } else {
-      alert("Wrong password!");
-    }
-  } catch(e){
-    console.error(e);
-    alert("Server error!");
-  }
-});
-</script>
-
-
 
 <script src="js/script.js"></script>
 <script src="js/particles.js"></script>
-<!-- <script src="js/devmode.js"></script> -->
 </body>
 </html>

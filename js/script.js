@@ -1,16 +1,14 @@
 const postsContainer = document.getElementById("postsContainer");
 
-// Backend URL’in buraya gelecek
-const BACKEND_URL = "https://sxlents-backend.onrender.com";
-
-fetch(`${BACKEND_URL}/posts?v=${new Date().getTime()}`)
-  .then(res => res.json())
+fetch("jsons/posts.json?v=" + new Date().getTime()) // cache buster
+  .then(response => response.json())
   .then(posts => {
     postsContainer.innerHTML = "";
 
     posts.forEach((post, index) => {
       const postDiv = document.createElement("div");
       postDiv.className = "post";
+
       postDiv.style.animation = `postFadeUp 0.6s forwards`;
       postDiv.style.animationDelay = `${index * 0.15}s`;
 

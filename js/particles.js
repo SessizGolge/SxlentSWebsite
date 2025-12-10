@@ -11,19 +11,27 @@ window.addEventListener('resize', () => {
 
 class Particle {
   constructor() { this.reset(); }
+
   reset() {
     this.x = Math.random() * canvas.width;
-    this.y = canvas.height + Math.random() * 500;
+    this.y = canvas.height + Math.random() * 50; // biraz altından başlasın
     this.size = 0.8 + Math.random() * 2;
     this.speedY = 0.3 + Math.random() * 0.6;
     this.opacity = 0.2 + Math.random() * 0.5;
     this.color = `hsla(280, 100%, 60%, ${this.opacity})`;
     this.blur = 1 + Math.random() * 2;
   }
+
   update() {
     this.y -= this.speedY;
     this.opacity -= 0.002;
+
+    // ekranın üstüne çıkarsa veya opaciteleri bitince yeniden başlat
+    if (this.y < -10 || this.opacity <= 0) {
+      this.reset();
+    }
   }
+
   draw() {
     ctx.fillStyle = this.color;
     ctx.shadowColor = 'purple';
@@ -34,6 +42,7 @@ class Particle {
   }
 }
 
+// particle sayısı
 const particles = Array.from({ length: 500 }, () => new Particle());
 
 function animate() {
