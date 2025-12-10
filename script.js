@@ -1,6 +1,6 @@
 const postsContainer = document.getElementById("postsContainer");
 
-fetch("posts.json?v=" + new Date().getTime()) // <-- cache buster eklendi
+fetch("jsons/posts.json?v=" + new Date().getTime()) // <-- cache buster eklendi
   .then(response => response.json())
   .then(posts => {
     // Önce eski postları temizle

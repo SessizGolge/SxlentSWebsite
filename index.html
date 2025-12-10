@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="icon" type="image/png" href="favicon512.png" />
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>SxlentStudios | Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
 <header class="header">
+  <img src="favicon64.png" alt="logo" class="hero-icon">
   <div class="logo">Home</div>
   <nav class="nav">
     <a href="about.html" class="me-link">
-      <img src="me.jpg" alt="Musab" class="nav-pfp">
+      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" alt="Musab" class="nav-pfp">
       Me
     </a>
   </nav>
@@ -24,9 +29,12 @@
   <p class="home-subtitle">Oh by the way, you can also visit my other social media accounts from top right!</p>
 </div>
 
+
 <div class="posts-container" id="postsContainer">
   <!-- JS buraya postları ekleyecek -->
 </div>
+
 <script src="script.js"></script>
+<script src="particles.js"></script>
 </body>
 </html>

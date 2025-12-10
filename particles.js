@@ -16,7 +16,7 @@ class Particle {
 
   reset() {
     this.x = Math.random() * canvas.width;
-    this.y = canvas.height + Math.random() * 50; // alt kısımdan başlasın
+    this.y = canvas.height + Math.random() * 500; // alt kısımdan başlasın
     this.size = 0.8 + Math.random() * 2; // küçültüldü
     this.speedY = 0.3 + Math.random() * 0.6; // biraz daha hızlı yukarı
     this.opacity = 0.2 + Math.random() * 0.5;
@@ -27,7 +27,7 @@ class Particle {
   update() {
     this.y -= this.speedY;
     this.opacity -= 0.002;
-    if (this.y < 0 || this.opacity <= 0) this.reset(); // ekranın en üstüne kadar çıkıyor
+    // if (this.y < 0 || this.opacity <= 0) this.reset(); // ekranın en üstüne kadar çıkıyor
   }
 
   draw() {
@@ -41,7 +41,7 @@ class Particle {
 }
 
 // particle sayısını biraz artırabiliriz
-const particles = Array.from({ length: 200 }, () => new Particle());
+const particles = Array.from({ length: 500 }, () => new Particle());
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
