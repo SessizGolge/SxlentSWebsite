@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="favicon512.png" />
-
+  <link rel="icon" type="image/png" href="images/favicon512.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SxlentStudios | Home</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <canvas id="bgCanvas"></canvas>
 
 <header class="header">
-  <img src="favicon64.png" alt="logo" class="hero-icon">
+  <img src="images/favicon64.png" alt="logo" class="hero-icon">
   <div class="logo">Home</div>
   <nav class="nav">
     <a href="about.html" class="me-link">
@@ -23,18 +22,25 @@
   </nav>
 </header>
 
+<div id="devPanel" style="display:none; position:fixed; bottom:20px; right:20px; background:#111; padding:16px; border-radius:12px; color:white; z-index:1001; width:300px;">
+  <h3>Dev Mode</h3>
+  <input type="text" id="postText" placeholder="Post text" style="width:100%; margin-bottom:8px;">
+  <input type="text" id="postImg" placeholder="Image URL (optional)" style="width:100%; margin-bottom:8px;">
+  <input type="text" id="postLink" placeholder="Link (optional)" style="width:100%; margin-bottom:8px;">
+  <button id="addPostBtn" style="width:100%; padding:8px; background:#ff66ff; border:none; border-radius:6px; cursor:pointer;">Add Post</button>
+</div>
+
 <div class="hero">
   <h1 class="home-title">Welcome!</h1>
   <p class="home-subtitle">This is my little chilling zone. I usually upload some posts here. Take a look below!</p>
   <p class="home-subtitle">Oh by the way, you can also visit my other social media accounts from top right!</p>
 </div>
 
-
 <div class="posts-container" id="postsContainer">
   <!-- JS buraya postları ekleyecek -->
 </div>
 
-<script src="script.js"></script>
-<script src="particles.js"></script>
+<script src="js/script.js"></script>
+<script src="js/particles.js"></script>
 </body>
 </html>

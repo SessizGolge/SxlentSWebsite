@@ -1,16 +1,16 @@
 const postsContainer = document.getElementById("postsContainer");
 
-fetch("jsons/posts.json?v=" + new Date().getTime()) // <-- cache buster eklendi
-  .then(response => response.json())
+// Backend URL’in buraya gelecek
+const BACKEND_URL = "https://sxlents-backend.onrender.com";
+
+fetch(`${BACKEND_URL}/posts?v=${new Date().getTime()}`)
+  .then(res => res.json())
   .then(posts => {
-    // Önce eski postları temizle
     postsContainer.innerHTML = "";
 
     posts.forEach((post, index) => {
       const postDiv = document.createElement("div");
       postDiv.className = "post";
-
-      // Animasyon delay ekleme
       postDiv.style.animation = `postFadeUp 0.6s forwards`;
       postDiv.style.animationDelay = `${index * 0.15}s`;
 
