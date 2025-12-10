@@ -39,11 +39,12 @@
 <div class="posts-container" id="postsContainer">
   <!-- JS buraya postları ekleyecek -->
 </div>
-<!-- <button id="addPostBtn" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;font-size:24px;border-radius:50%;background:#ff8aff;color:#000;border:none;cursor:pointer;z-index:1000;">+</button>
+<!-- + Buton (admin) -->
+<button id="adminAddBtn" style="position:fixed;bottom:30px;right:30px;width:50px;height:50px;font-size:24px;border-radius:50%;background:#ff8aff;color:#000;border:none;cursor:pointer;z-index:1000;">+</button>
 
 <script>
-const addBtn = document.getElementById("addPostBtn");
-addBtn.addEventListener("click", async () => {
+const adminBtn = document.getElementById("adminAddBtn");
+adminBtn.addEventListener("click", async () => {
   const key = prompt("Enter admin password:");
   if(!key) return;
 
@@ -64,11 +65,12 @@ addBtn.addEventListener("click", async () => {
     alert("Server error!");
   }
 });
-</script> -->
+</script>
+
 
 
 <script src="js/script.js"></script>
 <script src="js/particles.js"></script>
-<script src="js/devmode.js"></script>
+<!-- <script src="js/devmode.js"></script> -->
 </body>
 </html>
