@@ -1,368 +1,531 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ==========================================================================
+   style.css — Refactored (Pro)
+   - Organized sections
+   - Variables, reusable utilities
+   - Kept original visual style, removed unused jitter
+   - Added: neon-box, nebula background, typewriter, reveal, header underline,
+            hero parallax hover, preloader styles
+   ========================================================================== */
+
+/* ==========================
+   0) CSS Variables & Reset
+   ========================== */
+:root{
+  /* Colors */
+  --bg: #000;
+  --fg: #fff;
+  --accent-pink: #ff8aff;
+  --accent-magenta: #e754ff;
+  --accent-cyan: #00f2ea;
+  --neon-shadow: 0 0 12px var(--accent-magenta);
+  --card-bg: rgba(255,255,255,0.05);
+  --card-border: rgba(255,255,255,0.10);
+
+  /* Sizes */
+  --header-h: 70px;
+  --max-width: 1200px;
 }
 
-body {
-  background: #000; /* tamamen siyah */
-  color: white;
-  font-family: Arial, sans-serif;
+/* Reset / base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { height: 100%; }
+body{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== HEADER ===== */
-.header {
+/* ==========================
+   1) Header / Nav
+   ========================== */
+.header{
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 70px;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
   background: rgba(0,0,0,0.25);
   backdrop-filter: blur(10px);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   padding: 0 40px;
   z-index: 1000;
 }
 
-@keyframes headerFade {
-  from { opacity: 0; transform: translateY(-25px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== LOGO ===== */
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #e754ff;
-  text-shadow: 0 0 6px #e754ff, 0 0 12px #ff8aff50;
+/* logo */
+.logo{
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent-magenta);
+  text-shadow: 0 0 6px var(--accent-magenta), 0 0 12px var(--accent-pink, #ff8aff)50;
   animation: neonPulse 2.4s infinite ease-in-out;
 }
 
-@keyframes neonPulse {
-  0%, 100% { text-shadow: 0 0 4px #e754ff; }
-  50%      { text-shadow: 0 0 10px #ff8aff, 0 0 18px #e754ff; }
-}
-
-/* NAV with profile pic */
-.nav a.me-link {
+/* nav and profile link */
+.nav a.me-link{
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #ff8aff;
-  font-weight: bold;
+  gap: .5rem;
+  color: var(--accent-pink);
+  font-weight: 700;
   text-decoration: none;
-  font-size: 17px;
-  text-shadow: 0 0 6px #ff8aff50;
-  transition: 0.2s;
+  font-size: .95rem;
+  text-shadow: 0 0 6px rgba(255,138,255,0.3);
+  transition: transform .18s ease, color .18s ease, text-shadow .18s ease;
 }
-
-.nav a.me-link:hover {
-  color: #ff66ff;
-  text-shadow: 0 0 12px #ff8aff, 0 0 24px #e754ff;
+.nav a.me-link:hover{
   transform: translateY(-2px) scale(1.05);
+  color: #ff66ff;
+  text-shadow: 0 0 12px var(--accent-pink), 0 0 24px var(--accent-magenta);
 }
 
-.nav-pfp {
-  width: 32px;
-  height: 32px;
+/* small circular profile pic */
+.nav-pfp{
+  width: 32px; height: 32px;
   border-radius: 50%;
-  border: 2px solid #ff8aff;
+  border: 2px solid var(--accent-pink);
   object-fit: cover;
-  box-shadow: 0 0 6px #ff8aff, 0 0 12px #e754ff50;
+  box-shadow: 0 0 6px var(--accent-pink), 0 0 12px rgba(231,84,255,0.3);
 }
 
-/* HERO */
-.hero {
+/* header neon pulse */
+@keyframes neonPulse{
+  0%,100% { text-shadow: 0 0 4px var(--accent-magenta); }
+  50% { text-shadow: 0 0 10px var(--accent-pink), 0 0 18px var(--accent-magenta); }
+}
+
+/* header underline (subtle) */
+.header .nav a{
+  position: relative;
+  padding-bottom: 4px;
+}
+.header .nav a::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-pink), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .28s ease;
+  opacity: .9;
+}
+.header .nav a:hover::after{ transform: scaleX(1); }
+
+/* ==========================
+   2) Hero
+   ========================== */
+.hero{
   text-align: center;
+  min-height: 100vh; /* Tüm ekranı kaplasın */
   margin: 0 auto;
-  flex: none; /* flex büyümesini durdurduk */
   display: flex;
   flex-direction: column;
-  justify-content: center; /* dikey ortala */
-  align-items: center;     /* yatay ortala */
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding-top: var(--header-h);
   animation: heroEntry 1.2s cubic-bezier(.18,.89,.32,1.28) forwards;
   opacity: 0;
-  height: 80vh; /* sayfanın giriş kısmını kaplasın */
-  padding-top: 70px; /* header boşluğu */
 }
 
-@keyframes heroEntry {
-  0% { opacity: 0; transform: scale(0.7) translateY(40px); filter: blur(8px); }
+/* Scroll hint */
+.scroll-hint {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.7;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.scroll-hint span {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #ff66ff;
+}
+
+/* Aşağı ok */
+.arrow {
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid #ff66ff;
+  border-bottom: 2px solid #ff66ff;
+  transform: rotate(-45deg);
+  animation: arrowBounce 1.4s infinite ease-in-out;
+  opacity: 0.9;
+}
+
+/* Ok animasyonu */
+@keyframes arrowBounce {
+  0% { transform: translateY(0) rotate(-45deg); }
+  50% { transform: translateY(6px) rotate(-45deg); }
+  100% { transform: translateY(0) rotate(-45deg); }
+}
+
+/* Fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 0.7; transform: translateY(0); }
+}
+
+
+@keyframes heroEntry{
+  0% { opacity: 0; transform: scale(.98) translateY(36px); filter: blur(6px); }
   100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
 }
 
-.hero h1,
-.home-title {
-  transition: transform 0.12s ease, text-shadow 0.12s ease;
-}
-
-.hero h1:hover,
-.home-title:hover {
-  animation: jitter 0.12s infinite;
-  animation-fill-mode: forwards; /* animasyon bitiminde stil sabit kalır */
-  opacity: 1 !important;        /* hover’da kaybolmayı engeller */
-  text-shadow: 
-    0 0 12px #e754ff,
-    0 0 24px #ff5fe0,
-    0 0 40px #800080;          /* glow hover’da sabit */
-}
-
-@keyframes jitter {
-  0% { transform: translate(1px, -1px) rotate(-0.5deg); }
-  50% { transform: translate(-1px, 1px) rotate(0.5deg); }
-  100% { transform: translate(1px, 0px) rotate(0deg); }
-}
-
-.hero p {
-  margin-top: 16px;
-  font-size: 20px;
-  color: #ff8aff;
-  text-shadow: 0 0 8px #ff8aff50;
-}
-
-.home-title {
-  font-size: 48px;
-  text-shadow: 
-    0 0 12px #e754ff,
+/* Title */
+.home-title{
+  font-size: 3rem; /* 48px */
+  color: var(--fg);
+  margin-bottom: 12px;
+  text-shadow:
+    0 0 12px var(--accent-magenta),
     0 0 24px #ff5fe0,
     0 0 40px #800080;
   position: relative;
-  overflow: visible; /* artık glow kutu sınırında kesilmeyecek */
-  margin-bottom: 16px;
+  overflow: visible;
+  transition: transform .28s ease, text-shadow .28s ease, filter .28s ease;
 }
 
-.home-title:hover {
-  animation: jitter 0.12s infinite;
+@keyframes textJitter {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(1px, -1px) rotate(-0.8deg); }
+  40% { transform: translate(-1px, 1px) rotate(0.8deg); }
+  60% { transform: translate(1px, 1px) rotate(-0.6deg); }
+  80% { transform: translate(-1px, -1px) rotate(0.6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-.home-subtitle {
-  font-size: 20px;
-  color: #ff8aff;
-  text-shadow: 0 0 8px #ff8aff50;
+/* subtle parallax-ish hover (no jitter) */
+.home-title:hover{
+  animation: textJitter 0.25s ease-in-out;
+  filter: saturate(1.05);
 }
 
-/* POSTS CONTAINER */
-.posts-container {
-  max-width: 1200px;
-  margin: 40px auto 80px; /* üstten hero boşluğu, altta ekstra boşluk */
+/* subtitle */
+.home-subtitle{
+  font-size: 1.125rem; /* 18-20px */
+  color: var(--accent-pink);
+  text-shadow: 0 0 8px rgba(255,138,255,0.25);
+  margin-top: 10px;
+}
+
+/* ==========================
+   3) Posts Grid
+   ========================== */
+
+.posts-section {
+  padding-top: 60px;
+  position: relative;
+  z-index: 2;
+}
+.posts-container{
+  max-width: var(--max-width);
+  margin: 40px auto 80px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-}
-
-/* Son post alt boşluk eklemek istersen buraya */
-.posts-container::after {
-  content: "";
-  display: block;
-  height: 80px; /* alt boşluk */
-}
-
-/* Post animasyonu */
-.post {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 20px;
-  color: #fff;
-  text-shadow: 0 0 6px #ff8aff50;
-  transition: 0.3s;
-  opacity: 0; /* başlangıç gizli */
-  transform: translateY(20px); /* hafif aşağıdan başlasın */
-  animation: postFadeUp 0.6s forwards;
+  padding: 0 18px;
 }
 
 @keyframes postFadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.post:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 18px #ff8aff50;
+
+/* responsive grid */
+@media (min-width: 769px) and (max-width: 1200px){
+  .posts-container{ grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 768px){
+  .posts-container{ grid-template-columns: 1fr; gap:16px; margin: 20px auto 60px; padding: 0 12px; }
 }
 
-.post-img {
+/* Post card */
+.post{
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 18px;
+  color: var(--fg);
+  text-shadow: 0 0 6px rgba(255,138,255,0.25);
+  transition: transform .22s ease, box-shadow .22s ease, background .2s ease;
+  opacity: 0; transform: translateY(20px);
+  overflow: hidden;
+  /* show via .reveal class (JS will add) */
+}
+
+/* fade overlay */
+.post::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,0,255,0.12); /* mor-pink fade */
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+.post:hover{
+  transform: translateY(-6px) scale(1.01);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 18px rgba(255,138,255,0.12);
+  cursor: pointer;
+}
+
+.post:hover::after{
+  opacity: .35;
+}
+
+.post-img{
   width: 100%;
   max-height: 150px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 8px;
 }
+.post-text{ font-size: 0.95rem; margin-bottom: 6px; word-break: break-word; }
+.post-date{ font-size: .8rem; color: rgba(255,138,255,0.5); }
 
-.post-text {
-  font-size: 16px;
-  margin-bottom: 6px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-  flex: 1; /* kutuyu doldur */
+/* reveal helper: used by scroll reveal JS */
+.reveal{
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1);
 }
 
-.post-date {
-  font-size: 12px;
-  color: #ff8aff80;
-  margin-top: 6px;
-}
+/* ==========================
+   4) Utilities & small UI
+   ========================== */
+.welcome-wrap{ display:flex; justify-content:center; align-items:center; margin-bottom: 12px; }
+.welcome-icon{ width:48px; height:48px; border-radius:10px; box-shadow: 0 0 12px rgba(231,84,255,0.5); }
 
-.post-link-text {
-  font-size: 12px;
-  color: #00f2ea;
-  margin-top: 6px;
+/* small buttons (neon hover sound target) */
+.btn {
+  display: inline-block;
+  padding: .6rem 1rem;
+  border-radius: 10px;
+  border: none;
   cursor: pointer;
-  text-decoration: underline;
+  background: linear-gradient(180deg, rgba(255,138,255,0.14), rgba(231,84,255,0.08));
+  color: #000;
+  font-weight: 700;
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+.btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 6px 22px rgba(231,84,255,0.12);
+}
+
+/* neon framed box — utility class to wrap highlights */
+.neon-box{
+  border-radius: 14px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+.neon-box::after{
+  content: "";
+  position: absolute; inset: -2px; z-index: -1;
+  background: linear-gradient(90deg, rgba(231,84,255,0.12), rgba(255,138,255,0.08), rgba(0,242,234,0.06));
+  filter: blur(18px);
+  opacity: 0.9;
+  transform: translateX(-20%);
+  transition: transform 6s linear;
+}
+.neon-box:hover::after{ transform: translateX(20%); }
+
+/* ==========================
+   5) Nebula / Glow Background
+   - soft, low-cost CSS blobs using pseudo elements
+   ========================== */
+body::before,
+body::after{
+  content: "";
+  position: fixed;
+  z-index: -2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(60px) saturate(120%);
+  opacity: .12;
+}
+
+/* large purple nebula on bottom-left */
+body::before{
+  width: 60vw; height: 60vh;
+  left: -10vw; bottom: -20vh;
+  background: radial-gradient(closest-side, rgba(231,84,255,0.95), rgba(231,84,255,0.35), transparent 60%);
+}
+
+/* cyan-pink top-right subtle blob */
+body::after{
+  width: 46vw; height: 46vh;
+  right: -8vw; top: -12vh;
+  background: radial-gradient(closest-side, rgba(0,242,234,0.8), rgba(255,138,255,0.25), transparent 60%);
+}
+
+/* make nebula lighter on mobile */
+@media (max-width: 768px){
+  body::before, body::after{ opacity: .08; filter: blur(46px); }
+  body::before{ width: 80vw; height: 40vh; left: -20vw; bottom: -30vh; }
+}
+
+/* ==========================
+   6) Typewriter (css-only helper)
+   - Use: <span class="typewriter"><b>Text</b></span>
+   - JS can change innerText for rotating text
+   ========================== */
+.typewriter{
+  display: inline-block;
+  overflow: hidden;
+  border-right: .12em solid rgba(255,255,255,0.12);
+  white-space: nowrap;
+  letter-spacing: .03em;
+  animation: caret 900ms steps(1) infinite;
+}
+@keyframes caret{ 50% { border-color: transparent; } }
+
+/* ==========================
+   7) Preloader (styles only)
+   - Use HTML markup .preloader { } and toggle via JS
+   ========================== */
+.preloader{
+  position: fixed; inset: 0; z-index: 2000;
+  display:flex; align-items:center; justify-content:center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
+  color: var(--accent-pink);
+}
+.preloader .logo {
+  font-size: 2rem;
+  animation: neonPulse 2.2s infinite;
+}
+
+/* ==========================
+   8) Small visual helpers
+   ========================== */
+.hidden { display: none !important; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+/* ==========================
+   9) Animations central (reusable)
+   ========================== */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* small shimmer - for buttons or cards */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.00), rgba(255,255,255,0.03), rgba(255,255,255,0.00));
+  transform: translateX(-110%);
+  transition: transform .8s ease;
+  pointer-events: none;
+}
+.shimmer:hover::after{ transform: translateX(110%); }
+
+/* ==========================
+   10) Responsive touches
+   ========================== */
+@media (max-width: 1000px){ .home-title{ font-size: 2.4rem; } }
+@media (max-width: 520px){
+  .home-title{
+    font-size: 1.8rem;
+  }
+  .header{
+    padding: 0 14px;
+  }
+  .logo{ 
+    font-size: 1rem; 
+  }
+}
+
+/* ==========================
+   11) Accessibility / Reduced motion
+   ========================== */
+@media (prefers-reduced-motion: reduce){
+  .home-title, .post, .logo, .nav a { transition: none !important; animation: none !important; }
 }
 
 #bgCanvas {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -2;
+}
+
+
+/* --- Glitch scanlines overlay --- */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;               /* canvas zaten z-index:-1 ise bu 0 ile üstte ama içerik altında kalır */
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.01) 0px,
+    rgba(0,0,0,0.03) 1px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.55;
   width: 100%;
   height: 100%;
-  z-index: -1; /* her şeyin arkasında */
-  pointer-events: none; /* mouse etkileşimini engelle */
 }
 
-/* ===== MOBILE HERO ADJUSTMENTS ===== */
-@media (max-width: 768px) {
-  .hero {
-    height: auto; /* yüksekliği içeriğe göre ayarla */
-    padding: 100px 20px 40px 20px; /* header + biraz boşluk */
-  }
-
-  .hero h1 {
-    font-size: 32px; /* daha küçük başlık */
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  .hero p {
-    font-size: 16px; /* alt başlık biraz küçülsün */
-    text-align: center;
-    line-height: 1.4;
-  }
-
-  .header {
-    padding: 0 20px; /* header kenar boşluklarını küçült */
-  }
-
-  .posts-container {
-    grid-template-columns: 1fr; /* tek kolon */
-    gap: 16px;
-  }
+/* Slight grain fallback for high-res */
+@media (min-resolution: 2dppx) {
+  .scanlines { opacity: 0.35; }
 }
 
+.new-post-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 
-@media (min-width: 769px) and (max-width: 1200px) {
-  .posts-container {
-    grid-template-columns: repeat(2, 1fr); /* tablet için 2 kolon */
-  }
+  font-size: 12px;
+  font-weight: 600;
+
+  padding: 4px 8px;
+  border-radius: 6px;
+
+  background: rgba(170, 60, 255, 0.25);
+  border: 1px solid rgba(200, 100, 255, 0.5);
+
+  backdrop-filter: blur(4px);
+
+  color: #eac9ff;
+  
+  animation: pulseBadge 1.5s infinite ease-in-out;
 }
 
-/* WELCOME WRAP */
-.welcome-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
+@keyframes pulseBadge {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.55; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-.welcome-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  box-shadow: 0 0 12px #e754ff80;
-  opacity: 0;
-  transform: scale(0.6) translateY(-20px);
-  animation: iconPop 0.9s cubic-bezier(.18,.89,.32,1.28) forwards;
-}
-
-@keyframes iconPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(-20px);
-    filter: blur(6px);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.08) translateY(0px);
-    filter: blur(0);
-    box-shadow: 0 0 18px #ff4dff, 0 0 30px #ff8aff70;
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 12px #e754ff80;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .welcome-icon {
-    width: 32px;
-    height: 32px;
-  }
-  .welcome-wrap {
-    margin-bottom: 8px;
-  }
-}
-
-/* ICON ENTRY ANIMATION */
-.welcome-icon {
-  opacity: 0;
-  transform: scale(0.6) translateY(-20px);
-  animation: iconPop 0.9s cubic-bezier(.18,.89,.32,1.28) forwards;
-}
-
-@keyframes iconPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(-20px);
-    filter: blur(6px);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.08) translateY(0);
-    filter: blur(0);
-    box-shadow: 0 0 18px #ff4dff, 0 0 30px #ff8aff70;
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 12px #e754ff80;
-  }
-}
-
-.hero .home-title,
-.hero .home-subtitle {
-  opacity: 0;
-  animation: fadeHero 1s ease forwards;
-}
-
-.hero .home-title {
-  animation-delay: 0.3s; /* icon’dan sonra */
-}
-
-.hero .home-subtitle {
-  animation-delay: 0.5s; /* title'dan sonra */
-}
-
-@keyframes fadeHero {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-  }
+.post {
+  position: relative; /* badge pozisyonu için gerekli */
 }
 
 
+/* ==========================================================================
+   End of file
+   ========================================================================== */

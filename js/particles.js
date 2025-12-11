@@ -1,54 +1,52 @@
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
+// === Neon Wave Grid Background ===
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const canvas = document.getElementById("bgCanvas");
+const ctx = canvas.getContext("2d", { alpha: true });
 
-window.addEventListener('resize', () => {
+function resize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-});
-
-class Particle {
-  constructor() { this.reset(); }
-
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = canvas.height + Math.random() * 50; // biraz altından başlasın
-    this.size = 0.8 + Math.random() * 2;
-    this.speedY = 0.3 + Math.random() * 0.6;
-    this.opacity = 0.2 + Math.random() * 0.5;
-    this.color = `hsla(280, 100%, 60%, ${this.opacity})`;
-    this.blur = 1 + Math.random() * 2;
-  }
-
-  update() {
-    this.y -= this.speedY;
-    this.opacity -= 0.002;
-
-    // ekranın üstüne çıkarsa veya opaciteleri bitince yeniden başlat
-    if (this.y < -10 || this.opacity <= 0) {
-      this.reset();
-    }
-  }
-
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.shadowColor = 'purple';
-    ctx.shadowBlur = this.blur;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
 }
+resize();
+window.addEventListener("resize", resize);
 
-// particle sayısı
-const particles = Array.from({ length: 500 }, () => new Particle());
+let time = 0;
 
-function animate() {
+function drawGrid() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animate);
+
+  const spacing = 50; // grid aralığı
+  const waveHeight = 20; // dalga yüksekliği
+  const speed = 0.015; // hız
+  const glow = 15; // neon blur
+
+  ctx.lineWidth = 1.2;
+  ctx.strokeStyle = "rgba(170, 0, 255, 0.35)"; // neon mor
+  ctx.shadowColor = "rgba(200, 0, 255, 0.8)";
+  ctx.shadowBlur = glow;
+
+  // yatay çizgiler
+  for (let y = 0; y < canvas.height; y += spacing) {
+    ctx.beginPath();
+    for (let x = 0; x <= canvas.width; x++) {
+      const wave = Math.sin((x * 0.012) + time + y * 0.05) * waveHeight;
+      ctx.lineTo(x, y + wave);
+    }
+    ctx.stroke();
+  }
+
+  // dikey çizgiler
+  for (let x = 0; x < canvas.width; x += spacing) {
+    ctx.beginPath();
+    for (let y = 0; y <= canvas.height; y++) {
+      const wave = Math.cos((y * 0.012) + time + x * 0.05) * waveHeight;
+      ctx.lineTo(x + wave, y);
+    }
+    ctx.stroke();
+  }
+
+  time += speed;
+  requestAnimationFrame(drawGrid);
 }
 
-animate();
+drawGrid();

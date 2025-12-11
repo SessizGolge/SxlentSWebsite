@@ -10,6 +10,7 @@
 <body>
 
 <canvas id="bgCanvas"></canvas>
+<div class="scanlines" aria-hidden="true"></div>
 
 <header class="header">
   <img src="images/favicon64.png" alt="logo" class="hero-icon">
@@ -22,17 +23,22 @@
   </nav>
 </header>
 
-<div class="hero">
+<section class="hero">
   <h1 class="home-title">Welcome!</h1>
   <p class="home-subtitle">This is my little chilling zone. I usually upload some posts here. Take a look below!</p>
-  <p class="home-subtitle">Oh by the way, you can also visit my other social media accounts from top right!</p>
+  <div class="scroll-hint">
+  <span>Scroll down to see posts</span>
+  <div class="arrow"></div>
 </div>
 
-<div class="posts-container" id="postsContainer">
-  <!-- JS buraya postları ekleyecek -->
-</div>
+</section>
 
-<script src="js/script.js"></script>
-<script src="js/particles.js"></script>
+<section class="posts-section">
+  <div class="posts-container" id="postsContainer"></div>
+</section>
+
+<script src="js/bgEffect.js"></script>
+<script src="js/script.js"></script> <!-- post loader gibi -->
+
 </body>
 </html>

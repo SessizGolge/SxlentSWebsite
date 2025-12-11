@@ -152,3 +152,24 @@
   transform: translateY(-2px) scale(1.05);
 }
 
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-icon {
+  width: 18px;
+  height: 18px;
+  color: #9fdcff; /* hafif neon mavi */
+  filter: drop-shadow(0 0 4px #ff66ff);
+  transition: 0.2s ease;
+}
+
+.home-link:hover .home-icon {
+  color: #c9eaff;
+  filter: drop-shadow(0 0 6px #ff66ff);
+  transform: scale(1.1);
+}
+
+
