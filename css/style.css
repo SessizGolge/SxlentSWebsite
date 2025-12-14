@@ -50,7 +50,8 @@ body{
   height: var(--header-h);
   background: rgba(0,0,0,0.25);
   backdrop-filter: blur(10px);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
@@ -67,30 +68,40 @@ body{
 }
 
 /* nav and profile link */
-.nav a.me-link{
+.me-link{
   display: flex;
   align-items: center;
   gap: .5rem;
+
   color: var(--accent-pink);
   font-weight: 700;
   text-decoration: none;
   font-size: .95rem;
+
   text-shadow: 0 0 6px rgba(255,138,255,0.3);
   transition: transform .18s ease, color .18s ease, text-shadow .18s ease;
 }
-.nav a.me-link:hover{
+
+.me-link:hover{
   transform: translateY(-2px) scale(1.05);
   color: #ff66ff;
-  text-shadow: 0 0 12px var(--accent-pink), 0 0 24px var(--accent-magenta);
+  text-shadow:
+    0 0 12px var(--accent-pink),
+    0 0 24px var(--accent-magenta);
 }
+
 
 /* small circular profile pic */
 .nav-pfp{
-  width: 32px; height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 2px solid var(--accent-pink);
   object-fit: cover;
-  box-shadow: 0 0 6px var(--accent-pink), 0 0 12px rgba(231,84,255,0.3);
+
+  box-shadow:
+    0 0 6px var(--accent-pink),
+    0 0 12px rgba(231,84,255,0.3);
 }
 
 /* header neon pulse */
@@ -116,6 +127,23 @@ body{
   opacity: .9;
 }
 .header .nav a:hover::after{ transform: scaleX(1); }
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-center {
+  display: flex;
+  justify-content: center;
+  /* pointer-events: none; tıklanmasın istiyorsan */
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
 
 /* ==========================
    2) Hero
@@ -454,6 +482,9 @@ body::after{
   .logo{ 
     font-size: 1rem; 
   }
+  .me-link span {
+    display: none; /* sadece avatar kalsın */
+  }
 }
 
 /* ==========================
@@ -615,9 +646,35 @@ body::after{
   transform: translateY(-2px);
 }
 
+.logged-in-only { display: none; }
+
+body.logged-in .login-only { display: none; }
+body.logged-in .logged-in-only { display: inline-block; }
+
 
 .post * {
   pointer-events: none;
+}
+
+.auth-btn {
+  margin-left: 14px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  color: #fff;
+  background: rgba(255,138,255,0.15);
+  border: 1px solid rgba(255,138,255,0.35);
+
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.auth-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255,138,255,0.25);
+  box-shadow: 0 0 12px rgba(255,138,255,0.35);
 }
 
 /* ==========================================================================

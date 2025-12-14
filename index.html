@@ -13,15 +13,31 @@
 <div class="scanlines" aria-hidden="true"></div>
 
 <header class="header">
-  <img src="images/favicon64.png" alt="logo" class="hero-icon">
-  <div class="logo">Home</div>
-  <nav class="nav">
+
+  <!-- SOL -->
+  <div class="header-left">
+    <img src="images/favicon64.png" alt="logo" class="hero-icon">
+
+    <div class="logo">Home</div>
+  </div>
+  
+  <!-- ORTA -->
+  <div class="header-center">
     <a href="about.html" class="me-link">
-      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" alt="Musab" class="nav-pfp">
-      Me
+      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" class="nav-pfp">
+      <span>Me</span>
     </a>
+  </div>
+
+  <!-- SAĞ -->
+  <nav class="nav header-right">
+    <a href="auth.html" class="auth-btn login-only">Login</a>
+    <a href="auth.html" class="auth-btn logged-in-only">Account</a>
   </nav>
+
 </header>
+
+
 
 <section class="hero">
   <h1 class="home-title">Welcome!</h1>
@@ -61,6 +77,8 @@
 <!-- JS EN SON -->
 <script src="js/script.js?v=1.0.3"></script>
 <script src="js/bgEffect.js?v=1.0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/auth.js"></script>
 <script src="js/script.js"></script>
 
 </body>
