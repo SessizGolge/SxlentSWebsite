@@ -13,7 +13,7 @@
 
   <header class="header">
     <img src="images/favicon64.png" class="hero-icon">
-    <div class="logo">Account</div>
+    <div class="logo">Login / Register</div>
     <nav class="nav">
       <a href="index.html" class="home-link">
         <svg class="home-icon" viewBox="0 0 24 24" fill="none">
@@ -32,14 +32,20 @@
 
     <button id="loginBtn">Login</button>
     <button id="registerBtn">Register</button>
-    <hr>
-    <button id="googleBtn">Continue with Google</button>
 
-    <p id="authMsg"></p>
+    <p id="authMsg" class="auth-msg"></p>
+
+    <div class="google-login-container">
+      <button id="googleBtn" class="google-btn">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/022/484/503/small/google-lens-icon-logo-symbol-free-png.png" alt="Google">
+      </button>
+    </div>
   </div>
 
-  <!-- Module script -->
-  <script type="module" src="js/auth.js?v=1.0.4"></script>
-  <script src="js/bgEffect.js?v=1.0.4"></script>
+  <!-- SUPABASE CDN önce -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.87.1/dist/umd/supabase.js?v=1.0.0"></script>
+  <script src="js/auth.js?v=1.1.2"></script>
+  <script src="js/common.js?v=1.0.2" type="module"></script>
+  <script src="js/bgEffect.js?v=1.0.7"></script>
 </body>
 </html>

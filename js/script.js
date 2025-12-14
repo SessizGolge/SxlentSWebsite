@@ -1,4 +1,4 @@
-const postsContainer = document.getElementById("postsContainer");
+let postsContainer = document.getElementById("postsContainer");
 
 // MODAL ELEMENTS
 const modal = document.getElementById("postModal");
@@ -39,7 +39,7 @@ fetch("jsons/posts.json?v=" + Date.now())
         <span class="post-date">${post.date}</span>
       `;
 
-      // 🔥 MODAL AÇ
+      // MODAL AÇ
       postDiv.addEventListener("click", () => {
         modalImg.src = post.img || "";
         modalImg.style.display = post.img ? "block" : "none";
@@ -73,9 +73,7 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
-// -------------------------
 // GREETING
-// -------------------------
 function updateGreeting() {
   const title = document.querySelector(".home-title");
   const subtitle = document.querySelector(".home-subtitle");
@@ -96,5 +94,50 @@ function updateGreeting() {
     subtitle.textContent = "Long day, sit back for a sec.";
   }
 }
-
 updateGreeting();
+
+// -------------------------
+// LOGIN / ACCOUNT TOGGLE
+// -------------------------
+async function checkLogin() {
+  if (!window.supabaseClient) return;
+  const { data: { session } } = await window.supabaseClient.auth.getSession();
+
+  const loginButtons = document.querySelectorAll(".login-only");
+  const accountButtons = document.querySelectorAll(".logged-in-only");
+
+  if (session) {
+    loginButtons.forEach(btn => btn.style.display = "none");
+    accountButtons.forEach(btn => btn.style.display = "inline-block");
+  } else {
+    loginButtons.forEach(btn => btn.style.display = "inline-block");
+    accountButtons.forEach(btn => btn.style.display = "none");
+  }
+}
+
+// İlk kontrol
+checkLogin();
+
+// Auth state değişince güncelle
+if (window.supabaseClient) {
+  window.supabaseClient.auth.onAuthStateChange(() => checkLogin());
+}
+
+// -------------------------
+// LOGOUT BUTONU
+// -------------------------
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn && window.supabaseClient) {
+  logoutBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      await window.supabaseClient.auth.signOut();
+      alert("Çıkış yapıldı.");
+      checkLogin();
+    } catch (err) {
+      console.error("Logout error:", err);
+      alert("Çıkış yapılamadı!");
+    }
+  });
+}
