@@ -25,20 +25,42 @@
 
 <section class="hero">
   <h1 class="home-title">Welcome!</h1>
-  <p class="home-subtitle">This is my little chilling zone. I usually upload some posts here. Take a look below!</p>
-  <div class="scroll-hint">
-  <span>Scroll down to see posts</span>
-  <div class="arrow"></div>
-</div>
+  <p class="home-subtitle">
+    This is my little chilling zone. I usually upload some posts here.
+    Take a look below!
+  </p>
 
+  <div class="scroll-hint">
+    <span>Scroll down to see posts</span>
+    <div class="arrow"></div>
+  </div>
 </section>
 
 <section class="posts-section">
   <div class="posts-container" id="postsContainer"></div>
 </section>
 
+<!-- 🔥 MODAL (body’nin EN ALTINDA olmalı) -->
+<div id="postModal" class="post-modal hidden">
+  <div class="post-modal-overlay"></div>
+
+  <div class="post-modal-content">
+    <button class="post-modal-close" aria-label="Close modal">×</button>
+
+    <!-- img boş gelirse CSS ile gizleyebiliriz -->
+    <img id="modalImg" alt="Post image">
+
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <span id="modalDate"></span>
+
+    <a id="modalLink" target="_blank" class="btn">Open link</a>
+  </div>
+</div>
+
+<!-- JS EN SON -->
 <script src="js/bgEffect.js"></script>
-<script src="js/script.js"></script> <!-- post loader gibi -->
+<script src="js/script.js"></script>
 
 </body>
 </html>

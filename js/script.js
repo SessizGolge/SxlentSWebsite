@@ -1,81 +1,100 @@
 const postsContainer = document.getElementById("postsContainer");
 
-fetch("jsons/posts.json?v=" + new Date().getTime()) // cache buster
-  .then(response => response.json())
+// MODAL ELEMENTS
+const modal = document.getElementById("postModal");
+const modalImg = document.getElementById("modalImg");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const modalDate = document.getElementById("modalDate");
+const modalLink = document.getElementById("modalLink");
+const modalClose = document.querySelector(".post-modal-close");
+const modalOverlay = document.querySelector(".post-modal-overlay");
+
+// POSTS
+fetch("jsons/posts.json?v=" + Date.now())
+  .then(res => res.json())
   .then(posts => {
     postsContainer.innerHTML = "";
-
     const today = new Date();
 
     posts.forEach((post, index) => {
       const postDiv = document.createElement("div");
       postDiv.className = "post";
 
-      // Animasyon
       postDiv.style.animation = `postFadeUp 0.6s forwards`;
       postDiv.style.animationDelay = `${index * 0.15}s`;
 
-      // Link varsa click event
-      if (post.link) {
-        postDiv.addEventListener("click", () => {
-          window.open(post.link, "_blank");
-        });
-      }
-
-      // Tarihi parse et
       const postDate = new Date(post.date);
-
-      // Aynı gün mü?
       const isToday =
         postDate.getFullYear() === today.getFullYear() &&
         postDate.getMonth() === today.getMonth() &&
         postDate.getDate() === today.getDate();
 
-      // HTML yazdır
+      const displayTitle = post.title || "Update";
+
       postDiv.innerHTML = `
         ${isToday ? `<span class="new-post-badge">New post!</span>` : ""}
-        ${post.img ? `<img src="${post.img}" alt="post image" class="post-img">` : ""}
-        <p class="post-text">${post.text}</p>
+        ${post.img ? `<img src="${post.img}" class="post-img">` : ""}
+        <p class="post-text">${displayTitle}</p>
         <span class="post-date">${post.date}</span>
       `;
+
+      // 🔥 MODAL AÇ
+      postDiv.addEventListener("click", () => {
+        modalImg.src = post.img || "";
+        modalImg.style.display = post.img ? "block" : "none";
+
+        modalTitle.textContent = displayTitle;
+        modalDesc.textContent = post.description || post.text || "";
+        modalDate.textContent = post.date;
+
+        if (post.link) {
+          modalLink.href = post.link;
+          modalLink.style.display = "inline-block";
+        } else {
+          modalLink.style.display = "none";
+        }
+
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      });
 
       postsContainer.appendChild(postDiv);
     });
   })
-  .catch(err => console.error("Postları yüklerken hata:", err));
+  .catch(err => console.error("Posts error:", err));
 
+// MODAL CLOSE
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", closeModal);
 
-//-------------------------
-//   G R E E T I N G
-//-------------------------
+function closeModal() {
+  modal.classList.add("hidden");
+  document.body.style.overflow = "";
+}
+
+// -------------------------
+// GREETING
+// -------------------------
 function updateGreeting() {
   const title = document.querySelector(".home-title");
   const subtitle = document.querySelector(".home-subtitle");
 
   const hour = new Date().getHours();
 
-  let titleText = "Welcome!";
-  let subtitleText = "This is my little chilling zone. I usually upload some posts here. Take a look below!";
-
-  if (hour >= 0 && hour < 5) {
-    titleText = "Still up, huh?";
-    subtitleText = "Not judging, just… you're definitely running on pure willpower right now.";
-  } 
-  else if (hour >= 5 && hour < 12) {
-    titleText = "Good morning.";
-    subtitleText = "Fresh start, clean mind. Scroll down if you want something to warm up the day.";
-  } 
-  else if (hour >= 12 && hour < 18) {
-    titleText = "Good afternoon.";
-    subtitleText = "Chill vibe hours. I drop updates here sometimes, feel free to check.";
-  } 
-  else if (hour >= 18 && hour <= 23) {
-    titleText = "Good evening.";
-    subtitleText = "Long day, huh. Sit back for a sec, I got some stuff down below.";
+  if (hour < 5) {
+    title.textContent = "Still up, huh?";
+    subtitle.textContent = "Running on pure willpower right now.";
+  } else if (hour < 12) {
+    title.textContent = "Good morning.";
+    subtitle.textContent = "Fresh start, clean mind.";
+  } else if (hour < 18) {
+    title.textContent = "Good afternoon.";
+    subtitle.textContent = "Chill vibe hours.";
+  } else {
+    title.textContent = "Good evening.";
+    subtitle.textContent = "Long day, sit back for a sec.";
   }
-
-  title.textContent = titleText;
-  subtitle.textContent = subtitleText;
 }
 
 updateGreeting();

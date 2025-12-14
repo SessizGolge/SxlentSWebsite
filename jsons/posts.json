@@ -1,25 +1,29 @@
 [
   {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/200x200",
-    "text": "DMLTZR is complately updated and it's now on BandLab. It's also dropping to Spotify very soon!",
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
+    "title": "DMLTZR — Patch Update",
+    "description": "DMLTZR received a fresh patch with improved mix and details. Now available to stream.",
     "date": "Dec 12, 2025",
     "link": "https://www.bandlab.com/track/c9cf5097-84c5-f011-8196-000d3a96100f?revId=c8cf5097-84c5-f011-8196-000d3a96100f"
   },
   {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/395a704f-6389-4846-864c-ab33f1fac7b6/200x200",
-    "text": "MIDNIGHT BLASTER is now on BandLab!",
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/395a704f-6389-4846-864c-ab33f1fac7b6/1024x1024",
+    "title": "MIDNIGHT BLASTER — Out Now",
+    "description": "MIDNIGHT BLASTER is officially published on BandLab. Turn the volume up and dive in.",
     "date": "Dec 10, 2025",
     "link": "https://www.bandlab.com/track/50bdea88-24ce-f011-8196-000d3a96100f?revId=4fbdea88-24ce-f011-8196-000d3a96100f"
   },
   {
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShHFsWJzaRw3cL64dYavw2P5BxVVLhVaWY-w&s",
-    "text": "Another banger available now on Spotify! (Also on YT Music, Apple Music, etc.)",
+    "title": "New Release on Spotify",
+    "description": "Another track just landed on Spotify. Also available on YouTube Music and Apple Music.",
     "date": "Dec 10, 2025",
     "link": "https://open.spotify.com/track/5eNRJVGosgu9uw4ByMxGir?si=a2cc4d340fad4907"
   },
   {
     "img": "https://source.boomplaymusic.com/group10/M00/11/19/7f77f47e37724dd9b464fec328042f53H3000W3000_464_464.jpg",
-    "text": "My track DMLTZR is on Spotify! (Also on YT Music, Apple Music, etc.)",
+    "title": "DMLTZR — Streaming Everywhere",
+    "description": "DMLTZR is now live on Spotify and all major platforms. Headphones recommended.",
     "date": "Dec 10, 2025",
     "link": "https://open.spotify.com/track/52URZFt9jVKpMUXA33mPMV?si=71f4ac7d014f4765"
   }

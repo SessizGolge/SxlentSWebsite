@@ -288,7 +288,7 @@ body{
 
 .post-img{
   width: 100%;
-  max-height: 150px;
+  /* max-height: 150px; */
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 8px;
@@ -525,6 +525,100 @@ body::after{
   position: relative; /* badge pozisyonu için gerekli */
 }
 
+/* ==========================
+   POST MODAL
+========================== */
+
+.post-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.post-modal.hidden {
+  display: none;
+}
+
+.post-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+}
+
+.post-modal-content {
+  position: relative;
+  z-index: 2;
+  width: min(90%, 520px);
+  background: rgba(20,20,30,0.9);
+  border: 1px solid rgba(255,138,255,0.25);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  animation: fadeUp .35s ease forwards;
+}
+
+.post-modal-content img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.post-modal-content h2 {
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 0 10px rgba(255,138,255,0.6);
+}
+
+.post-modal-content p {
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  color: #ffbdfd;
+}
+
+.post-modal-content span {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-bottom: 14px;
+}
+
+.post-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #ff8aff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Post modal open link override */
+.post-modal-content .btn {
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 138, 255, 0.35);
+  text-decoration: none; /* underline yok */
+
+  box-shadow: 0 0 12px rgba(231, 84, 255, 0.25);
+  transition: all 0.2s ease;
+}
+
+.post-modal-content .btn:hover {
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 20px rgba(255, 138, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+
+.post * {
+  pointer-events: none;
+}
 
 /* ==========================================================================
    End of file
