@@ -1,29 +1,11 @@
-// 🔐 SUPABASE SETUP
+// SUPABASE SETUP
 const SUPABASE_URL = "https://tzbfehmwpryzubhvwvrz.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_yXDanWtrvOHNOzj6PY2uiA_4K4voP1k";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6YmZlaG13cHJ5enViaHZ3dnJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU3MTQyMjIsImV4cCI6MjA4MTI5MDIyMn0.tK35WCIraPDxFtYc_YsMx07D3AFIgrhCgjiYHBzvAas";
 
-const supabase = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+// Burada supabaseJs yerine "supabase" olarak başlatmalıyız
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// -------------------------
-// AUTH HELPERS
-// -------------------------
-
-async function getUser() {
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
-}
-
-async function logout() {
-  await supabase.auth.signOut();
-  location.reload();
-}
-
-// -------------------------
 // SESSION CHECK
-// -------------------------
 supabase.auth.onAuthStateChange((event, session) => {
   console.log("Auth event:", event);
 

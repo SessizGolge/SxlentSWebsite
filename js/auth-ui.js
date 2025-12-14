@@ -1,3 +1,23 @@
+const consolePanel = document.getElementById("consolePanel");
+
+// Konsola yazan her şeyi buraya da yaz
+(function() {
+  const oldLog = console.log;
+  const oldErr = console.error;
+
+  console.log = function(...args) {
+    oldLog.apply(console, args);
+    consolePanel.innerHTML += args.map(a => a instanceof Object ? JSON.stringify(a) : a).join(" ") + "<br>";
+    consolePanel.scrollTop = consolePanel.scrollHeight;
+  }
+
+  console.error = function(...args) {
+    oldErr.apply(console, args);
+    consolePanel.innerHTML += "<span style='color:red;'>" + args.map(a => a instanceof Object ? JSON.stringify(a) : a).join(" ") + "</span><br>";
+    consolePanel.scrollTop = consolePanel.scrollHeight;
+  }
+})();
+
 const msg = document.getElementById("authMsg");
 
 async function login() {
