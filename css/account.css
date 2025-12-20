@@ -1,8 +1,20 @@
 .account-container {
+  margin: 120px auto 60px;
+  max-width: 900px;
+  padding: 32px 28px;
+
   text-align: center;
-  margin-top: 150px;
   animation: riseFade 1s ease forwards;
   opacity: 0;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,138,255,0.18);
+  border-radius: 20px;
+
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 0 24px rgba(231,84,255,0.25),
+    inset 0 0 20px rgba(255,255,255,0.02);
 }
 
 @keyframes riseFade {
