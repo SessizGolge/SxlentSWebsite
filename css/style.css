@@ -90,6 +90,12 @@ body{
     0 0 24px var(--accent-magenta);
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  justify-self: end;
+}
 
 /* small circular profile pic */
 .nav-pfp{
@@ -657,20 +663,63 @@ body.logged-in .logged-in-only { display: inline-block; }
 }
 
 .auth-btn {
-  color: #ff8aff;
-  font-weight: bold;
+  color: var(--accent-pink);
+  font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
-  margin-left: 20px;
-  font-size: 17px;
-  transition: 0.2s;
-  text-shadow: 0 0 5px #ff8aff50; /* glow mor-pembe */
+  cursor: pointer;
+
+  text-shadow:
+    0 0 6px rgba(255,138,255,0.45),
+    0 0 12px rgba(231,84,255,0.35);
+
+  transition:
+    transform .18s ease,
+    color .18s ease,
+    text-shadow .18s ease;
 }
 
 .auth-btn:hover {
   color: #ff66ff;
-  text-shadow: 0 0 12px #ff8aff, 0 0 24px #e754ff;
   transform: translateY(-2px) scale(1.05);
+  text-shadow:
+    0 0 12px var(--accent-pink),
+    0 0 26px var(--accent-magenta);
 }
+
+
+.hidden {
+  display: none;
+}
+
+#auth-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  opacity: 0.6;
+}
+
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.92),
+    rgba(0,0,0,0.82)
+  );
+  backdrop-filter: blur(6px);
+  transition: opacity .4s ease, visibility .4s ease;
+}
+
+#loading-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
 
 /* ==========================================================================
    End of file

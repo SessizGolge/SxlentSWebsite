@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!window.supabaseClient) return null;
 
     const { data: { user } } = await window.supabaseClient.auth.getUser();
-    
+
     if (user) {
       loginButtons.forEach(btn => btn.style.display = "none");
       accountButtons.forEach(btn => btn.style.display = "inline-block");
@@ -22,6 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
       loginButtons.forEach(btn => btn.style.display = "inline-block");
       accountButtons.forEach(btn => btn.style.display = "none");
     }
+
+    // 🔥 AUTH DURUMU NETLEŞTİ → UI'ı GÖSTER
+    document.getElementById("loading-screen")?.remove();
+    document.getElementById("app")?.classList.remove("hidden");
 
     return user;
   }

@@ -184,4 +184,14 @@
   .change-password-container button {
     font-size: 15px;
   }
+
+  .btn.danger {
+  background: #ff3b3b;
+  color: white;
+}
+
+.btn.danger:hover {
+  background: #ff1f1f;
+}
+
 }
