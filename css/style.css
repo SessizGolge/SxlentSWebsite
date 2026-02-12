@@ -44,24 +44,29 @@ body{
 /* ==========================
    1) Header / Nav
    ========================== */
-.header{
+.header {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: var(--header-h);
   background: rgba(0,0,0,0.25);
   backdrop-filter: blur(10px);
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto; /* sol + sağ */
   align-items: center;
-  justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 24px;
   z-index: 1000;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 /* logo */
 .logo{
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 1000;
   color: var(--accent-magenta);
   text-shadow: 0 0 6px var(--accent-magenta), 0 0 12px var(--accent-pink, #ff8aff)50;
   animation: neonPulse 2.4s infinite ease-in-out;
@@ -74,13 +79,16 @@ body{
   gap: .5rem;
 
   color: var(--accent-pink);
-  font-weight: 700;
+  font-weight: 1000;
   text-decoration: none;
   font-size: .95rem;
 
   text-shadow: 0 0 6px rgba(255,138,255,0.3);
   transition: transform .18s ease, color .18s ease, text-shadow .18s ease;
+
+  justify-self: end;
 }
+
 
 .me-link:hover{
   transform: translateY(-2px) scale(1.05);
@@ -104,11 +112,22 @@ body{
   border-radius: 50%;
   border: 2px solid var(--accent-pink);
   object-fit: cover;
-
   box-shadow:
     0 0 6px var(--accent-pink),
     0 0 12px rgba(231,84,255,0.3);
 }
+
+@media (max-width: 900px) {
+  .mobile-only .nav-pfp {
+    width: 42px;
+    height: 42px;
+    border-width: 2px;
+    box-shadow:
+      0 0 10px var(--accent-pink),
+      0 0 20px rgba(231,84,255,0.4);
+  }
+}
+
 
 /* header neon pulse */
 @keyframes neonPulse{
@@ -488,9 +507,6 @@ body::after{
   .logo{ 
     font-size: 1rem; 
   }
-  .me-link span {
-    display: none; /* sadece avatar kalsın */
-  }
 }
 
 /* ==========================
@@ -636,7 +652,7 @@ body::after{
 
 /* Post modal open link override */
 .post-modal-content .btn {
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(223, 13, 223, 0.35);
   color: #ffffff;
 
   border: 1px solid rgba(255, 138, 255, 0.35);
@@ -652,92 +668,33 @@ body::after{
   transform: translateY(-2px);
 }
 
-.logged-in-only { display: none; }
-
-body.logged-in .login-only { display: none; }
-body.logged-in .logged-in-only { display: inline-block; }
-
-
-.post * {
-  pointer-events: none;
-}
-
-.auth-btn {
-  color: var(--accent-pink);
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-
-  text-shadow:
-    0 0 6px rgba(255,138,255,0.45),
-    0 0 12px rgba(231,84,255,0.35);
-
-  transition:
-    transform .18s ease,
-    color .18s ease,
-    text-shadow .18s ease;
-}
-
-.auth-btn:hover {
-  color: #ff66ff;
-  transform: translateY(-2px) scale(1.05);
-  text-shadow:
-    0 0 12px var(--accent-pink),
-    0 0 26px var(--accent-magenta);
-}
-
-
-.hidden {
-  display: none;
-}
-
-#auth-loading {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.95rem;
-  opacity: 0.6;
-}
-
-#loading-screen {
-  position: fixed;
-  inset: 0;
-  z-index: 2500;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,0.92),
-    rgba(0,0,0,0.82)
-  );
-  backdrop-filter: blur(6px);
-  transition: opacity .4s ease, visibility .4s ease;
-}
-
-#loading-screen.fade-out {
-  opacity: 0;
-  visibility: hidden;
-}
-
 /* ==========================
    SPLIT LAYOUT
 ========================== */
 
 .split-layout {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 40px;
+  grid-template-columns: 500px 1fr;
+  gap: 100px;
   max-width: 1400px;
-  margin: 120px auto 60px;
+  margin: 100px auto 60px;
   padding: 0 24px;
 }
 
 .about-panel {
   position: sticky;
-  top: 120px;
+  top: 200px;
   align-self: start;
   text-align: center;
+  padding-bottom: 80px; /* default güvenli boşluk */
 }
+
+@media (max-width: 900px) {
+  .about-panel {
+    padding-bottom: 120px;
+  }
+}
+
 
 .about-pfp {
   width: 140px;
@@ -825,6 +782,16 @@ body.logged-in .logged-in-only { display: inline-block; }
   background: rgba(20, 0, 40, 0.6);
   cursor: pointer;
 }
+
+.post-row.is-new {
+  background: rgba(255, 60, 60, 0.08);
+  border-left: 4px solid #ff3c3c;
+}
+
+.post-row.is-new:hover {
+  background: rgba(255, 60, 60, 0.15);
+}
+
 
 .post-row:hover {
   background: rgba(80, 0, 140, 0.45);

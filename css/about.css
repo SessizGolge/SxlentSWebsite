@@ -33,7 +33,15 @@
   gap: 18px;
   max-width: 400px;
   margin: 40px auto 0;
+  padding-bottom: 80px;
 }
+
+@media (max-width: 900px) {
+  .socials-grid {
+    padding-bottom: 120px;
+  }
+}
+
 
 .box {
   position: relative;
@@ -82,7 +90,7 @@
 .ig { color: #ff66d8; }
 .ig::before { background-image: url("https://i.gifer.com/UDeR.gif"); }
 
-.tt { color: #00f2ea; }
+.tt { color: #830062; }
 .tt::before { background-image: url("https://i.pinimg.com/originals/80/78/a2/8078a2862bcb5e9041ffbc12f79f2bae.gif"); }
 
 .sp { color: #1db954; }
@@ -161,13 +169,13 @@
 .home-icon {
   width: 18px;
   height: 18px;
-  color: #9fdcff; /* hafif neon mavi */
+  color: #ff66ff; /* hafif neon mavi */
   filter: drop-shadow(0 0 4px #ff66ff);
   transition: 0.2s ease;
 }
 
 .home-link:hover .home-icon {
-  color: #c9eaff;
+  color: #ff66ff;
   filter: drop-shadow(0 0 6px #ff66ff);
   transform: scale(1.1);
 }

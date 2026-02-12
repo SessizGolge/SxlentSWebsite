@@ -67,18 +67,23 @@ fetch("jsons/posts.json?v=" + Date.now())
       postDiv.addEventListener("click", () => {
         modalMedia.innerHTML = "";
 
-        if (post.embed) {
-          modalMedia.innerHTML = `
-            <div class="modal-embed">
-              ${post.embed}
-            </div>
-          `;
-          modalLink.style.display = "none";
-        } else if (post.img) {
-          modalMedia.innerHTML = `<img src="${post.img}">`;
-          modalLink.style.display = post.link ? "inline-block" : "none";
-        }
+      if (post.embed) {
+        modalMedia.innerHTML = `
+          <div class="modal-embed">
+            ${post.embed}
+          </div>
+        `;
+      } else if (post.img) {
+        modalMedia.innerHTML = `<img src="${post.img}">`;
+      }
 
+      // 🔗 LINK KONTROLÜ AYRI
+      if (post.link) {
+        modalLink.href = post.link;
+        modalLink.style.display = "inline-block";
+      } else {
+        modalLink.style.display = "none";
+      }
         modalTitle.textContent = post.title || "Update";
         modalDesc.textContent = post.description || "";
         modalDate.textContent = displayDate;
