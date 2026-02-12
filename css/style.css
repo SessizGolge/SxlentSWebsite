@@ -719,6 +719,263 @@ body.logged-in .logged-in-only { display: inline-block; }
   visibility: hidden;
 }
 
+/* ==========================
+   SPLIT LAYOUT
+========================== */
+
+.split-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 120px auto 60px;
+  padding: 0 24px;
+}
+
+.about-panel {
+  position: sticky;
+  top: 120px;
+  align-self: start;
+  text-align: center;
+}
+
+.about-pfp {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-pink);
+  box-shadow: 0 0 16px var(--accent-magenta);
+  margin-bottom: 14px;
+}
+
+.about-name {
+  color: var(--accent-pink);
+  margin-bottom: 6px;
+}
+
+.about-desc {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 16px;
+}
+
+.posts-panel {
+  min-width: 0;
+}
+
+/* EMBEDS */
+
+.post-embed iframe,
+.modal-embed iframe {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+}
+
+.modal-embed iframe {
+  min-height: 380px;
+  margin-bottom: 12px;
+}
+
+/* RESPONSIVE */
+
+.desktop-only { display: block; }
+.mobile-only { display: none; }
+
+@media (max-width: 900px) {
+  .split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: flex;
+  }
+}
+
+/* ABOUT ANIMATION */
+.about-anim {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: aboutFade 0.8s forwards;
+}
+
+.about-anim:nth-child(1) { animation-delay: 0.1s; }
+.about-anim:nth-child(2) { animation-delay: 0.25s; }
+.about-anim:nth-child(3) { animation-delay: 0.4s; }
+.about-anim:nth-child(4) { animation-delay: 0.55s; }
+
+@keyframes aboutFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* POST LIST ROW */
+
+.post-row {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(20, 0, 40, 0.6);
+  cursor: pointer;
+}
+
+.post-row:hover {
+  background: rgba(80, 0, 140, 0.45);
+}
+
+.post-thumb {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.post-embed-placeholder {
+  width: 84px;
+  height: 84px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2b003f, #120018);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #ff66ff;
+}
+
+.post-info {
+  flex: 1;
+}
+
+.post-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.post-desc {
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.post-date {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* EMBED DARK BACKGROUND */
+.modal-embed iframe {
+  background: #120018;
+  border-radius: 12px;
+  width: 100%;
+  min-height: 220px;
+}
+
+/* ============================= */
+/* POSTS – SINGLE COLUMN LIST */
+/* ============================= */
+
+.posts-panel {
+  padding: 40px 20px;
+}
+
+.posts-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Eski grid/kare postları öldür */
+.post,
+.post-card {
+  all: unset;
+}
+
+/* Yeni post row */
+.post-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  width: 100%;
+  min-height: 120px;           /* 10:3 hissi */
+  padding: 18px 22px;
+
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(40, 0, 70, 0.55),
+    rgba(15, 0, 30, 0.75)
+  );
+
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.post-row:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px #b84cff55;
+}
+
+/* Sol görsel */
+.post-thumb,
+.post-embed-placeholder {
+  width: 110px;
+  height: 80px; /* 10:3 oran */
+  border-radius: 12px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+/* Embed placeholder */
+.post-embed-placeholder {
+  background: linear-gradient(135deg, #2b003f, #120018);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff7aff;
+  font-size: 28px;
+}
+
+/* Sağ içerik */
+.post-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.post-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ff9cff;
+  text-shadow: 0 0 6px #ff7aff60;
+}
+
+.post-desc {
+  font-size: 0.92rem;
+  opacity: 0.75;
+}
+
+.post-date {
+  font-size: 0.75rem;
+  opacity: 0.45;
+}
+
+
+
+
+
 
 
 /* ==========================================================================

@@ -5,62 +5,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SxlentStudios | Home</title>
-  <link rel="stylesheet" href="css/style.css?v=1.0.6">
+  <link rel="stylesheet" href="css/style.css?v=1.1.0">
+  <link rel="stylesheet" href="css/about.css?v=1.1.0">
 </head>
 <body>
 
-<!-- ARKA PLAN HEP AÇIK -->
 <canvas id="bgCanvas"></canvas>
 <div class="scanlines" aria-hidden="true"></div>
 
-<!-- TÜM SITE -->
-<div id="app">
+<header class="header">
+  <div class="header-left">
+    <img src="images/favicon64.png" alt="logo" class="hero-icon">
+    <div class="logo">Home</div>
 
-  <header class="header">
-    <div class="header-left">
-      <img src="images/favicon64.png" alt="logo" class="hero-icon">
-      <div class="logo">Home</div>
+    <!-- Mobile Me -->
+    <a href="about.html" class="me-link mobile-only">
+      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" class="nav-pfp">
+      <span>Me</span>
+    </a>
+  </div>
+</header>
 
-      <a href="about.html" class="me-link">
-        <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" class="nav-pfp">
-        <span>Me</span>
-      </a>
+<main class="split-layout">
+
+  <!-- LEFT / ABOUT (desktop) -->
+  <aside class="about-panel desktop-only">
+    
+    <div class="profile-block">
+        <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj" class="pfp" alt="Musab">
+        <h1 class="full-name">Musab Yasin Sezer</h1>
+        <p class="about-desc about-anim">Music • Code • Games</p>
     </div>
-    </nav>
-  </header>
 
-  <section class="hero">
-    <h1 class="home-title"></h1>
-    <p class="home-subtitle"></p>
-
-    <div class="scroll-hint">
-      <span>Scroll down to see posts</span>
-      <div class="arrow"></div>
+    <!-- about.html'den birebir al -->
+    <div class="socials-grid">
+      <a class="box yt" href="https://www.youtube.com/@SxlentS" target="_blank"></a>
+      <a class="box dc" href="https://discord.gg/9T2XwTxfHE" target="_blank"></a>
+      <a class="box ig" href="https://www.instagram.com/sxlent.s/" target="_blank"></a>
+      <a class="box tt" href="https://www.tiktok.com/@sxlent.s" target="_blank"></a>
+      <a class="box sp" href="https://open.spotify.com/artist/7kBgj3tPl9gMi866CvXTXu" target="_blank"></a>
+      <a class="box ym" href="https://music.youtube.com/channel/UC4d85qDyBOIS97wQKAnhReA" target="_blank"></a>
+      <a class="box bl" href="https://www.bandlab.com/sxlents" target="_blank"></a>
+      <a class="box it" href="https://sxlents.itch.io" target="_blank"></a>
     </div>
-  </section>
+  </aside>
 
-  <section class="posts-section">
+  <!-- RIGHT / POSTS -->
+  <section class="posts-panel">
     <div class="posts-container" id="postsContainer"></div>
   </section>
 
-  <!-- MODAL -->
-  <div id="postModal" class="post-modal hidden">
-    <div class="post-modal-overlay"></div>
-    <div class="post-modal-content">
-      <button class="post-modal-close">×</button>
-      <img id="modalImg">
-      <h2 id="modalTitle"></h2>
-      <p id="modalDesc"></p>
-      <span id="modalDate"></span>
-      <a id="modalLink" target="_blank" class="btn">Open link</a>
-    </div>
-  </div>
+</main>
 
+<!-- MODAL -->
+<div id="postModal" class="post-modal hidden">
+  <div class="post-modal-overlay"></div>
+  <div class="post-modal-content">
+    <button class="post-modal-close">×</button>
+
+    <!-- media alanı -->
+    <div id="modalMedia"></div>
+
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <span id="modalDate"></span>
+    <a id="modalLink" target="_blank" class="btn">Open link</a>
+  </div>
 </div>
 
 <script src="js/script.js"></script>
 <script src="js/bgEffect.js"></script>
-
 </body>
-
 </html>

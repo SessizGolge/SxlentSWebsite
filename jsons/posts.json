@@ -4,26 +4,20 @@
     "title": "PHASE SHIFT — New track!",
     "description": "PHASE SHIFT is now available on BandLab!",
     "date": "Dec 20, 2025",
-    "link": "https://www.bandlab.com/track/68473f90-f6db-f011-819b-6045bd3096b1?revId=67473f90-f6db-f011-819b-6045bd3096b1"
+    "link": "https://www.bandlab.com/track/68473f90-f6db-f011-819b-6045bd3096b1?revId=67473f90-f6db-f011-819b-6045bd3096b1",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=67473f90-f6db-f011-819b-6045bd3096b1\" allowfullscreen></iframe>"
   },
   {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
-    "title": "DMLTZR — Now on Spotify!",
-    "description": "DMLTZR has already received a fresh patch an now it's son spotify!",
+    "title": "DMLTZR — Remastered!",
+    "description": "DMLTZR has received a fresh patch an now it's on all platforms!",
     "date": "Dec 20, 2025",
     "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55"
   },
   {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
-    "title": "DMLTZR — Patch Update",
-    "description": "DMLTZR received a fresh patch with improved mix and details. Now available to stream.",
-    "date": "Dec 12, 2025",
-    "link": "https://www.bandlab.com/track/c9cf5097-84c5-f011-8196-000d3a96100f?revId=c8cf5097-84c5-f011-8196-000d3a96100f"
-  },
-  {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/395a704f-6389-4846-864c-ab33f1fac7b6/1024x1024",
-    "title": "MIDNIGHT BLASTER — Out Now",
-    "description": "MIDNIGHT BLASTER is officially published on BandLab. Turn the volume up and dive in.",
+    "title": "MIDNIGHT BLASTER — Undertale inspired track!",
+    "description": "MIDNIGHT BLASTER is officially on every platform. Turn the volume up and dive in!",
     "date": "Dec 10, 2025",
     "link": "https://www.bandlab.com/track/50bdea88-24ce-f011-8196-000d3a96100f?revId=4fbdea88-24ce-f011-8196-000d3a96100f"
   },
@@ -39,6 +33,23 @@
     "title": "DMLTZR — Streaming Everywhere",
     "description": "DMLTZR is now live on Spotify and all major platforms. Headphones recommended.",
     "date": "Dec 10, 2025",
-    "link": "https://open.spotify.com/track/52URZFt9jVKpMUXA33mPMV?si=71f4ac7d014f4765"
+    "link": "https://open.spotify.com/track/52URZFt9jVKpMUXA33mPMV?si=e6176dcbdb69441d",
+    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/52URZFt9jVKpMUXA33mPMV?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/55ea1a7f-7827-4067-9f15-412c653f68dd/1080x1080",
+    "title": "BIZARRE PHASE — Newest Track!",
+    "description": "BIZARRE PHASE is now on BandLab.",
+    "date": "Feb 12, 2026",
+    "link": "https://www.bandlab.com/track/056dabc7-e33e-487f-9f6d-94bcaa8d0d17?revId=d5cb82dd-9fbc-44d5-b166-81e1a56b2911",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=d5cb82dd-9fbc-44d5-b166-81e1a56b2911\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/c2777aaa-8e91-4cb6-9a14-480d38a599b8/1080x1080",
+    "title": "SPLIT POINT — First track of SEKKAI!",
+    "description": "SPLIT POINT is officially out! Check it out on BandLab.",
+    "date": "Feb 12, 2026",
+    "link": "https://www.bandlab.com/track/92fcb679-dffd-f011-832e-6045bd324b5d?revId=91fcb679-dffd-f011-832e-6045bd324b5d",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=91fcb679-dffd-f011-832e-6045bd324b5d\" allowfullscreen></iframe>"
   }
 ]
