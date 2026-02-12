@@ -1,0 +1,41 @@
+name: New Post
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update posts.json
+        run: |
+          BODY="${{ github.event.issue.body }}"
+
+          img=$(echo "$BODY" | grep '^img=' | cut -d= -f2-)
+          title=$(echo "$BODY" | grep '^title=' | cut -d= -f2-)
+          description=$(echo "$BODY" | grep '^description=' | cut -d= -f2-)
+          date=$(echo "$BODY" | grep '^date=' | cut -d= -f2-)
+          link=$(echo "$BODY" | grep '^link=' | cut -d= -f2-)
+
+          newPost=$(jq -n \
+            --arg img "$img" \
+            --arg title "$title" \
+            --arg description "$description" \
+            --arg date "$date" \
+            --arg link "$link" \
+            '{img:$img,title:$title,description:$description,date:$date,link:$link}')
+
+          jq ". |= [\$newPost] + ." posts.json > tmp.json
+          mv tmp.json posts.json
+
+      - name: Commit
+        run: |
+          git config user.name "post-bot"
+          git config user.email "post-bot@users.noreply.github.com"
+          git add posts.json
+          git commit -m "New post added"
+          git push
