@@ -972,6 +972,43 @@ body.logged-in .logged-in-only { display: inline-block; }
   opacity: 0.45;
 }
 
+/* ===== Custom Scrollbar ===== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #e754ff transparent;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #ff8aff,
+    #e754ff,
+    #9f4cff
+  );
+  border-radius: 999px;
+  box-shadow: 0 0 10px #e754ff80;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ffb3ff,
+    #ff66ff,
+    #b266ff
+  );
+  box-shadow: 0 0 14px #ff8aff;
+}
 
 
 

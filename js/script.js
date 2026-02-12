@@ -31,6 +31,15 @@ fetch("jsons/posts.json?v=" + Date.now())
       postDiv.style.animation = `postFadeUp 0.5s forwards`;
       postDiv.style.animationDelay = `${index * 0.1}s`;
 
+      // 🔥 NEW POST KONTROLÜ
+      const today = new Date();
+      const isNewPost =
+        post._dateObj.toDateString() === today.toDateString();
+
+      if (isNewPost) {
+        postDiv.classList.add("is-new");
+      }
+
       const displayDate = post._dateObj.toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
@@ -46,6 +55,7 @@ fetch("jsons/posts.json?v=" + Date.now())
       }
 
       postDiv.innerHTML = `
+        ${isNewPost ? `<div class="new-post-badge">New post!</div>` : ""}
         ${thumbHTML}
         <div class="post-info">
           <h3 class="post-title">${post.title || "Update"}</h3>

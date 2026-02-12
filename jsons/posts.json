@@ -12,24 +12,27 @@
     "title": "DMLTZR — Remastered!",
     "description": "DMLTZR has received a fresh patch an now it's on all platforms!",
     "date": "Dec 20, 2025",
-    "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55"
+    "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55",
+    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/7gK2xeGlgLYqZfTjy2e6G7?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
   {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/395a704f-6389-4846-864c-ab33f1fac7b6/1024x1024",
     "title": "MIDNIGHT BLASTER — Undertale inspired track!",
     "description": "MIDNIGHT BLASTER is officially on every platform. Turn the volume up and dive in!",
     "date": "Dec 10, 2025",
-    "link": "https://www.bandlab.com/track/50bdea88-24ce-f011-8196-000d3a96100f?revId=4fbdea88-24ce-f011-8196-000d3a96100f"
+    "link": "https://www.bandlab.com/track/50bdea88-24ce-f011-8196-000d3a96100f?revId=4fbdea88-24ce-f011-8196-000d3a96100f",
+    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/5Qo2Seo3Ti7xBdH7P1KHOD?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
   {
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShHFsWJzaRw3cL64dYavw2P5BxVVLhVaWY-w&s",
-    "title": "New Release on Spotify",
-    "description": "Another track just landed on Spotify. Also available on YouTube Music and Apple Music.",
+    "title": "DAZED MIDNIGHT",
+    "description": "Another track just landed on Spotify. Also available on other platforms!",
     "date": "Dec 10, 2025",
-    "link": "https://open.spotify.com/track/5eNRJVGosgu9uw4ByMxGir?si=a2cc4d340fad4907"
+    "link": "https://open.spotify.com/track/5eNRJVGosgu9uw4ByMxGir?si=a2cc4d340fad4907",
+    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/1xKyj46seXYy0u1DqwSlB0?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
   {
-    "img": "https://source.boomplaymusic.com/group10/M00/11/19/7f77f47e37724dd9b464fec328042f53H3000W3000_464_464.jpg",
+    "img": "images\\DMLTZR-logo.jpg",
     "title": "DMLTZR — Streaming Everywhere",
     "description": "DMLTZR is now live on Spotify and all major platforms. Headphones recommended.",
     "date": "Dec 10, 2025",
