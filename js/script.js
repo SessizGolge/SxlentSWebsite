@@ -148,13 +148,18 @@ function updateUI(enabled) {
 async function enableNotifications() {
   try {
 
+    if (Notification.permission === "granted") {
+      console.log("Notifications already enabled.");
+      updateUI(true);
+      return;
+    }
+
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       alert("Notifications blocked.");
       return;
     }
 
-    // ⬇️ SERVICE WORKER HAZIR OLANA KADAR BEKLE
     const registration = await navigator.serviceWorker.ready;
 
     const token = await messaging.getToken({
@@ -164,7 +169,6 @@ async function enableNotifications() {
 
     if (token) {
       console.log("FCM Token:", token);
-
       localStorage.setItem("notifEnabled", "true");
       updateUI(true);
     }
@@ -174,12 +178,11 @@ async function enableNotifications() {
   }
 }
 
-
-notifBtn.addEventListener("click", () => {
+notifBtn.addEventListener("click", async () => {
   const enabled = localStorage.getItem("notifEnabled") === "true";
 
   if (!enabled) {
-    enableNotifications();
+    await enableNotifications();
   }
 });
 
