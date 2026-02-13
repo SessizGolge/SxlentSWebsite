@@ -110,13 +110,15 @@ function closeModal() {
 }
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/firebase-messaging-sw.js")
-    .then((registration) => {
-      console.log("Service Worker registered:", registration);
-    })
-    .catch((err) => {
-      console.error("Service Worker error:", err);
-    });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/firebase-messaging-sw.js")
+      .then((registration) => {
+        console.log("Service Worker registered:", registration);
+      })
+      .catch((err) => {
+        console.error("Service Worker error:", err);
+      });
+  });
 }
 
 // ===============================
@@ -126,7 +128,11 @@ if ("serviceWorker" in navigator) {
 const notifBtn = document.getElementById("notifToggle");
 const notifCheck = document.querySelector(".notif-check");
 
-const messaging = firebase.messaging();
+let messaging;
+
+if (firebase.apps.length) {
+  messaging = firebase.messaging();
+}
 
 // VAPID PUBLIC KEY BURAYA
 const VAPID_KEY = "BGU2enzMZuJIvMvBgbRIlb2Xqvs0z7Bg1B8EAIXwYynJYzi_FwKnV8Gdb65XkGItlHVlHDYrLFJC_JOMvXE1N6o";
@@ -141,22 +147,23 @@ function updateUI(enabled) {
 
 async function enableNotifications() {
   try {
-    const permission = await Notification.requestPermission();
 
+    const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       alert("Notifications blocked.");
       return;
     }
 
+    // ⬇️ SERVICE WORKER HAZIR OLANA KADAR BEKLE
+    const registration = await navigator.serviceWorker.ready;
+
     const token = await messaging.getToken({
-      vapidKey: VAPID_KEY
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: registration
     });
 
     if (token) {
       console.log("FCM Token:", token);
-
-      // 🔥 BURAYA İSTERSEN TOKEN'I DATABASE'E GÖNDERİRSİN
-      // fetch("/save-token", { method: "POST", body: JSON.stringify({ token }) })
 
       localStorage.setItem("notifEnabled", "true");
       updateUI(true);
@@ -166,6 +173,7 @@ async function enableNotifications() {
     console.error("Notification error:", err);
   }
 }
+
 
 notifBtn.addEventListener("click", () => {
   const enabled = localStorage.getItem("notifEnabled") === "true";
