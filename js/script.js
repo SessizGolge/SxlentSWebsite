@@ -108,3 +108,75 @@ function closeModal() {
   modalMedia.innerHTML = "";
   document.body.style.overflow = "";
 }
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/firebase-messaging-sw.js")
+    .then((registration) => {
+      console.log("Service Worker registered:", registration);
+    })
+    .catch((err) => {
+      console.error("Service Worker error:", err);
+    });
+}
+
+// ===============================
+// 🔔 PUSH NOTIFICATION TOGGLE
+// ===============================
+
+const notifBtn = document.getElementById("notifToggle");
+const notifCheck = document.querySelector(".notif-check");
+
+const messaging = firebase.messaging();
+
+// VAPID PUBLIC KEY BURAYA
+const VAPID_KEY = "BGU2enzMZuJIvMvBgbRIlb2Xqvs0z7Bg1B8EAIXwYynJYzi_FwKnV8Gdb65XkGItlHVlHDYrLFJC_JOMvXE1N6o";
+
+function updateUI(enabled) {
+  if (enabled) {
+    notifCheck.classList.remove("hidden");
+  } else {
+    notifCheck.classList.add("hidden");
+  }
+}
+
+async function enableNotifications() {
+  try {
+    const permission = await Notification.requestPermission();
+
+    if (permission !== "granted") {
+      alert("Notifications blocked.");
+      return;
+    }
+
+    const token = await messaging.getToken({
+      vapidKey: VAPID_KEY
+    });
+
+    if (token) {
+      console.log("FCM Token:", token);
+
+      // 🔥 BURAYA İSTERSEN TOKEN'I DATABASE'E GÖNDERİRSİN
+      // fetch("/save-token", { method: "POST", body: JSON.stringify({ token }) })
+
+      localStorage.setItem("notifEnabled", "true");
+      updateUI(true);
+    }
+
+  } catch (err) {
+    console.error("Notification error:", err);
+  }
+}
+
+notifBtn.addEventListener("click", () => {
+  const enabled = localStorage.getItem("notifEnabled") === "true";
+
+  if (!enabled) {
+    enableNotifications();
+  }
+});
+
+// Sayfa açılınca check göster
+if (localStorage.getItem("notifEnabled") === "true") {
+  updateUI(true);
+}
+

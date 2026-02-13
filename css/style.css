@@ -984,6 +984,40 @@ body::after{
   box-shadow: 0 0 14px #ff8aff;
 }
 
+/* ==========================
+   Notification Toggle
+========================== */
+
+.notif-btn {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 138, 255, 0.25);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #ff8aff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-btn:hover {
+  background: rgba(255, 138, 255, 0.1);
+  box-shadow: 0 0 14px rgba(255, 138, 255, 0.3);
+}
+
+.notif-check {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #00f2ea;
+  color: black;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 6px;
+}
 
 
 

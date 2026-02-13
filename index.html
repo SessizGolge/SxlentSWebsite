@@ -9,6 +9,23 @@
   <!-- ABSOLUTE PATHS (GitHub Pages şart) -->
   <link rel="stylesheet" href="/css/style.css?v=1.1.0">
   <link rel="stylesheet" href="/css/about.css?v=1.1.0">
+
+  <!-- 1️⃣ Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+
+  <!-- 2️⃣ Firebase Config -->
+  <script>
+      const firebaseConfig = {
+      apiKey: "AIzaSyBqpK0hbm48oZ_46gKzwB6ANVAKbVT7mbw",
+      authDomain: "sxlentswebsite-80464.firebaseapp.com",
+      projectId: "sxlentswebsite-80464",
+      messagingSenderId: "785662700611",
+      appId: "1:785662700611:web:b6ae713028a6976b4978f6"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
 
@@ -20,8 +37,12 @@
     <img src="/images/favicon64.png" alt="logo" class="hero-icon">
     <div class="logo">Home</div>
 
-    <!-- Mobile Me -->
+    <button id="notifToggle" class="notif-btn" title="Enable notifications">
+      <span class="notif-icon">🔔</span>
+      <span class="notif-check hidden">✓</span>
+    </button>
   </div>
+
   <a href="/about" class="me-link mobile-only">
     <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj"
          class="nav-pfp">
