@@ -1,5 +1,7 @@
 const admin = require("firebase-admin");
+const fs = require("fs");
 
+// Service account yükle
 const serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
@@ -9,24 +11,37 @@ admin.initializeApp({
 const db = admin.firestore();
 
 async function sendPush() {
-  const snapshot = await db.collection("tokens").get();
-  const tokens = snapshot.docs.map((doc) => doc.data().token);
+  try {
+    console.log("Fetching tokens...");
 
-  if (tokens.length === 0) {
-    console.log("No tokens found.");
-    return;
+    const snapshot = await db.collection("tokens").get();
+
+    if (snapshot.empty) {
+      console.log("No tokens found.");
+      return;
+    }
+
+    const tokens = snapshot.docs.map(doc => doc.id);
+
+    console.log(`Found ${tokens.length} tokens`);
+
+    const message = {
+      notification: {
+        title: "New Post 🚀",
+        body: "A new update has been published!",
+      },
+      tokens: tokens,
+    };
+
+    const response = await admin.messaging().sendEachForMulticast(message);
+
+    console.log("Push response:");
+    console.log(response);
+
+  } catch (error) {
+    console.error("Push error:", error);
+    process.exit(1);
   }
-
-  const payload = {
-    notification: {
-      title: "New Post!",
-      body: "Click to see the post",
-    },
-  };
-
-  await admin.messaging().sendToDevice(tokens, payload);
-
-  console.log("Push sent successfully!");
 }
 
 sendPush();
