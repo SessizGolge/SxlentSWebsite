@@ -206,10 +206,7 @@ notifBtn.addEventListener("click", async () => {
   if (!token) {
     await enableNotifications();
   } else {
-    const confirmDisable = confirm("Disable notifications?");
-    if (confirmDisable) {
-      await disableNotifications();
-    }
+    console.log("Notifications already enabled.");
   }
 });
 
