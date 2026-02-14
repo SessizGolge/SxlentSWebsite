@@ -157,7 +157,15 @@ class MusicPlayer {
           for (const name of manifest) {
             if (typeof name !== 'string') continue;
             const filename = name.split('/').pop();
-            const url = name.startsWith('http') || name.startsWith('/') ? name : `${base}${filename}`;
+            // If manifest provides absolute HTTP(S) URLs, add them directly (user requested direct links)
+            if (name.startsWith('http://') || name.startsWith('https://')) {
+              const url = name;
+              this.playlist.push({ title: this.formatTitle(filename), url, filename });
+              console.log('🎵 Added from manifest (absolute):', url);
+              continue;
+            }
+
+            const url = name.startsWith('/') ? name : `${base}${filename}`;
             const ok = await validateUrl(url);
             if (ok) {
               this.playlist.push({ title: this.formatTitle(filename), url, filename });
