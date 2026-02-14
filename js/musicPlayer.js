@@ -127,7 +127,7 @@ class MusicPlayer {
       
       // Try to extract music files from directory listing
       const links = doc.querySelectorAll('a[href*=".mp3"], a[href*=".m4a"], a[href*=".wav"], a[href*=".ogg"]');
-      
+
       if (links.length > 0) {
         links.forEach(link => {
           const href = link.getAttribute('href');
@@ -142,7 +142,49 @@ class MusicPlayer {
         });
         console.log(`🎵 Loaded ${links.length} music file(s)`);
       } else {
-        console.log('🎵 No music files found in ../music/ folder. Add .mp3, .m4a, .wav, or .ogg files to enable the jukebox.');
+        // Fallback: search raw HTML for audio file references (works when directory listing format differs)
+        const rawMatches = Array.from(new Set((html.match(/([\w-:\/.]+\.(?:mp3|m4a|wav|ogg))/gi) || [])));
+
+        if (rawMatches.length > 0) {
+          rawMatches.forEach(match => {
+            // Extract filename from possible full or relative URL
+            const parts = match.split('/');
+            const filename = parts[parts.length - 1];
+            if (filename) {
+              this.playlist.push({
+                title: this.formatTitle(filename),
+                url: match.startsWith('http') ? match : `../music/${filename}`,
+                filename
+              });
+            }
+          });
+          console.log(`🎵 Fallback: found ${this.playlist.length} music file(s) via HTML scan`);
+        } else {
+          // Try manifest file as last resort
+          try {
+            const manifestResp = await fetch('../jsons/music.json');
+            if (manifestResp.ok) {
+              const manifest = await manifestResp.json();
+              if (Array.isArray(manifest) && manifest.length > 0) {
+                manifest.forEach(name => {
+                  const filename = name.split('/').pop();
+                  this.playlist.push({
+                    title: this.formatTitle(filename),
+                    url: name.startsWith('http') ? name : `../music/${filename}`,
+                    filename
+                  });
+                });
+                console.log(`🎵 Loaded ${this.playlist.length} music file(s) from ../jsons/music.json manifest`);
+              }
+            }
+          } catch (e) {
+            // ignore manifest failure
+          }
+
+          if (this.playlist.length === 0) {
+            console.log('🎵 No music files found in ../music/ folder. Add .mp3, .m4a, .wav, or .ogg files to enable the jukebox, or create ../jsons/music.json with a list of filenames.');
+          }
+        }
       }
     } catch (error) {
       console.warn('⚠️ Music folder not accessible. GitHub Pages tip: Ensure you have audio files in the ../music/ folder. Directory listings may not work on some hosts - consider using a hardcoded playlist instead.');
