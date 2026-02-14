@@ -120,7 +120,7 @@ class MusicPlayer {
 
   async loadMusicFiles() {
     try {
-      const response = await fetch('/music/');
+      const response = await fetch('../music/');
       const html = await response.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
@@ -135,25 +135,24 @@ class MusicPlayer {
             const filename = href.split('/').pop();
             this.playlist.push({
               title: this.formatTitle(filename),
-              url: `/music/${filename}`,
+              url: `../music/${filename}`,
               filename
             });
           }
         });
         console.log(`🎵 Loaded ${links.length} music file(s)`);
       } else {
-        console.log('🎵 No music files found in /music/ folder. Add .mp3, .m4a, .wav, or .ogg files to enable the jukebox.');
+        console.log('🎵 No music files found in ../music/ folder. Add .mp3, .m4a, .wav, or .ogg files to enable the jukebox.');
       }
     } catch (error) {
-      console.warn('⚠️ Music folder not accessible. GitHub Pages tip: Ensure you have audio files in the /music/ folder. Directory listings may not work on some hosts - consider using a hardcoded playlist instead.');
+      console.warn('⚠️ Music folder not accessible. GitHub Pages tip: Ensure you have audio files in the ../music/ folder. Directory listings may not work on some hosts - consider using a hardcoded playlist instead.');
     }
   }
 
   formatTitle(filename) {
     return filename
       .replace(/\.[^/.]+$/, '') // Remove extension
-      .replace(/[-_]/g, ' ')     // Replace hyphens/underscores with spaces
-      .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize words
+      .replace(/[_]/g, ' ')     // Replace hyphens/underscores with spaces
   }
 
   setupEventListeners() {
