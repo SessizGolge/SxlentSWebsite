@@ -197,7 +197,7 @@ async function disableNotifications() {
 
 async function initNotificationState() {
   const token = await getCurrentToken();
-  setUI(!!token);
+  setUI(!token);
 }
 
 notifBtn.addEventListener("click", async () => {
