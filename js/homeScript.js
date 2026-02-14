@@ -1,6 +1,5 @@
 let postsContainer = document.getElementById("postsContainer");
 
-// GREETING
 function updateGreeting() {
   const title = document.querySelector(".home-title");
   const subtitle = document.querySelector(".home-subtitle");
@@ -21,9 +20,7 @@ function updateGreeting() {
     subtitle.textContent = "Long day, sit back for a sec.";
   }
 }
-updateGreeting();
 
-// CHECK FOR NEW POSTS
 async function checkForNewPosts() {
   try {
     const response = await fetch("/jsons/posts.json");
@@ -31,29 +28,24 @@ async function checkForNewPosts() {
 
     if (posts.length > 0) {
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Reset time for date comparison
-      
-      // Check if ANY post is from today
+      today.setHours(0, 0, 0, 0);
       let hasNewPost = false;
-      
+
       posts.forEach(post => {
         const postDate = new Date(post.date);
-        postDate.setHours(0, 0, 0, 0); // Reset time for comparison
-        
+        postDate.setHours(0, 0, 0, 0);
         if (postDate.toDateString() === today.toDateString()) {
           hasNewPost = true;
         }
       });
-      
+
       console.log("Today's date:", today.toDateString());
       console.log("Has new post from today?", hasNewPost);
-      
+
       if (hasNewPost) {
         const postsBtn = document.querySelector('a[href="/posts/"]');
-        if (postsBtn) {
+        if (postsBtn && !postsBtn.querySelector('.new-post-indicator')) {
           postsBtn.classList.add('has-new-post');
-          
-          // Add badge
           const badge = document.createElement('span');
           badge.className = 'new-post-indicator';
           badge.textContent = 'New!';
@@ -67,4 +59,15 @@ async function checkForNewPosts() {
   }
 }
 
-checkForNewPosts();
+function initHome() {
+  updateGreeting();
+  checkForNewPosts();
+}
+
+// initial run
+initHome();
+
+// Re-run when SPA navigates to home
+window.addEventListener('spa:navigate', () => {
+  if (location.pathname === '/' || location.pathname === '/index.html') initHome();
+});
