@@ -129,32 +129,22 @@ const notifBtn = document.getElementById("notifToggle");
 const notifCheck = document.querySelector(".notif-check");
 
 let messaging;
+let currentToken = null;
 
 if (firebase.apps.length) {
   messaging = firebase.messaging();
 }
 
-// VAPID PUBLIC KEY BURAYA
 const VAPID_KEY = "BGU2enzMZuJIvMvBgbRIlb2Xqvs0z7Bg1B8EAIXwYynJYzi_FwKnV8Gdb65XkGItlHVlHDYrLFJC_JOMvXE1N6o";
 
 function updateUI(enabled) {
-  if (enabled) {
-    notifCheck.classList.remove("hidden");
-  } else {
-    notifCheck.classList.add("hidden");
-  }
+  notifCheck.classList.toggle("hidden", !enabled);
 }
 
 async function enableNotifications() {
   try {
-
-    if (Notification.permission === "granted") {
-      console.log("Notifications already enabled.");
-      updateUI(true);
-      return;
-    }
-
     const permission = await Notification.requestPermission();
+
     if (permission !== "granted") {
       alert("Notifications blocked.");
       return;
@@ -162,13 +152,20 @@ async function enableNotifications() {
 
     const registration = await navigator.serviceWorker.ready;
 
-    const token = await messaging.getToken({
+    currentToken = await messaging.getToken({
       vapidKey: VAPID_KEY,
       serviceWorkerRegistration: registration
     });
 
-    if (token) {
-      console.log("FCM Token:", token);
+    if (currentToken) {
+      console.log("FCM Token:", currentToken);
+
+      // Firestore'a kaydet
+      await firebase.firestore().collection("tokens").doc(currentToken).set({
+        token: currentToken,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
       localStorage.setItem("notifEnabled", "true");
       updateUI(true);
     }
@@ -178,11 +175,40 @@ async function enableNotifications() {
   }
 }
 
+async function disableNotifications() {
+  try {
+    const registration = await navigator.serviceWorker.ready;
+
+    const token = await messaging.getToken({
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: registration
+    });
+
+    if (token) {
+      await firebase.firestore().collection("tokens").doc(token).delete();
+      await messaging.deleteToken(token);
+    }
+
+    localStorage.removeItem("notifEnabled");
+    updateUI(false);
+
+    alert("Notifications disabled.");
+
+  } catch (err) {
+    console.error("Disable error:", err);
+  }
+}
+
 notifBtn.addEventListener("click", async () => {
   const enabled = localStorage.getItem("notifEnabled") === "true";
 
   if (!enabled) {
     await enableNotifications();
+  } else {
+    const confirmDisable = confirm("Do you want to disable notifications?");
+    if (confirmDisable) {
+      await disableNotifications();
+    }
   }
 });
 
