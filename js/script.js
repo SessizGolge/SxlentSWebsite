@@ -9,7 +9,7 @@ const modalLink = document.getElementById("modalLink");
 const modalClose = document.querySelector(".post-modal-close");
 const modalOverlay = document.querySelector(".post-modal-overlay");
 
-fetch("jsons/posts.json?v=" + Date.now())
+fetch("/jsons/posts.json?v=" + Date.now())
   .then(res => res.json())
   .then(posts => {
 
@@ -55,7 +55,7 @@ fetch("jsons/posts.json?v=" + Date.now())
       }
 
       postDiv.innerHTML = `
-        ${isNewPost ? `<div class="new-post-badge">New post!</div>` : ""}
+        ${isNewPost ? `<div class="new-post-badge">New!</div>` : ""}
         ${thumbHTML}
         <div class="post-info">
           <h3 class="post-title">${post.title || "Update"}</h3>
@@ -137,62 +137,100 @@ if (firebase.apps.length) {
 const VAPID_KEY = "BGU2enzMZuJIvMvBgbRIlb2Xqvs0z7Bg1B8EAIXwYynJYzi_FwKnV8Gdb65XkGItlHVlHDYrLFJC_JOMvXE1N6o";
 
 function setUI(enabled) {
-  notifCheck.classList.toggle("hidden", !enabled);
+  if (enabled) {
+    notifCheck.classList.remove('hidden');
+    notifBtn.title = 'Disable notifications';
+  } else {
+    notifCheck.classList.add('hidden');
+    notifBtn.title = 'Enable notifications';
+  }
 }
 
 async function getCurrentToken() {
   if (Notification.permission !== "granted") return null;
 
-  const registration = await navigator.serviceWorker.ready;
-
-  return await messaging.getToken({
-    vapidKey: VAPID_KEY,
-    serviceWorkerRegistration: registration
-  });
+  try {
+    const registration = await navigator.serviceWorker.ready;
+    const token = await messaging.getToken({
+      vapidKey: VAPID_KEY,
+      serviceWorkerRegistration: registration
+    });
+    return token;
+  } catch (e) {
+    console.error('Error getting token:', e);
+    return null;
+  }
 }
 
 async function enableNotifications() {
-  console.log("Enable clicked");
+  console.log("📢 Enabling notifications...");
 
   const permission = await Notification.requestPermission();
-  console.log("Permission:", permission);
+  console.log("Permission result:", permission);
 
-  if (permission !== "granted") return;
+  if (permission !== "granted") {
+    console.warn("Notification permission denied");
+    return;
+  }
 
   const token = await getCurrentToken();
-  console.log("Token:", token);
+  console.log("Got token:", token);
 
-  if (!token) return;
+  if (!token) {
+    console.error("Failed to get messaging token");
+    return;
+  }
 
   try {
-    await firebase.firestore().collection("tokens").doc(token).set({
-      token,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+    const existingDoc = await firebase.firestore()
+      .collection("tokens")
+      .doc(token)
+      .get();
 
-    console.log("Token saved to Firestore!");
+    if (!existingDoc.exists) {
+      await firebase.firestore()
+        .collection("tokens")
+        .doc(token)
+        .set({
+          token,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          userAgent: navigator.userAgent
+        });
+      console.log("✅ Token saved to Firestore!");
+    } else {
+      console.log("✓ Token already exists in Firestore");
+    }
+
+    setUI(true);
+    localStorage.setItem('notificationsEnabled', 'true');
   } catch (e) {
     console.error("Firestore write error:", e);
   }
-
-  setUI(true);
 }
 
 
 async function disableNotifications() {
+  console.log("🔕 Disabling notifications...");
+
   const token = await getCurrentToken();
 
   if (token) {
     try {
-      await firebase.firestore().collection("tokens").doc(token).delete();
-    } catch (e) {
-      console.warn("Firestore delete failed:", e.message);
-    }
+      await firebase.firestore()
+        .collection("tokens")
+        .doc(token)
+        .delete();
+      console.log("✓ Token removed from Firestore");
 
-    await messaging.deleteToken();
+      await messaging.deleteToken();
+      console.log("✓ Token deleted from messaging");
+    } catch (e) {
+      console.error("Error disabling notifications:", e);
+    }
   }
 
   setUI(false);
+  localStorage.setItem('notificationsEnabled', 'false');
 }
 
 async function initNotificationState() {
@@ -204,9 +242,11 @@ notifBtn.addEventListener("click", async () => {
   const token = await getCurrentToken();
 
   if (!token) {
+    // Notifications disabled → enable them
     await enableNotifications();
   } else {
-    console.log("Notifications already enabled.");
+    // Notifications enabled → disable them
+    await disableNotifications();
   }
 });
 

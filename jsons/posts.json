@@ -1,21 +1,5 @@
 [
   {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/fff9856e-4fd2-4686-acb5-67d068ae2b8a/1024x1024",
-    "title": "PHASE SHIFT — New track!",
-    "description": "PHASE SHIFT is now available on BandLab!",
-    "date": "Dec 20, 2025",
-    "link": "https://www.bandlab.com/track/68473f90-f6db-f011-819b-6045bd3096b1?revId=67473f90-f6db-f011-819b-6045bd3096b1",
-    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=67473f90-f6db-f011-819b-6045bd3096b1\" allowfullscreen></iframe>"
-  },
-  {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
-    "title": "DMLTZR — Remastered!",
-    "description": "DMLTZR has received a fresh patch an now it's on all platforms!",
-    "date": "Dec 20, 2025",
-    "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55",
-    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/7gK2xeGlgLYqZfTjy2e6G7?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
-  },
-  {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/395a704f-6389-4846-864c-ab33f1fac7b6/1024x1024",
     "title": "MIDNIGHT BLASTER — Undertale inspired track!",
     "description": "MIDNIGHT BLASTER is officially on every platform. Turn the volume up and dive in!",
@@ -32,12 +16,28 @@
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/1xKyj46seXYy0u1DqwSlB0?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
   {
-    "img": "images\\DMLTZR-logo.jpg",
+    "img": "../images/DMLTZR-logo.jpg",
     "title": "DMLTZR — Streaming Everywhere",
     "description": "DMLTZR is now live on Spotify and all major platforms. Headphones recommended.",
     "date": "Dec 10, 2025",
     "link": "https://open.spotify.com/track/52URZFt9jVKpMUXA33mPMV?si=e6176dcbdb69441d",
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/52URZFt9jVKpMUXA33mPMV?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/fff9856e-4fd2-4686-acb5-67d068ae2b8a/1024x1024",
+    "title": "PHASE SHIFT — New track!",
+    "description": "PHASE SHIFT is now available on BandLab!",
+    "date": "Dec 20, 2025",
+    "link": "https://www.bandlab.com/track/68473f90-f6db-f011-819b-6045bd3096b1?revId=67473f90-f6db-f011-819b-6045bd3096b1",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=67473f90-f6db-f011-819b-6045bd3096b1\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
+    "title": "DMLTZR — Remastered!",
+    "description": "DMLTZR has received a fresh patch an now it's on all platforms!",
+    "date": "Dec 20, 2025",
+    "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55",
+    "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/7gK2xeGlgLYqZfTjy2e6G7?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
   {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/55ea1a7f-7827-4067-9f15-412c653f68dd/1080x1080",

@@ -1,107 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="/images/favicon512.png">
+  <link rel="icon" type="image/png" href="images/favicon512.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
+  <link rel="stylesheet" href="css/style.css?v=1.0.6">
+  <link rel="stylesheet" href="css/about.css?v=1.0.6">
+  <link rel="stylesheet" href="css/musicPlayer.css?v=1.0.0">
+  <style>
+    /* Home Page Specific Styles */
+    .hero {
+      text-align: center;
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-top: var(--header-h);
+      animation: heroEntry 1.2s cubic-bezier(.18,.89,.32,1.28) forwards;
+      opacity: 0;
+    }
 
-  <!-- ABSOLUTE PATHS (GitHub Pages şart) -->
-  <link rel="stylesheet" href="/css/style.css?v=1.2.1">
-  <link rel="stylesheet" href="/css/about.css?v=1.2.1">
+    .home-title {
+      font-size: 3rem;
+      color: var(--fg);
+      margin-bottom: 12px;
+      text-shadow:
+        0 0 12px var(--accent-magenta),
+        0 0 24px #ff5fe0,
+        0 0 40px #800080;
+      position: relative;
+      overflow: visible;
+      transition: transform .28s ease, text-shadow .28s ease, filter .28s ease;
+    }
 
-<!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    .home-subtitle {
+      font-size: 1.125rem;
+      color: var(--accent-pink);
+      text-shadow: 0 0 8px rgba(255,138,255,0.25);
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
 
+    .site-description {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+      text-shadow: 0 0 6px rgba(255,138,255,0.1);
+    }
 
-  <!-- 2️⃣ Firebase Config -->
-  <script>
-      const firebaseConfig = {
-      apiKey: "AIzaSyBqpK0hbm48oZ_46gKzwB6ANVAKbVT7mbw",
-      authDomain: "sxlentswebsite-80464.firebaseapp.com",
-      projectId: "sxlentswebsite-80464",
-      messagingSenderId: "785662700611",
-      appId: "1:785662700611:web:b6ae713028a6976b4978f6"
-    };
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
 
-    firebase.initializeApp(firebaseConfig);
-  </script>
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      border: 2px solid var(--accent-pink);
+      background: rgba(255, 138, 255, 0.1);
+      color: var(--accent-pink);
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .25s ease;
+      text-shadow: 0 0 8px rgba(255,138,255,0.3);
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      background: rgba(255, 138, 255, 0.2);
+      box-shadow: 0 0 24px var(--accent-pink), 0 0 48px rgba(255,138,255,0.3);
+      text-shadow: 0 0 12px rgba(255,138,255,0.8);
+      border-color: #ff66ff;
+    }
+
+    .hero-btn.primary {
+      background: var(--accent-magenta);
+      color: #fff;
+      border-color: var(--accent-magenta);
+    }
+
+    .hero-btn.primary:hover {
+      background: #ff66ff;
+      border-color: #ff66ff;
+      box-shadow: 0 0 32px var(--accent-magenta), 0 0 64px rgba(231,84,255,0.4);
+    }
+
+    .hero-btn.has-new-post {
+      animation: buttonShake 0.5s ease-in-out infinite;
+    }
+
+    .new-post-indicator {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff8aff, #e754ff);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      text-shadow: 0 0 4px rgba(0,0,0,0.3);
+      box-shadow: 0 0 8px rgba(231, 84, 255, 0.6), inset 0 0 4px rgba(255,255,255,0.2);
+    }
+
+    @keyframes buttonShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px) rotate(-0.5deg); }
+      75% { transform: translateX(3px) rotate(0.5deg); }
+    }
+
+    @keyframes heroEntry{
+      0% { opacity: 0; transform: scale(.98) translateY(36px); filter: blur(6px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+
+    @media (max-width: 520px) {
+      .home-title {
+        font-size: 1.8rem;
+      }
+
+      .home-subtitle {
+        font-size: 1rem;
+      }
+
+      .site-description {
+        font-size: 0.95rem;
+      }
+
+      .hero-buttons {
+        gap: 12px;
+      }
+
+      .hero-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
+<!-- Background Canvas & Scanlines -->
 <canvas id="bgCanvas"></canvas>
 <div class="scanlines" aria-hidden="true"></div>
 
-<header class="header">
-  <div class="header-left">
-    <img src="/images/favicon64.png" alt="logo" class="hero-icon">
-    <div class="logo">Home</div>
+<!-- Main App -->
+<div id="app">
 
-    <button id="notifToggle" class="notif-btn" title="Enable notifications">
-      <span class="notif-icon">🔔</span>
-      <span class="notif-check hidden">✓</span>
-    </button>
-  </div>
-
-  <a href="/about" class="me-link mobile-only">
-    <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj"
-         class="nav-pfp">
-  </a>
-</header>
-
-<main class="split-layout">
-
-  <!-- LEFT / ABOUT (desktop) -->
-  <aside class="about-panel desktop-only">
-
-    <div class="profile-block">
-      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj"
-           class="pfp" alt="Musab">
-      <h1 class="full-name">Musab Yasin Sezer</h1>
-      <p class="about-desc about-anim">Music • Code • Games</p>
+  <header class="header">
+    <div class="header-left">
+      <img src="images/favicon64.png" alt="logo" class="hero-icon">
+      <div class="logo">Home</div>
     </div>
+  </header>
 
-    <div class="socials-grid">
-      <a class="box yt" href="https://www.youtube.com/@SxlentS" target="_blank"></a>
-      <a class="box dc" href="https://discord.gg/9T2XwTxfHE" target="_blank"></a>
-      <a class="box ig" href="https://www.instagram.com/sxlent.s/" target="_blank"></a>
-      <a class="box tt" href="https://www.tiktok.com/@sxlent.s" target="_blank"></a>
-      <a class="box sp" href="https://open.spotify.com/artist/7kBgj3tPl9gMi866CvXTXu" target="_blank"></a>
-      <a class="box ym" href="https://music.youtube.com/channel/UC4d85qDyBOIS97wQKAnhReA" target="_blank"></a>
-      <a class="box bl" href="https://www.bandlab.com/sxlents" target="_blank"></a>
-      <a class="box it" href="https://sxlents.itch.io" target="_blank"></a>
+  <section class="hero">
+    <h1 class="home-title"></h1>
+    <p class="home-subtitle"></p>
+
+    <p class="site-description">
+      Welcome to my creative space. Here you'll find my latest projects, thoughts, and updates on music, code, and games. 
+      Explore my posts to see what I've been working on, or check out more about me.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="/posts/" class="hero-btn primary">
+        📝 Check Posts
+      </a>
+      <a href="/about/" class="hero-btn">
+        👤 About Me
+      </a>
     </div>
-    <div></div>
-    <div></div>
-
-  </aside>
-
-  <!-- RIGHT / POSTS -->
-  <section class="posts-panel">
-    <div class="posts-container" id="postsContainer"></div>
   </section>
 
-</main>
-
-<!-- MODAL -->
-<div id="postModal" class="post-modal hidden">
-  <div class="post-modal-overlay"></div>
-  <div class="post-modal-content">
-    <button class="post-modal-close">×</button>
-
-    <div id="modalMedia"></div>
-
-    <h2 id="modalTitle"></h2>
-    <p id="modalDesc"></p>
-    <span id="modalDate"></span>
-    <a id="modalLink" target="_blank" class="btn">Open link</a>
-  </div>
 </div>
 
-<!-- JS -->
-<script src="/js/script.js?v=1.2.1"></script>
-<script src="/js/bgEffect.js"></script>
+<!-- Scripts -->
+<script src="js/bgEffect.js"></script>
+<script src="js/homeScript.js"></script>
+<script src="js/musicPlayer.js?v=1.0.0"></script>
+
 </body>
 </html>

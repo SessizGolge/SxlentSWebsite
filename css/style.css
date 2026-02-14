@@ -1,10 +1,8 @@
 /* ==========================================================================
-   style.css — Refactored (Pro)
-   - Organized sections
-   - Variables, reusable utilities
-   - Kept original visual style, removed unused jitter
-   - Added: neon-box, nebula background, typewriter, reveal, header underline,
-            hero parallax hover, preloader styles
+   style.css — Cleaned & Optimized
+   - Removed: .hero, .home-title/.subtitle, old .post cards, .welcome-*
+   - Removed: .typewriter, .preloader, .neon-box, .shimmer, .center, .nav
+   - Kept: split-layout, post-row list, modal, header, animations, nebula
    ========================================================================== */
 
 /* ==========================
@@ -29,10 +27,9 @@
 /* Reset / base */
 * {
   -webkit-tap-highlight-color: transparent;
-  box-sizing: 
-  border-box; 
-  margin: 0; 
-  padding: 0; 
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,body { height: 100%; }
@@ -58,7 +55,7 @@ body{
   background: rgba(0,0,0,0.25);
   backdrop-filter: blur(10px);
   display: grid;
-  grid-template-columns: 1fr auto; /* sol + sağ */
+  grid-template-columns: 1fr auto;
   align-items: center;
   padding: 0 24px;
   z-index: 1000;
@@ -67,109 +64,62 @@ body{
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
-/* logo */
 .logo{
   font-size: 1.15rem;
   font-weight: 1000;
   color: var(--accent-magenta);
-  text-shadow: 0 0 6px var(--accent-magenta), 0 0 12px var(--accent-pink, #ff8aff)50;
+  text-shadow: 0 0 6px var(--accent-magenta), 0 0 12px var(--accent-pink);
   animation: neonPulse 2.4s infinite ease-in-out;
 }
 
-/* nav and profile link */
 .me-link{
   display: flex;
   align-items: center;
   gap: .5rem;
-
   color: var(--accent-pink);
   font-weight: 1000;
   text-decoration: none;
   font-size: .95rem;
-
   text-shadow: 0 0 6px rgba(255,138,255,0.3);
   transition: transform .18s ease, color .18s ease, text-shadow .18s ease;
-
   justify-self: end;
 }
-
 
 .me-link:hover{
   transform: translateY(-2px) scale(1.05);
   color: #ff66ff;
-  text-shadow:
-    0 0 12px var(--accent-pink),
-    0 0 24px var(--accent-magenta);
+  text-shadow: 0 0 12px var(--accent-pink), 0 0 24px var(--accent-magenta);
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  justify-self: end;
-}
-
-/* small circular profile pic */
 .nav-pfp{
   width: 26px;
   height: 26px;
   border-radius: 50%;
   border: 2px solid var(--accent-pink);
   object-fit: cover;
-  box-shadow:
-    0 0 6px var(--accent-pink),
-    0 0 12px rgba(231,84,255,0.3);
+  box-shadow: 0 0 6px var(--accent-pink), 0 0 12px rgba(231,84,255,0.3);
 }
 
 @media (max-width: 900px) {
-  .mobile-only .nav-pfp {
+  .nav-pfp {
     width: 42px;
     height: 42px;
     border-width: 2px;
-    box-shadow:
-      0 0 10px var(--accent-pink),
-      0 0 20px rgba(231,84,255,0.4);
+    box-shadow: 0 0 10px var(--accent-pink), 0 0 20px rgba(231,84,255,0.4);
   }
 }
 
-
-/* header neon pulse */
 @keyframes neonPulse{
   0%,100% { text-shadow: 0 0 4px var(--accent-magenta); }
   50% { text-shadow: 0 0 10px var(--accent-pink), 0 0 18px var(--accent-magenta); }
 }
 
-/* header underline (subtle) */
-.header .nav a{
-  position: relative;
-  padding-bottom: 4px;
-}
-.header .nav a::after{
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -4px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent-pink), transparent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .28s ease;
-  opacity: .9;
-}
-.header .nav a:hover::after{ transform: scaleX(1); }
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
 .header-center {
   display: flex;
   justify-content: center;
-  /* pointer-events: none; tıklanmasın istiyorsan */
 }
 
 .header-right {
@@ -178,115 +128,8 @@ body{
 }
 
 /* ==========================
-   2) Hero
+   2) Posts Grid
    ========================== */
-.hero{
-  text-align: center;
-  min-height: 100vh; /* Tüm ekranı kaplasın */
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  padding-top: var(--header-h);
-  animation: heroEntry 1.2s cubic-bezier(.18,.89,.32,1.28) forwards;
-  opacity: 0;
-}
-
-/* Scroll hint */
-.scroll-hint {
-  margin-top: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  opacity: 0.7;
-  animation: fadeIn 1.5s ease forwards;
-}
-
-.scroll-hint span {
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  color: #ff66ff;
-}
-
-/* Aşağı ok */
-.arrow {
-  width: 12px;
-  height: 12px;
-  border-left: 2px solid #ff66ff;
-  border-bottom: 2px solid #ff66ff;
-  transform: rotate(-45deg);
-  animation: arrowBounce 1.4s infinite ease-in-out;
-  opacity: 0.9;
-}
-
-/* Ok animasyonu */
-@keyframes arrowBounce {
-  0% { transform: translateY(0) rotate(-45deg); }
-  50% { transform: translateY(6px) rotate(-45deg); }
-  100% { transform: translateY(0) rotate(-45deg); }
-}
-
-/* Fade-in */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 0.7; transform: translateY(0); }
-}
-
-
-@keyframes heroEntry{
-  0% { opacity: 0; transform: scale(.98) translateY(36px); filter: blur(6px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-}
-
-/* Title */
-.home-title{
-  font-size: 3rem; /* 48px */
-  color: var(--fg);
-  margin-bottom: 12px;
-  text-shadow:
-    0 0 12px var(--accent-magenta),
-    0 0 24px #ff5fe0,
-    0 0 40px #800080;
-  position: relative;
-  overflow: visible;
-  transition: transform .28s ease, text-shadow .28s ease, filter .28s ease;
-}
-
-@keyframes textJitter {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  20% { transform: translate(1px, -1px) rotate(-0.8deg); }
-  40% { transform: translate(-1px, 1px) rotate(0.8deg); }
-  60% { transform: translate(1px, 1px) rotate(-0.6deg); }
-  80% { transform: translate(-1px, -1px) rotate(0.6deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
-}
-
-/* subtle parallax-ish hover (no jitter) */
-.home-title:hover{
-  animation: textJitter 0.25s ease-in-out;
-  filter: saturate(1.05);
-}
-
-/* subtitle */
-.home-subtitle{
-  font-size: 1.125rem; /* 18-20px */
-  color: var(--accent-pink);
-  text-shadow: 0 0 8px rgba(255,138,255,0.25);
-  margin-top: 10px;
-}
-
-/* ==========================
-   3) Posts Grid
-   ========================== */
-
-.posts-section {
-  padding-top: 60px;
-  position: relative;
-  z-index: 2;
-}
 .posts-container{
   max-width: var(--max-width);
   margin: 40px auto 80px;
@@ -301,8 +144,6 @@ body{
   100% { opacity: 1; transform: translateY(0); }
 }
 
-
-/* responsive grid */
 @media (min-width: 769px) and (max-width: 1200px){
   .posts-container{ grid-template-columns: repeat(2,1fr); }
 }
@@ -310,66 +151,9 @@ body{
   .posts-container{ grid-template-columns: 1fr; gap:16px; margin: 20px auto 60px; padding: 0 12px; }
 }
 
-/* Post card */
-.post{
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 18px;
-  color: var(--fg);
-  text-shadow: 0 0 6px rgba(255,138,255,0.25);
-  transition: transform .22s ease, box-shadow .22s ease, background .2s ease;
-  opacity: 0; transform: translateY(20px);
-  overflow: hidden;
-  /* show via .reveal class (JS will add) */
-}
-
-/* fade overlay */
-.post::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,0,255,0.12); /* mor-pink fade */
-  opacity: 0;
-  transition: opacity .25s ease;
-  pointer-events: none;
-}
-
-.post:hover{
-  transform: translateY(-6px) scale(1.01);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 0 18px rgba(255,138,255,0.12);
-  cursor: pointer;
-}
-
-.post:hover::after{
-  opacity: .35;
-}
-
-.post-img{
-  width: 100%;
-  /* max-height: 150px; */
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-.post-text{ font-size: 0.95rem; margin-bottom: 6px; word-break: break-word; }
-.post-date{ font-size: .8rem; color: rgba(255,138,255,0.5); }
-
-/* reveal helper: used by scroll reveal JS */
-.reveal{
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1);
-}
-
 /* ==========================
-   4) Utilities & small UI
+   3) Utilities & Buttons
    ========================== */
-.welcome-wrap{ display:flex; justify-content:center; align-items:center; margin-bottom: 12px; }
-.welcome-icon{ width:48px; height:48px; border-radius:10px; box-shadow: 0 0 12px rgba(231,84,255,0.5); }
-
-/* small buttons (neon hover sound target) */
 .btn {
   display: inline-block;
   padding: .6rem 1rem;
@@ -386,29 +170,8 @@ body{
   box-shadow: 0 6px 22px rgba(231,84,255,0.12);
 }
 
-/* neon framed box — utility class to wrap highlights */
-.neon-box{
-  border-radius: 14px;
-  padding: 12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
-  position: relative;
-  overflow: hidden;
-}
-.neon-box::after{
-  content: "";
-  position: absolute; inset: -2px; z-index: -1;
-  background: linear-gradient(90deg, rgba(231,84,255,0.12), rgba(255,138,255,0.08), rgba(0,242,234,0.06));
-  filter: blur(18px);
-  opacity: 0.9;
-  transform: translateX(-20%);
-  transition: transform 6s linear;
-}
-.neon-box:hover::after{ transform: translateX(20%); }
-
 /* ==========================
-   5) Nebula / Glow Background
-   - soft, low-cost CSS blobs using pseudo elements
+   4) Nebula / Glow Background
    ========================== */
 body::before,
 body::after{
@@ -421,106 +184,48 @@ body::after{
   opacity: .12;
 }
 
-/* large purple nebula on bottom-left */
 body::before{
   width: 60vw; height: 60vh;
   left: -10vw; bottom: -20vh;
   background: radial-gradient(closest-side, rgba(231,84,255,0.95), rgba(231,84,255,0.35), transparent 60%);
 }
 
-/* cyan-pink top-right subtle blob */
 body::after{
   width: 46vw; height: 46vh;
   right: -8vw; top: -12vh;
   background: radial-gradient(closest-side, rgba(0,242,234,0.8), rgba(255,138,255,0.25), transparent 60%);
 }
 
-/* make nebula lighter on mobile */
 @media (max-width: 768px){
   body::before, body::after{ opacity: .08; filter: blur(46px); }
   body::before{ width: 80vw; height: 40vh; left: -20vw; bottom: -30vh; }
 }
 
 /* ==========================
-   6) Typewriter (css-only helper)
-   - Use: <span class="typewriter"><b>Text</b></span>
-   - JS can change innerText for rotating text
-   ========================== */
-.typewriter{
-  display: inline-block;
-  overflow: hidden;
-  border-right: .12em solid rgba(255,255,255,0.12);
-  white-space: nowrap;
-  letter-spacing: .03em;
-  animation: caret 900ms steps(1) infinite;
-}
-@keyframes caret{ 50% { border-color: transparent; } }
-
-/* ==========================
-   7) Preloader (styles only)
-   - Use HTML markup .preloader { } and toggle via JS
-   ========================== */
-.preloader{
-  position: fixed; inset: 0; z-index: 2000;
-  display:flex; align-items:center; justify-content:center;
-  background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.85));
-  color: var(--accent-pink);
-}
-.preloader .logo {
-  font-size: 2rem;
-  animation: neonPulse 2.2s infinite;
-}
-
-/* ==========================
-   8) Small visual helpers
-   ========================== */
-.hidden { display: none !important; }
-.center { display:flex; align-items:center; justify-content:center; }
-
-/* ==========================
-   9) Animations central (reusable)
+   5) Animations
    ========================== */
 @keyframes fadeUp {
   0% { opacity: 0; transform: translateY(18px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* small shimmer - for buttons or cards */
-.shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.shimmer::after{
-  content:"";
-  position:absolute; inset:0;
-  background: linear-gradient(90deg, rgba(255,255,255,0.00), rgba(255,255,255,0.03), rgba(255,255,255,0.00));
-  transform: translateX(-110%);
-  transition: transform .8s ease;
-  pointer-events: none;
-}
-.shimmer:hover::after{ transform: translateX(110%); }
-
 /* ==========================
-   10) Responsive touches
+   6) Responsive Touches
    ========================== */
-@media (max-width: 1000px){ .home-title{ font-size: 2.4rem; } }
 @media (max-width: 520px){
-  .home-title{
-    font-size: 1.8rem;
-  }
   .header{
     padding: 0 14px;
   }
-  .logo{ 
-    font-size: 1rem; 
+  .logo{
+    font-size: 1rem;
   }
 }
 
 /* ==========================
-   11) Accessibility / Reduced motion
+   7) Accessibility / Reduced Motion
    ========================== */
 @media (prefers-reduced-motion: reduce){
-  .home-title, .post, .logo, .nav a { transition: none !important; animation: none !important; }
+  .logo { transition: none !important; animation: none !important; }
 }
 
 #bgCanvas {
@@ -531,12 +236,11 @@ body::after{
   z-index: -2;
 }
 
-
-/* --- Glitch scanlines overlay --- */
+/* Glitch scanlines overlay */
 .scanlines {
   position: fixed;
   inset: 0;
-  z-index: -1;               /* canvas zaten z-index:-1 ise bu 0 ile üstte ama içerik altında kalır */
+  z-index: -1;
   pointer-events: none;
   background-image: repeating-linear-gradient(
     to bottom,
@@ -549,7 +253,6 @@ body::after{
   height: 100%;
 }
 
-/* Slight grain fallback for high-res */
 @media (min-resolution: 2dppx) {
   .scanlines { opacity: 0.35; }
 }
@@ -557,21 +260,15 @@ body::after{
 .new-post-badge {
   position: absolute;
   top: 10px;
-  left: 10px;
-
+  right: 10px;
   font-size: 12px;
   font-weight: 600;
-
   padding: 4px 8px;
   border-radius: 6px;
-
   background: rgba(170, 60, 255, 0.25);
   border: 1px solid rgba(200, 100, 255, 0.5);
-
   backdrop-filter: blur(4px);
-
   color: #eac9ff;
-  
   animation: pulseBadge 1.5s infinite ease-in-out;
 }
 
@@ -582,13 +279,12 @@ body::after{
 }
 
 .post {
-  position: relative; /* badge pozisyonu için gerekli */
+  position: relative;
 }
 
 /* ==========================
-   POST MODAL
-========================== */
-
+   Post Modal
+   ========================== */
 .post-modal {
   position: fixed;
   inset: 0;
@@ -657,14 +353,11 @@ body::after{
   cursor: pointer;
 }
 
-/* Post modal open link override */
 .post-modal-content .btn {
   background: rgba(223, 13, 223, 0.35);
   color: #ffffff;
-
   border: 1px solid rgba(255, 138, 255, 0.35);
-  text-decoration: none; /* underline yok */
-
+  text-decoration: none;
   box-shadow: 0 0 12px rgba(231, 84, 255, 0.25);
   transition: all 0.2s ease;
 }
@@ -676,9 +369,8 @@ body::after{
 }
 
 /* ==========================
-   SPLIT LAYOUT
-========================== */
-
+   Split Layout
+   ========================== */
 .split-layout {
   display: grid;
   grid-template-columns: 500px 1fr;
@@ -693,7 +385,7 @@ body::after{
   top: 200px;
   align-self: start;
   text-align: center;
-  padding-bottom: 80px; /* default güvenli boşluk */
+  padding-bottom: 80px;
 }
 
 @media (max-width: 900px) {
@@ -701,7 +393,6 @@ body::after{
     padding-bottom: 120px;
   }
 }
-
 
 .about-pfp {
   width: 140px;
@@ -727,8 +418,9 @@ body::after{
   min-width: 0;
 }
 
-/* EMBEDS */
-
+/* ==========================
+   Embeds
+   ========================== */
 .post-embed iframe,
 .modal-embed iframe {
   width: 100%;
@@ -739,14 +431,16 @@ body::after{
 .modal-embed iframe {
   min-height: 380px;
   margin-bottom: 12px;
+  background: #120018;
 }
 
-/* RESPONSIVE */
-
+/* ==========================
+   Responsive
+   ========================== */
 .desktop-only { display: block; }
 .mobile-only { display: none; }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .split-layout {
     grid-template-columns: 1fr;
   }
@@ -760,7 +454,9 @@ body::after{
   }
 }
 
-/* ABOUT ANIMATION */
+/* ==========================
+   About Animation
+   ========================== */
 .about-anim {
   opacity: 0;
   transform: translateY(10px);
@@ -779,8 +475,9 @@ body::after{
   }
 }
 
-/* POST LIST ROW */
-
+/* ==========================
+   Post List Row
+   ========================== */
 .post-row {
   display: flex;
   gap: 16px;
@@ -798,7 +495,6 @@ body::after{
 .post-row.is-new:hover {
   background: rgba(255, 60, 60, 0.15);
 }
-
 
 .post-row:hover {
   background: rgba(80, 0, 140, 0.45);
@@ -843,18 +539,9 @@ body::after{
   opacity: 0.5;
 }
 
-/* EMBED DARK BACKGROUND */
-.modal-embed iframe {
-  background: #120018;
-  border-radius: 12px;
-  width: 100%;
-  min-height: 220px;
-}
-
-/* ============================= */
-/* POSTS – SINGLE COLUMN LIST */
-/* ============================= */
-
+/* ==========================
+   Posts Single Column List
+   ========================== */
 .posts-panel {
   padding: 40px 20px;
 }
@@ -867,32 +554,17 @@ body::after{
   margin: 0 auto;
 }
 
-/* Eski grid/kare postları öldür */
-.post,
-.post-card {
-  all: unset;
-}
-
-/* Yeni post row */
 .post-row {
   display: flex;
   align-items: center;
   gap: 18px;
-
   width: 100%;
-  min-height: 120px;           /* 10:3 hissi */
+  min-height: 120px;
   padding: 18px 22px;
-
   border-radius: 18px;
-  background: linear-gradient(
-    135deg,
-    rgba(40, 0, 70, 0.55),
-    rgba(15, 0, 30, 0.75)
-  );
-
+  background: linear-gradient(135deg, rgba(40, 0, 70, 0.55), rgba(15, 0, 30, 0.75));
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.08);
-
   cursor: pointer;
   transition: 0.25s ease;
 }
@@ -902,17 +574,15 @@ body::after{
   box-shadow: 0 0 25px #b84cff55;
 }
 
-/* Sol görsel */
 .post-thumb,
 .post-embed-placeholder {
   width: 110px;
-  height: 80px; /* 10:3 oran */
+  height: 80px;
   border-radius: 12px;
   flex-shrink: 0;
   object-fit: cover;
 }
 
-/* Embed placeholder */
 .post-embed-placeholder {
   background: linear-gradient(135deg, #2b003f, #120018);
   display: flex;
@@ -922,7 +592,6 @@ body::after{
   font-size: 28px;
 }
 
-/* Sağ içerik */
 .post-info {
   display: flex;
   flex-direction: column;
@@ -946,15 +615,75 @@ body::after{
   opacity: 0.45;
 }
 
-/* ===== Custom Scrollbar ===== */
+/* ==========================
+   Responsive Post Layout (Medium Screens - Split Layout narrowing)
+   ========================== */
+@media (max-width: 1000px) {
+  .post-row {
+    gap: 12px;
+    padding: 14px 16px;
+    min-height: 100px;
+  }
 
-/* Firefox */
+  .post-thumb,
+  .post-embed-placeholder {
+    width: 90px;
+    height: 70px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    font-size: 0.95rem;
+  }
+
+  .post-desc {
+    font-size: 0.85rem;
+  }
+}
+
+/* ==========================
+   Responsive Post Layout (Narrow Screens - Mobile)
+   ========================== */
+@media (max-width: 750px) {
+  .post-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: auto;
+    padding: 12px;
+  }
+
+  .post-thumb,
+  .post-embed-placeholder {
+    width: 100%;
+    height: 160px;
+  }
+
+  .post-info {
+    width: 100%;
+  }
+
+  .post-title {
+    font-size: 1rem;
+  }
+
+  .post-desc {
+    display: none;
+  }
+
+  .post-date {
+    font-size: 0.7rem;
+  }
+}
+
+/* ==========================
+   Custom Scrollbar
+   ========================== */
 * {
   scrollbar-width: thin;
   scrollbar-color: #e754ff transparent;
 }
 
-/* Chrome, Edge, Safari */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -964,30 +693,19 @@ body::after{
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #ff8aff,
-    #e754ff,
-    #9f4cff
-  );
+  background: linear-gradient(180deg, #ff8aff, #e754ff, #9f4cff);
   border-radius: 999px;
   box-shadow: 0 0 10px #e754ff80;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    #ffb3ff,
-    #ff66ff,
-    #b266ff
-  );
+  background: linear-gradient(180deg, #ffb3ff, #ff66ff, #b266ff);
   box-shadow: 0 0 14px #ff8aff;
 }
 
 /* ==========================
    Notification Toggle
-========================== */
-
+   ========================== */
 .notif-btn {
   position: relative;
   background: rgba(255, 255, 255, 0.05);
@@ -1019,9 +737,8 @@ body::after{
   border-radius: 6px;
 }
 
-
-
-
+/* Utility helpers */
+.hidden { display: none !important; }
 
 /* ==========================================================================
    End of file

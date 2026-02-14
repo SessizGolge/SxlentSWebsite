@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="/images/favicon512.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts</title>
+
+  <!-- ABSOLUTE PATHS (GitHub Pages şart) -->
+  <link rel="stylesheet" href="/css/style.css?v=1.2.1">
+  <link rel="stylesheet" href="/css/about.css?v=1.2.1">
+  <link rel="stylesheet" href="/css/musicPlayer.css?v=1.0.0">
+
+<!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+
+  <!-- 2️⃣ Firebase Config -->
+  <script>
+      const firebaseConfig = {
+      apiKey: "AIzaSyBqpK0hbm48oZ_46gKzwB6ANVAKbVT7mbw",
+      authDomain: "sxlentswebsite-80464.firebaseapp.com",
+      projectId: "sxlentswebsite-80464",
+      messagingSenderId: "785662700611",
+      appId: "1:785662700611:web:b6ae713028a6976b4978f6"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="header">
+  <div class="header-left">
+    <a href="/" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+      <img src="/images/favicon64.png" alt="logo" class="hero-icon">
+      <div class="logo">Posts</div>
+    </a>
+
+    <button id="notifToggle" class="notif-btn" title="Enable notifications">
+      <span class="notif-icon">🔔</span>
+      <span class="notif-check hidden">✓</span>
+    </button>
+  </div>
+
+  <nav class="nav">
+    <a href="/" class="home-link">
+      <svg class="home-icon" viewBox="0 0 24 24" fill="none">
+        <path d="M3 10L12 3L21 10V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 21V10Z"
+              stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Home
+    </a>
+  </nav>
+
+  <a href="/about" class="me-link mobile-only">
+    <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj"
+         class="nav-pfp">
+  </a>
+</header>
+
+<main class="split-layout">
+
+  <!-- LEFT / ABOUT (desktop) -->
+  <aside class="about-panel desktop-only">
+
+    <div class="profile-block">
+      <img src="https://yt3.googleusercontent.com/s2JCkWNSqvK99MWNUrdXl7CVdX8inLPa0Lddew4a2ATql2HWu8cUZLVlnGZYb0ZpQNbH_wUk1IU=s160-c-k-c0x00ffffff-no-rj"
+           class="pfp" alt="Musab">
+      <h1 class="full-name">Musab Yasin Sezer</h1>
+      <p class="about-desc about-anim">Music • Code • Games</p>
+    </div>
+
+    <div class="socials-grid">
+      <a class="box yt" href="https://www.youtube.com/@SxlentS" target="_blank"></a>
+      <a class="box dc" href="https://discord.gg/9T2XwTxfHE" target="_blank"></a>
+      <a class="box ig" href="https://www.instagram.com/sxlent.s/" target="_blank"></a>
+      <a class="box tt" href="https://www.tiktok.com/@sxlent.s" target="_blank"></a>
+      <a class="box sp" href="https://open.spotify.com/artist/7kBgj3tPl9gMi866CvXTXu" target="_blank"></a>
+      <a class="box ym" href="https://music.youtube.com/channel/UC4d85qDyBOIS97wQKAnhReA" target="_blank"></a>
+      <a class="box bl" href="https://www.bandlab.com/sxlents" target="_blank"></a>
+      <a class="box it" href="https://sxlents.itch.io" target="_blank"></a>
+    </div>
+    <div></div>
+    <div></div>
+
+  </aside>
+
+  <!-- RIGHT / POSTS -->
+  <section class="posts-panel">
+    <div class="posts-container" id="postsContainer"></div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div id="postModal" class="post-modal hidden">
+  <div class="post-modal-overlay"></div>
+  <div class="post-modal-content">
+    <button class="post-modal-close">×</button>
+
+    <div id="modalMedia"></div>
+
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <span id="modalDate"></span>
+    <a id="modalLink" target="_blank" class="btn">Open link</a>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="/js/script.js?v=1.2.1"></script>
+<script src="/js/bgEffect.js"></script>
+<script src="/js/musicPlayer.js?v=1.0.0"></script>
+</body>
+</html>
