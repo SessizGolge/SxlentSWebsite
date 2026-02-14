@@ -161,24 +161,42 @@ class MusicPlayer {
           console.log(`🎵 Fallback: found ${this.playlist.length} music file(s) via HTML scan`);
         } else {
           // Try manifest file as last resort
-          try {
-            const manifestResp = await fetch('../jsons/music.json');
-            if (manifestResp.ok) {
+          // Try multiple manifest locations to be resilient across root and subfolder pages
+          const manifestCandidates = ['../jsons/music.json', '/jsons/music.json', 'jsons/music.json', './jsons/music.json'];
+          let manifestLoaded = false;
+
+          const getBaseMusicPath = () => {
+            // If we're inside a subfolder like /posts/, use ../music/, otherwise use /music/
+            const path = window.location.pathname || '/';
+            if (path.startsWith('/posts') || path.startsWith('/posts/')) return '../music/';
+            return '/music/';
+          };
+
+          for (const candidate of manifestCandidates) {
+            try {
+              const manifestResp = await fetch(candidate);
+              if (!manifestResp.ok) continue;
               const manifest = await manifestResp.json();
-              if (Array.isArray(manifest) && manifest.length > 0) {
-                manifest.forEach(name => {
-                  const filename = name.split('/').pop();
-                  this.playlist.push({
-                    title: this.formatTitle(filename),
-                    url: name.startsWith('http') ? name : `../music/${filename}`,
-                    filename
-                  });
+              if (!Array.isArray(manifest) || manifest.length === 0) continue;
+
+              const base = getBaseMusicPath();
+              manifest.forEach(name => {
+                // support full URLs or plain filenames
+                if (typeof name !== 'string') return;
+                const filename = name.split('/').pop();
+                const url = name.startsWith('http') || name.startsWith('/') ? name : `${base}${filename}`;
+                this.playlist.push({
+                  title: this.formatTitle(filename),
+                  url,
+                  filename
                 });
-                console.log(`🎵 Loaded ${this.playlist.length} music file(s) from ../jsons/music.json manifest`);
-              }
+              });
+              console.log(`🎵 Loaded ${this.playlist.length} music file(s) from manifest ${candidate}`);
+              manifestLoaded = true;
+              break;
+            } catch (e) {
+              // try next candidate
             }
-          } catch (e) {
-            // ignore manifest failure
           }
 
           if (this.playlist.length === 0) {
