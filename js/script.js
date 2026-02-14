@@ -128,8 +128,7 @@ if ("serviceWorker" in navigator) {
 const notifBtn = document.getElementById("notifToggle");
 const notifCheck = document.querySelector(".notif-check");
 
-let messaging;
-let currentToken = null;
+let messaging = null;
 
 if (firebase.apps.length) {
   messaging = firebase.messaging();
@@ -152,44 +151,56 @@ async function enableNotifications() {
 
     const registration = await navigator.serviceWorker.ready;
 
-    currentToken = await messaging.getToken({
-      vapidKey: VAPID_KEY,
-      serviceWorkerRegistration: registration
-    });
-
-    if (currentToken) {
-      console.log("FCM Token:", currentToken);
-
-      // Firestore'a kaydet
-      await firebase.firestore().collection("tokens").doc(currentToken).set({
-        token: currentToken,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-
-      localStorage.setItem("notifEnabled", "true");
-      updateUI(true);
-    }
-
-  } catch (err) {
-    console.error("Notification error:", err);
-  }
-}
-
-async function disableNotifications() {
-  try {
-    const registration = await navigator.serviceWorker.ready;
-
     const token = await messaging.getToken({
       vapidKey: VAPID_KEY,
       serviceWorkerRegistration: registration
     });
 
-    if (token) {
-      await firebase.firestore().collection("tokens").doc(token).delete();
-      await messaging.deleteToken(token);
+    if (!token) {
+      console.log("No token received.");
+      return;
+    }
+
+    console.log("FCM Token:", token);
+
+    // Firestore'a kaydet
+    await firebase.firestore().collection("tokens").doc(token).set({
+      token: token,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    // localStorage'a kaydet
+    localStorage.setItem("notifEnabled", "true");
+    localStorage.setItem("fcmToken", token);
+
+    updateUI(true);
+
+  } catch (err) {
+    console.error("Enable error:", err);
+  }
+}
+
+async function disableNotifications() {
+  try {
+    const storedToken = localStorage.getItem("fcmToken");
+
+    if (storedToken) {
+      console.log("Deleting token:", storedToken);
+
+      // Firestore’dan sil (hata olsa bile devam etsin)
+      try {
+        await firebase.firestore().collection("tokens").doc(storedToken).delete();
+      } catch (e) {
+        console.warn("Firestore delete skipped:", e.message);
+      }
+
+      // FCM token iptal (compat parametre almaz)
+      await messaging.deleteToken();
     }
 
     localStorage.removeItem("notifEnabled");
+    localStorage.removeItem("fcmToken");
+
     updateUI(false);
 
     alert("Notifications disabled.");
@@ -212,8 +223,7 @@ notifBtn.addEventListener("click", async () => {
   }
 });
 
-// Sayfa açılınca check göster
+// Sayfa açılınca UI restore
 if (localStorage.getItem("notifEnabled") === "true") {
   updateUI(true);
 }
-

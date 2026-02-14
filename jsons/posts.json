@@ -56,7 +56,6 @@
     "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=91fcb679-dffd-f011-832e-6045bd324b5d\" allowfullscreen></iframe>"
   },
   {
-    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/c2777aaa-8e91-4cb6-9a14-480d38a599b8/1080x1080",
     "title": "FIRST TEST OF THE NOTIFICATION SYSTEM",
     "description": "Testing the notification system for new posts.",
     "date": "Feb 14, 2026"
