@@ -642,8 +642,59 @@ body::after{
 }
 
 /* ==========================
-   Responsive Post Layout (Narrow Screens - Mobile)
+   Responsive Header (Mobile)
    ========================== */
+@media (max-width: 600px) {
+  .header {
+    padding: 0 12px;
+    grid-template-columns: 1fr auto auto;
+    gap: 8px;
+  }
+  
+  .header-left {
+    gap: 8px;
+  }
+  
+  .logo {
+    font-size: 1rem;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .home-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+  
+  .home-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .me-link {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+  }
+  
+  .nav-pfp {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .notif-btn {
+    padding: 6px 8px;
+    font-size: 0.9rem;
+  }
+}
+
 @media (max-width: 750px) {
   .post-row {
     flex-direction: column;

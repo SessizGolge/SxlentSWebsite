@@ -140,9 +140,12 @@ class MusicPlayer {
             });
           }
         });
+        console.log(`🎵 Loaded ${links.length} music file(s)`);
+      } else {
+        console.log('🎵 No music files found in /music/ folder. Add .mp3, .m4a, .wav, or .ogg files to enable the jukebox.');
       }
     } catch (error) {
-      console.log('Music folder not accessible or empty');
+      console.warn('⚠️ Music folder not accessible. GitHub Pages tip: Ensure you have audio files in the /music/ folder. Directory listings may not work on some hosts - consider using a hardcoded playlist instead.');
     }
   }
 
