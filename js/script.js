@@ -152,19 +152,32 @@ async function getCurrentToken() {
 }
 
 async function enableNotifications() {
+  console.log("Enable clicked");
+
   const permission = await Notification.requestPermission();
+  console.log("Permission:", permission);
+
   if (permission !== "granted") return;
 
   const token = await getCurrentToken();
+  console.log("Token:", token);
+
   if (!token) return;
 
-  await firebase.firestore().collection("tokens").doc(token).set({
-    token,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
+  try {
+    await firebase.firestore().collection("tokens").doc(token).set({
+      token,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    console.log("Token saved to Firestore!");
+  } catch (e) {
+    console.error("Firestore write error:", e);
+  }
 
   setUI(true);
 }
+
 
 async function disableNotifications() {
   const token = await getCurrentToken();
