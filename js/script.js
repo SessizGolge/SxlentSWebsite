@@ -9,19 +9,9 @@ const modalLink = document.getElementById("modalLink");
 const modalClose = document.querySelector(".post-modal-close");
 const modalOverlay = document.querySelector(".post-modal-overlay");
 
-function closeModal() {
-  modal.classList.add("hidden");
-  modalMedia.innerHTML = "";
-  document.body.style.overflow = "";
-}
-
-modalClose && (modalClose.onclick = closeModal);
-modalOverlay && (modalOverlay.onclick = closeModal);
-
-async function renderPosts() {
-  try {
-    const res = await fetch("/jsons/posts.json?v=" + Date.now());
-    const posts = await res.json();
+fetch("/jsons/posts.json?v=" + Date.now())
+  .then(res => res.json())
+  .then(posts => {
 
     posts.forEach((p, i) => {
       p._dateObj = new Date(p.timestamp || p.date);
@@ -41,9 +31,14 @@ async function renderPosts() {
       postDiv.style.animation = `postFadeUp 0.5s forwards`;
       postDiv.style.animationDelay = `${index * 0.1}s`;
 
+      // 🔥 NEW POST KONTROLÜ
       const today = new Date();
-      const isNewPost = post._dateObj.toDateString() === today.toDateString();
-      if (isNewPost) postDiv.classList.add("is-new");
+      const isNewPost =
+        post._dateObj.toDateString() === today.toDateString();
+
+      if (isNewPost) {
+        postDiv.classList.add("is-new");
+      }
 
       const displayDate = post._dateObj.toLocaleDateString("en-US", {
         year: "numeric",
@@ -51,9 +46,13 @@ async function renderPosts() {
         day: "numeric"
       });
 
+      // LISTEDE EMBED YOK
       let thumbHTML = "";
-      if (post.img) thumbHTML = `<img src="${post.img}" class="post-thumb">`;
-      else if (post.embed) thumbHTML = `<div class="post-embed-placeholder">▶</div>`;
+      if (post.img) {
+        thumbHTML = `<img src="${post.img}" class="post-thumb">`;
+      } else if (post.embed) {
+        thumbHTML = `<div class="post-embed-placeholder">▶</div>`;
+      }
 
       postDiv.innerHTML = `
         ${isNewPost ? `<div class="new-post-badge">New!</div>` : ""}
@@ -68,26 +67,30 @@ async function renderPosts() {
       postDiv.addEventListener("click", () => {
         modalMedia.innerHTML = "";
 
-        if (post.embed) {
-          modalMedia.innerHTML = `
-            <div class="modal-embed">
-              ${post.embed}
-            </div>
-          `;
-        } else if (post.img) {
-          modalMedia.innerHTML = `<img src="${post.img}">`;
-        }
+      if (post.embed) {
+        modalMedia.innerHTML = `
+          <div class="modal-embed">
+            ${post.embed}
+          </div>
+        `;
+      } else if (post.img) {
+        modalMedia.innerHTML = `<img src="${post.img}">`;
+      }
 
-        if (post.link) {
-          modalLink.href = post.link;
-          modalLink.style.display = "inline-block";
-        } else {
-          modalLink.style.display = "none";
-        }
-
+      // 🔗 LINK KONTROLÜ AYRI
+      if (post.link) {
+        modalLink.href = post.link;
+        modalLink.style.display = "inline-block";
+      } else {
+        modalLink.style.display = "none";
+      }
         modalTitle.textContent = post.title || "Update";
         modalDesc.textContent = post.description || "";
         modalDate.textContent = displayDate;
+
+        if (post.link && !post.embed) {
+          modalLink.href = post.link;
+        }
 
         modal.classList.remove("hidden");
         document.body.style.overflow = "hidden";
@@ -95,33 +98,28 @@ async function renderPosts() {
 
       postsContainer.appendChild(postDiv);
     });
-  } catch (err) {
-    console.error('Failed to render posts:', err);
-  }
+  });
+
+modalClose.onclick = closeModal;
+modalOverlay.onclick = closeModal;
+
+function closeModal() {
+  modal.classList.add("hidden");
+  modalMedia.innerHTML = "";
+  document.body.style.overflow = "";
 }
 
-function initPosts() {
-  renderPosts();
-
-  // Service worker registration (only once on initial load)
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => {
-      if (!regs || regs.length === 0) {
-        navigator.serviceWorker.register("/firebase-messaging-sw.js").then(r => console.log('Service Worker registered:', r)).catch(e => console.error('Service Worker error:', e));
-      }
-    }).catch(() => {
-      // ignore
-    });
-  }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/firebase-messaging-sw.js")
+      .then((registration) => {
+        console.log("Service Worker registered:", registration);
+      })
+      .catch((err) => {
+        console.error("Service Worker error:", err);
+      });
+  });
 }
-
-// Run on initial load
-initPosts();
-
-// Re-run when SPA navigates to posts
-window.addEventListener('spa:navigate', () => {
-  if (location.pathname.startsWith('/posts')) initPosts();
-});
 
 // ===============================
 // 🔔 PUSH NOTIFICATION TOGGLE (CLEAN VERSION)
