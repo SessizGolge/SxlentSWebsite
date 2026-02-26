@@ -8,6 +8,23 @@
   <link rel="stylesheet" href="css/style.css?v=1.0.6">
   <link rel="stylesheet" href="css/about.css?v=1.0.6">
   <link rel="stylesheet" href="css/musicPlayer.css?v=1.0.0">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase Config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqpK0hbm48oZ_46gKzwB6ANVAKbVT7mbw",
+      authDomain: "sxlentswebsite-80464.firebaseapp.com",
+      projectId: "sxlentswebsite-80464",
+      messagingSenderId: "785662700611",
+      appId: "1:785662700611:web:b6ae713028a6976b4978f6"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
   <style>
     /* Home Page Specific Styles */
     .hero {
@@ -149,6 +166,21 @@
         font-size: 0.9rem;
       }
     }
+
+    .visitor-counter {
+      font-size: 0.9rem;
+      color: rgba(255, 138, 255, 0.6);
+      margin-top: 48px;
+      text-shadow: 0 0 4px rgba(255, 138, 255, 0.2);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    #visitorCount {
+      color: var(--accent-pink);
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(255, 138, 255, 0.3);
+    }
   </style>
 </head>
 <body>
@@ -184,6 +216,10 @@
         👤 About Me
       </a>
     </div>
+
+    <div class="visitor-counter">
+      <span id="visitorCount">Loading...</span> users visited
+    </div>
   </section>
 
 </div>
@@ -191,6 +227,7 @@
 <!-- Scripts -->
 <script src="js/bgEffect.js"></script>
 <script src="js/homeScript.js"></script>
+<script src="js/visitorTracker.js"></script>
 <script src="js/musicPlayer.js?v=1.0.0"></script>
 <script src="/js/musicPlayer.js"></script>
     <script src="/js/router.js"></script>
