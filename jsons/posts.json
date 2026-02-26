@@ -4,6 +4,7 @@
     "title": "MIDNIGHT BLASTER — Undertale inspired track!",
     "description": "MIDNIGHT BLASTER is officially on every platform. Turn the volume up and dive in!",
     "date": "Dec 10, 2025",
+    "time": "2025-12-10T20:45:00",
     "link": "https://www.bandlab.com/track/50bdea88-24ce-f011-8196-000d3a96100f?revId=4fbdea88-24ce-f011-8196-000d3a96100f",
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/5Qo2Seo3Ti7xBdH7P1KHOD?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
@@ -12,6 +13,7 @@
     "title": "DAZED MIDNIGHT",
     "description": "Another track just landed on Spotify. Also available on other platforms!",
     "date": "Dec 10, 2025",
+    "time": "2025-12-10T20:30:00",
     "link": "https://open.spotify.com/track/5eNRJVGosgu9uw4ByMxGir?si=a2cc4d340fad4907",
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/1xKyj46seXYy0u1DqwSlB0?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
   },
@@ -19,6 +21,7 @@
     "img": "../images/DMLTZR-logo.jpg",
     "title": "DMLTZR — Streaming Everywhere",
     "description": "DMLTZR is now live on Spotify and all major platforms. Headphones recommended.",
+    "time": "2025-12-10T20:15:00",
     "date": "Dec 10, 2025",
     "link": "https://open.spotify.com/track/52URZFt9jVKpMUXA33mPMV?si=e6176dcbdb69441d",
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/52URZFt9jVKpMUXA33mPMV?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
@@ -27,6 +30,7 @@
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/fff9856e-4fd2-4686-acb5-67d068ae2b8a/1024x1024",
     "title": "PHASE SHIFT — New track!",
     "description": "PHASE SHIFT is now available on BandLab!",
+    "time": "2025-12-20T18:20:00",
     "date": "Dec 20, 2025",
     "link": "https://www.bandlab.com/track/68473f90-f6db-f011-819b-6045bd3096b1?revId=67473f90-f6db-f011-819b-6045bd3096b1",
     "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=67473f90-f6db-f011-819b-6045bd3096b1\" allowfullscreen></iframe>"
@@ -35,6 +39,7 @@
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/b8fcc7d5-1aa4-43e5-ac4b-f09306bd1aa0/1024x1024",
     "title": "DMLTZR — Remastered!",
     "description": "DMLTZR has received a fresh patch an now it's on all platforms!",
+    "time": "2025-12-20T18:00:00",
     "date": "Dec 20, 2025",
     "link": "https://open.spotify.com/track/3bMqht1uYng65WIBxO1XHY?si=86b2cdfb5c214f55",
     "embed": "<iframe data-testid=\"embed-iframe\" style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/album/7gK2xeGlgLYqZfTjy2e6G7?utm_source=generator\" width=\"100%\" height=\"352\" frameBorder=\"0\" allowfullscreen=\"\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>"
@@ -43,6 +48,7 @@
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/55ea1a7f-7827-4067-9f15-412c653f68dd/1080x1080",
     "title": "BIZARRE PHASE — Newest Track!",
     "description": "BIZARRE PHASE is now on BandLab.",
+    "time": "2026-02-12T16:45:00",
     "date": "Feb 12, 2026",
     "link": "https://www.bandlab.com/track/056dabc7-e33e-487f-9f6d-94bcaa8d0d17?revId=d5cb82dd-9fbc-44d5-b166-81e1a56b2911",
     "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=d5cb82dd-9fbc-44d5-b166-81e1a56b2911\" allowfullscreen></iframe>"
@@ -50,9 +56,64 @@
   {
     "img": "https://bl-prod-images.azureedge.net/v1.3/songs/c2777aaa-8e91-4cb6-9a14-480d38a599b8/1080x1080",
     "title": "SPLIT POINT — First track of SEKKAI!",
+    "time": "2026-02-12T16:30:00",
     "description": "SPLIT POINT is officially out! Check it out on BandLab.",
     "date": "Feb 12, 2026",
     "link": "https://www.bandlab.com/track/92fcb679-dffd-f011-832e-6045bd324b5d?revId=91fcb679-dffd-f011-832e-6045bd324b5d",
     "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=91fcb679-dffd-f011-832e-6045bd324b5d\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/a154d9f7-711d-4237-80bb-8ee322f271e7/1080x1080",
+    "title": "an oddity. — New dimension, new track!",
+    "description": "You can now listen to an oddity. on BandLab. Check it out!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T21:00:00",
+    "link": "https://www.bandlab.com/track/d07c1a35-34fc-4af3-bc7c-af88231481f8?revId=38cbe307-a017-4387-8ade-19db14afacf2",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=38cbe307-a017-4387-8ade-19db14afacf2\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/9e42ed43-9a7c-4290-80de-104b3a07efec/1080x1080",
+    "title": "adhd. — Second track of the new dimension!",
+    "description": "adhd. is now available on BandLab. Give it a listen!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T21:15:00",
+    "link": "https://www.bandlab.com/track/4798e4b1-2c54-400a-9286-a94b179baedc?revId=765c2a84-9a45-4034-be5a-7a9cb31b78e8",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=765c2a84-9a45-4034-be5a-7a9cb31b78e8\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/songs/5395822a-8dde-4fb7-8ee9-867b3ce48abc/1080x1080",
+    "title": "anomalous. — Third track of the new dimension!",
+    "description": "anomalous. is now on BandLab. Check it out and let me know what you think!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T21:30:00",
+    "link": "https://www.bandlab.com/track/a3faab16-24c5-497e-bf00-bfa4e82ffe1d?revId=6100288b-f2ca-4d78-8cab-d442021f1fb5",
+    "embed": "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=6100288b-f2ca-4d78-8cab-d442021f1fb5\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/albums/ea947869-c145-4a97-9370-6b5ea7f443a6/1080x1080",
+    "title": "MIDNIGHT — The first album!",
+    "description": "The first album named MIDNIGHT is now available on BandLab. Check it out!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T21:45:00",
+    "link": "https://www.bandlab.com/sxlents/albums/ba389b9f-f912-f111-9a49-000d3a975135",
+    "embed": "<iframe width=\"560\" height=\"353\" src=\"https://www.bandlab.com/embed/collection/?id=ba389b9f-f912-f111-9a49-000d3a975135\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/albums/25bf6b2b-3a47-4cd5-a053-38dfc0bf21a6/1080x1080",
+    "title": "PHASE — New album!",
+    "description": "My second album PHASE is now available on BandLab. Check it out!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T22:00:00",
+    "link": "https://www.bandlab.com/sxlents/albums/c134a421-fb12-f111-9a49-000d3a975135",
+    "embed": "<iframe width=\"560\" height=\"353\" src=\"https://www.bandlab.com/embed/collection/?id=c134a421-fb12-f111-9a49-000d3a975135\" allowfullscreen></iframe>"
+  },
+  {
+    "img": "https://bl-prod-images.azureedge.net/v1.3/albums/f2ea2922-02a5-49d5-a45c-6c429f007b6b/1080x1080",
+    "title": "Oddity — Here comes the third album!",
+    "description": "The third album named Oddity is now on BandLab. Let me know what you think!",
+    "date": "Feb 26, 2026",
+    "time": "2026-02-26T22:15:00",
+    "link": "https://www.bandlab.com/sxlents/albums/1310d768-fb12-f111-9a49-000d3a975135",
+    "embed": "<iframe width=\"560\" height=\"353\" src=\"https://www.bandlab.com/embed/collection/?id=1310d768-fb12-f111-9a49-000d3a975135\" allowfullscreen></iframe>"
   }
 ]

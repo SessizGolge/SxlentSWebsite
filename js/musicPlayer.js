@@ -9,6 +9,7 @@ class MusicPlayer {
     this.audio = window.globalAudio;
     
     this.playlist = [];
+    this.shuffledPlaylist = []; // Will hold the shuffled order when shuffle is active
     this.currentIndex = 0;
     this.isShuffled = false;
     this.loopMode = 0; // 0: no loop, 1: loop all, 2: loop one
@@ -247,6 +248,16 @@ class MusicPlayer {
       .replace(/[_]/g, ' ')     // Replace hyphens/underscores with spaces
   }
 
+  shuffleArray(array) {
+    // Fisher-Yates shuffle algorithm
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
   setupEventListeners() {
     const player = document.getElementById('musicPlayer');
     const playPauseBtn = document.getElementById('playerPlayPause');
@@ -416,14 +427,24 @@ class MusicPlayer {
     this.audio.currentTime = percentage * this.audio.duration;
   }
 
-  play(index = this.currentIndex) {
+  play(trackOrIndex = 0) {
     if (this.playlist.length === 0) {
       console.log('No music files available');
       return;
     }
 
-    this.currentIndex = index % this.playlist.length;
-    const track = this.playlist[this.currentIndex];
+    let track;
+    
+    // If it's a track object, use it directly
+    if (typeof trackOrIndex === 'object' && trackOrIndex.url) {
+      track = trackOrIndex;
+    } else {
+      // It's an index - get from appropriate playlist
+      const index = trackOrIndex;
+      const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+      this.currentIndex = index % currentPlaylist.length;
+      track = currentPlaylist[this.currentIndex];
+    }
     
     this.audio.src = track.url;
     this.audio.play().catch(err => console.log('Playback error:', err));
@@ -457,24 +478,53 @@ class MusicPlayer {
   playNext() {
     if (this.playlist.length === 0) return;
 
-    if (this.isShuffled) {
-      this.currentIndex = Math.floor(Math.random() * this.playlist.length);
+    // Use shuffled playlist if shuffle is on, otherwise use normal playlist
+    const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+    
+    if (this.currentIndex < currentPlaylist.length - 1) {
+      this.currentIndex++;
     } else {
-      this.currentIndex = (this.currentIndex + 1) % this.playlist.length;
+      // Restart from beginning
+      this.currentIndex = 0;
+      // If shuffle is on and we've reached the end, reshuffle
+      if (this.isShuffled) {
+        this.shuffledPlaylist = this.shuffleArray(this.playlist);
+      }
     }
 
-    this.play(this.currentIndex);
+    this.play(currentPlaylist[this.currentIndex]);
   }
 
   playPrevious() {
     if (this.playlist.length === 0) return;
 
-    this.currentIndex = (this.currentIndex - 1 + this.playlist.length) % this.playlist.length;
-    this.play(this.currentIndex);
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      // Go to end of playlist
+      const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+      this.currentIndex = currentPlaylist.length - 1;
+    }
+
+    const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+    this.play(currentPlaylist[this.currentIndex]);
   }
 
   toggleShuffle() {
     this.isShuffled = !this.isShuffled;
+    
+    if (this.isShuffled) {
+      // Shuffle is ON - create a shuffled playlist
+      this.shuffledPlaylist = this.shuffleArray(this.playlist);
+      // Reset to beginning of shuffled playlist
+      this.currentIndex = 0;
+    } else {
+      // Shuffle is OFF - restore original order
+      this.shuffledPlaylist = [];
+      // Reset to beginning of original playlist
+      this.currentIndex = 0;
+    }
+    
     document.getElementById('playerShuffle').classList.toggle('active', this.isShuffled);
     this.savePlayerState();
     this.resetInactivityTimer();
@@ -538,18 +588,24 @@ class MusicPlayer {
   }
 
   onAudioEnded() {
+    const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+    
     if (this.loopMode === 2) {
       // Loop one - repeat current song
       this.audio.currentTime = 0;
       this.audio.play();
     } else if (this.loopMode === 1) {
       // Loop all - play next song
-      if (this.currentIndex < this.playlist.length - 1) {
+      if (this.currentIndex < currentPlaylist.length - 1) {
         this.playNext();
       } else {
         // At end of playlist, go back to first song
         this.currentIndex = 0;
-        this.play(0);
+        // If shuffle is on, reshuffle the playlist
+        if (this.isShuffled) {
+          this.shuffledPlaylist = this.shuffleArray(this.playlist);
+        }
+        this.play(currentPlaylist[0]);
       }
     } else {
       // No loop - pause when song ends
@@ -573,7 +629,11 @@ class MusicPlayer {
     }
 
     if (this.playlist.length > 0) {
-      titleDisplay.textContent = this.playlist[this.currentIndex].title;
+      // Get the current playlist (shuffled or normal)
+      const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+      if (this.currentIndex < currentPlaylist.length) {
+        titleDisplay.textContent = currentPlaylist[this.currentIndex].title;
+      }
     }
   }
 
@@ -608,6 +668,11 @@ class MusicPlayer {
       document.getElementById('playerShuffle').classList.toggle('active', this.isShuffled);
       document.getElementById('playerLoop').classList.toggle('active', this.loopMode > 0);
       document.getElementById('playerLoop').dataset.mode = this.loopMode;
+      
+      // If shuffle is on, create shuffled playlist
+      if (this.isShuffled && this.playlist.length > 0) {
+        this.shuffledPlaylist = this.shuffleArray(this.playlist);
+      }
     }
 
     // Check if audio is already playing from previous page
@@ -629,15 +694,16 @@ class MusicPlayer {
       
       // If less than 20 seconds have passed, restore the state seamlessly
       if (timeSinceLastUpdate < 20000 && this.playlist.length > 0) {
-        this.currentIndex = Math.min(state.currentIndex, this.playlist.length - 1);
+        const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+        this.currentIndex = Math.min(state.currentIndex, currentPlaylist.length - 1);
         
         // Check if this is the same track that was playing
-        if (this.audio.src === this.playlist[this.currentIndex].url && this.audio.duration > 0) {
+        if (this.audio.src === currentPlaylist[this.currentIndex].url && this.audio.duration > 0) {
           // Same track - restore time directly without changing source
           this.audio.currentTime = state.currentTime;
         } else {
           // Different track or first load - set source
-          const track = this.playlist[this.currentIndex];
+          const track = currentPlaylist[this.currentIndex];
           this.audio.src = track.url;
           
           // Try to set time immediately (might not work until loaded)

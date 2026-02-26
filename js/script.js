@@ -14,10 +14,12 @@ fetch("/jsons/posts.json?v=" + Date.now())
   .then(posts => {
 
     posts.forEach((p, i) => {
-      p._dateObj = new Date(p.timestamp || p.date);
+      // Use time field if available, otherwise fall back to date
+      p._dateObj = new Date(p.time || p.timestamp || p.date);
       p._i = i;
     });
 
+    // Sort by time (newest first), then by original index for ties
     posts.sort((a, b) => {
       const d = b._dateObj - a._dateObj;
       return d !== 0 ? d : a._i - b._i;
@@ -46,6 +48,13 @@ fetch("/jsons/posts.json?v=" + Date.now())
         day: "numeric"
       });
 
+      const displayTime = post._dateObj.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+      const fullDateTime = `${displayDate} at ${displayTime}`;
+
       // LISTEDE EMBED YOK
       let thumbHTML = "";
       if (post.img) {
@@ -60,7 +69,7 @@ fetch("/jsons/posts.json?v=" + Date.now())
         <div class="post-info">
           <h3 class="post-title">${post.title || "Update"}</h3>
           <p class="post-desc">${post.description || ""}</p>
-          <span class="post-date">${displayDate}</span>
+          <span class="post-date">${fullDateTime}</span>
         </div>
       `;
 
@@ -86,7 +95,7 @@ fetch("/jsons/posts.json?v=" + Date.now())
       }
         modalTitle.textContent = post.title || "Update";
         modalDesc.textContent = post.description || "";
-        modalDate.textContent = displayDate;
+        modalDate.textContent = fullDateTime;
 
         if (post.link && !post.embed) {
           modalLink.href = post.link;
