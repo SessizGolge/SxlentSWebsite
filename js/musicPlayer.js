@@ -167,6 +167,8 @@ class MusicPlayer {
           if (!Array.isArray(manifest) || manifest.length === 0) continue;
 
           const base = getBaseMusicPath();
+          const validatedTracks = [];
+
           for (const name of manifest) {
             let track;
 
@@ -194,27 +196,24 @@ class MusicPlayer {
               continue;
             }
 
-            // Resolve final URL for validation: preserve absolute URLs, resolve relative paths to base 
             let resolvedUrl = track.url;
             if (!resolvedUrl.startsWith('http://') && !resolvedUrl.startsWith('https://') && !resolvedUrl.startsWith('/')) {
               resolvedUrl = `${base}${track.filename}`;
             }
 
-            // Validate the resolved candidate URL before adding to playlist
-            const ok = await validateUrl(resolvedUrl);
-            if (ok) {
-              track.url = resolvedUrl;
-              this.playlist.push(track);
-              console.log('🎵 Added and validated:', track.url);
-            } else {
-              console.log('⛔ Skipped (not reachable):', resolvedUrl);
-            }
+            track.url = resolvedUrl;
+            validatedTracks.push(track);
+            console.log('🎵 Manifest loaded:', track.url);
           }
-          if (this.playlist.length > 0) {
+
+          // Use manifest results as authoritative source; only fallback when manifest doesn't exist or parse fails.
+          if (validatedTracks.length > 0) {
+            this.playlist = validatedTracks;
             console.log(`🎵 Loaded ${this.playlist.length} music file(s) from manifest ${candidate}`);
             manifestUsed = true;
             break;
           }
+
         } catch (e) {
           // try next candidate
         }
