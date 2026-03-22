@@ -1,14 +1,12 @@
 // Music Player - Persistent across all pages
 class MusicPlayer {
-  constructor(playlistPath = '/jsons/music.json') {
+  constructor() {
     // Use persistent audio element stored on window
     if (!window.globalAudio) {
       window.globalAudio = new Audio();
       window.globalAudio.crossOrigin = 'anonymous';
     }
     this.audio = window.globalAudio;
-    
-    this.playlistPath = playlistPath; // Store the playlist path
     
     this.playlist = [];
     this.shuffledPlaylist = []; // Will hold the shuffled order when shuffle is active
@@ -135,15 +133,15 @@ class MusicPlayer {
 
   async loadMusicFiles() {
     try {
-      // Use the provided playlist path
-      const resp = await fetch(this.playlistPath);
+      // Sayfa root'u baz alarak fetch
+      const resp = await fetch('/jsons/music.json');
       const tracks = await resp.json();
 
       this.playlist = tracks.map(track => ({
         title: track.title,
         artist: track.artist,
         album: track.album,
-        url: track.url,
+        url: track.url,   // <- artık direkt JSON'daki url kullanılıyor
         cover: track.cover
       }));
 
@@ -344,38 +342,38 @@ class MusicPlayer {
     this.audio.currentTime = percentage * this.audio.duration;
   }
 
-  play(trackOrIndex = 0) {
-    if (this.playlist.length === 0) return;
+play(trackOrIndex = 0) {
+  if (this.playlist.length === 0) return;
 
-    let track;
+  let track;
 
-    // Eğer direkt bir track objesi verilmişse onu kullan
-    if (typeof trackOrIndex === 'object' && trackOrIndex.url) {
-      track = trackOrIndex;
-    } else {
-      // Şu anki playlist (shuffle aktifse shuffled)
-      const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
+  // Eğer direkt bir track objesi verilmişse onu kullan
+  if (typeof trackOrIndex === 'object' && trackOrIndex.url) {
+    track = trackOrIndex;
+  } else {
+    // Şu anki playlist (shuffle aktifse shuffled)
+    const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
 
-      // Indexi modulo ile sınırla
-      this.currentIndex = trackOrIndex % currentPlaylist.length;
-      track = currentPlaylist[this.currentIndex];
-    }
-
-    // Sadece yeni track farklıysa src ata
-    if (track.url !== this.audio.src) {
-      this.audio.src = track.url;
-    }
-
-    updateMediaSession(track);
-    this.setupMediaSessionControls();
-    this.audio.play().catch(err => console.log('Playback error:', err));
-
-    this.isPlaying = true;
-    this.updateUI();
-    this.savePlayerState();
-    this.resetInactivityTimer();
-    this.expand();
+    // Indexi modulo ile sınırla
+    this.currentIndex = trackOrIndex % currentPlaylist.length;
+    track = currentPlaylist[this.currentIndex];
   }
+
+  // Sadece yeni track farklıysa src ata
+  if (track.url !== this.audio.src) {
+    this.audio.src = track.url;
+  }
+
+  updateMediaSession(track);
+  this.setupMediaSessionControls();
+  this.audio.play().catch(err => console.log('Playback error:', err));
+
+  this.isPlaying = true;
+  this.updateUI();
+  this.savePlayerState();
+  this.resetInactivityTimer();
+  this.expand();
+}
 
   togglePlayPause() {
     if (this.playlist.length === 0) return;
@@ -384,15 +382,13 @@ class MusicPlayer {
       this.audio.pause();
       this.isPlaying = false;
     } else {
-      // Eğer src boşsa ilk track'i JSON'dan başlat
-      if (!this.audio.src && this.playlist.length > 0) {
+      if (this.audio.src === '') {
         this.play(0);
       } else {
         this.audio.play();
         this.isPlaying = true;
       }
     }
-
     this.updateUI();
     this.savePlayerState();
     this.savePlaybackState();
