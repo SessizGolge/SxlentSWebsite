@@ -132,144 +132,20 @@ class MusicPlayer {
   }
 
   async loadMusicFiles() {
-    // Helper: try a HEAD request first, fallback to a small ranged GET if HEAD isn't allowed.
-    const validateUrl = async (url) => {
-      try {
-        const headResp = await fetch(url, { method: 'HEAD' });
-        if (headResp.ok) return true;
-      } catch (e) {
-        // HEAD may be blocked by some hosts. Try a tiny ranged GET as fallback.
-        try {
-          const getResp = await fetch(url, { method: 'GET', headers: { Range: 'bytes=0-0' } });
-          if (getResp.ok || getResp.status === 206) return true;
-        } catch (e2) {
-          return false;
-        }
-      }
-      return false;
-    };
-
-    const getBaseMusicPath = () => {
-      const currentPath = window.location.pathname || '/';
-
-      // GitHub Pages and subpath-aware: we want an absolute URL to the music folder.
-      if (currentPath.includes('/posts/')) {
-        return new URL('../music/', window.location.href).href;
-      }
-
-      // Prefer project-relative music folder (works with root domain and GitHub Pages repo path).
-      return new URL('./music/', window.location.href).href;
-    };
-
-    const jsonsBaseCandidates = [
-      new URL('jsons/music.json', window.location.href).href,
-      new URL('https://sxlents.website/jsons/music.json', window.location.href).href,
-      new URL('/jsons/music.json', window.location.origin).href
-    ];
-
-    // Try manifest candidates first (prioritize explicit playlist).
-    const manifestCandidates = [...new Set(jsonsBaseCandidates)];
     try {
-      let manifestUsed = false;
-      for (const candidate of manifestCandidates) {
-        try {
-          const manifestResp = await fetch(candidate);
-          if (!manifestResp.ok) continue;
-          const manifest = await manifestResp.json();
-          if (!Array.isArray(manifest) || manifest.length === 0) continue;
-
-          const base = getBaseMusicPath();
-          const validatedTracks = [];
-
-          for (const name of manifest) {
-            let track;
-
-            if (typeof name === 'string') {
-              const filename = name.split('/').pop();
-              track = {
-                title: this.formatTitle(filename),
-                url: name,
-                artist: "SxlentS",
-                album: "",
-                cover: "",
-                filename
-              };
-            } else if (typeof name === 'object' && name.url) {
-              const filename = name.url.split('/').pop();
-              track = {
-                title: name.title || this.formatTitle(filename),
-                url: name.url,
-                artist: name.artist || "SxlentS",
-                album: name.album || "",
-                cover: name.cover || "",
-                filename
-              };
-            } else {
-              continue;
-            }
-
-            let resolvedUrl = track.url;
-            if (!resolvedUrl.startsWith('http://') && !resolvedUrl.startsWith('https://') && !resolvedUrl.startsWith('/')) {
-              resolvedUrl = `${base}${track.filename}`;
-            }
-
-            track.url = resolvedUrl;
-            validatedTracks.push(track);
-            console.log('🎵 Manifest loaded:', track.url);
-          }
-
-          // Use manifest results as authoritative source; only fallback when manifest doesn't exist or parse fails.
-          if (validatedTracks.length > 0) {
-            this.playlist = validatedTracks;
-            console.log(`🎵 Loaded ${this.playlist.length} music file(s) from manifest ${candidate}`);
-            manifestUsed = true;
-            break;
-          }
-
-        } catch (e) {
-          // try next candidate
-        }
-      }
-
-      if (!manifestUsed) {
-        // Manifest wasn't found or yielded no valid entries; try directory listing and HTML scans as fallback.
-        try {
-          const response = await fetch('../music/');
-          const html = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-
-          // Extract music files from directory listing
-          const links = doc.querySelectorAll('a[href*=".mp3"], a[href*=".m4a"], a[href*=".wav"], a[href*=".ogg"]');
-          if (links.length > 0) {
-            for (const link of links) {
-              const href = link.getAttribute('href');
-              if (!href) continue;
-              const filename = href.split('/').pop();
-              const url = href.startsWith('http') ? href : `../music/${filename}`;
-              const ok = await validateUrl(url);
-              if (ok) {
-                this.playlist.push({ title: this.formatTitle(filename), url, filename });
-                console.log('🎵 Validated:', url);
-              } else {
-                console.log('⛔ Skipped (not reachable):', url);
-              }
-            }
-            if (this.playlist.length > 0) console.log(`🎵 Loaded ${this.playlist.length} music file(s) from ../music/ listing`);
-          } else {
-            // No actual links in /music/ index, skip text-based raw scanning to avoid false paths (e.g. 1.mp3 from example text)
-            console.log('⚠️ /music/ listing contained no file links; skipping raw-text fallback (prevents false candidate 1.mp3 etc).');
-          }
-        } catch (err) {
-          // Directory fetch failed; nothing else to do beyond manifest attempt
-        }
-      }
-
-      if (this.playlist.length === 0) {
-        console.log('🎵 No valid music files found. Add files to ../music/ or create jsons/music.json with reachable URLs.');
-      }
-    } catch (error) {
-      console.warn('⚠️ Music discovery failed:', error);
+        const resp = await fetch('jsons/music.json');
+        const tracks = await resp.json();
+        // HEAD / relative path check yok
+        this.playlist = tracks.map(track => ({
+            title: track.title,
+            artist: track.artist,
+            album: track.album,
+            url: track.url,
+            cover: track.cover
+        }));
+        console.log('🎵 Playlist loaded', this.playlist);
+    } catch(err) {
+        console.error('⚠️ Failed to load playlist', err);
     }
   }
 
@@ -434,7 +310,7 @@ class MusicPlayer {
     const progressBar = document.querySelector('.player-progress-bar');
     const rect = progressBar.getBoundingClientRect();
     const progress = document.querySelector('.player-progress');
-    const percentage = parseInt(progress.style.width) / 100;
+    const percentage = parseFloat(progress.style.width) / 100;
     
     this.audio.currentTime = percentage * this.audio.duration;
     this.isDragging = false;
