@@ -1,13 +1,79 @@
 [
-    "https://sxlents.website/music/DMLTZR.mp3",
-    "https://sxlents.website/music/DAZED_MIDNIGHT.mp3",
-    "https://sxlents.website/music/DMLTZR_-_Remastered.mp3",
-    "https://sxlents.website/music/MIDNIGHT_BLASTER.mp3",
-    "https://sxlents.website/music/PHASE_SHIFT.mp3",
-    "https://sxlents.website/music/SPLIT_POINT.mp3",
-    "https://sxlents.website/music/BIZARRE_PHASE.mp3",
-    "https://sxlents.website/music/an_oddity..mp3",
-    "https://sxlents.website/music/adhd..mp3",
-    "https://sxlents.website/music/anomalous..mp3",
-    "https://sxlents.website/music/synesthesia..mp3"
+    {
+        "url": "https://sxlents.website/music/DMLTZR.mp3",
+        "title": "DMLTZR",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://i.kfs.io/album/global/286812137,2v1/fit/1080x1080.jpg"
+    },
+    {
+        "url": "https://sxlents.website/music/DAZED_MIDNIGHT.mp3",
+        "title": "DAZED MIDNIGHT",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://i.kfs.io/album/global/286812137,2v1/fit/1080x1080.jpg"
+    },
+    {
+        "url": "https://sxlents.website/music/MIDNIGHT_BLASTER.mp3",
+        "title": "MIDNIGHT BLASTER",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://i.kfs.io/album/global/286812137,2v1/fit/1080x1080.jpg"
+    },
+    {
+        "url": "https://sxlents.website/music/DMLTZR_-_Remastered.mp3",
+        "title": "DMLTZR - Remastered",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://i.kfs.io/album/global/286812137,2v1/fit/1080x1080.jpg"
+    },
+    {
+        "url": "https://sxlents.website/music/PHASE_SHIFT.mp3",
+        "title": "PHASE SHIFT",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/fff9856e-4fd2-4686-acb5-67d068ae2b8a/1024x1024"
+    },
+    {
+        "url": "https://sxlents.website/music/BIZARRE_PHASE.mp3",
+        "title": "BIZARRE PHASE",
+        "artist": "SxlentS",
+        "album": "Midnight Phase",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/55ea1a7f-7827-4067-9f15-412c653f68dd/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/SPLIT_POINT.mp3",
+        "title": "SPLIT POINT",
+        "artist": "SxlentS",
+        "album": "SEKKAI",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/c2777aaa-8e91-4cb6-9a14-480d38a599b8/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/an_oddity..mp3",
+        "title": "an oddity.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/a154d9f7-711d-4237-80bb-8ee322f271e7/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/adhd..mp3",
+        "title": "adhd.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/8c0fd7f4-4501-4f23-a90b-95d74a5316d0/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/anomalous..mp3",
+        "title": "anomalous.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/8c0fd7f4-4501-4f23-a90b-95d74a5316d0/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/synesthesia..mp3",
+        "title": "synesthesia.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/8c0fd7f4-4501-4f23-a90b-95d74a5316d0/1080x1080"
+    }
 ]

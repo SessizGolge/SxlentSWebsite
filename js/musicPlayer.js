@@ -25,6 +25,9 @@ class MusicPlayer {
     // Set this as the current player instance for audio event listeners
     window.currentMusicPlayer = this;
     
+    // Setup media session controls
+    this.setupMediaSessionControls();
+    
     // Create player UI
     this.createPlayerUI();
     
@@ -39,6 +42,15 @@ class MusicPlayer {
     
     // Setup page transition handling
     this.setupPageTransitionHandling();
+  }
+
+  setupMediaSessionControls() {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.setActionHandler('play', () => this.audio.play());
+      navigator.mediaSession.setActionHandler('pause', () => this.audio.pause());
+      navigator.mediaSession.setActionHandler('previoustrack', () => this.playPrevious());
+      navigator.mediaSession.setActionHandler('nexttrack', () => this.playNext());
+    }
   }
 
   setupPageTransitionHandling() {
@@ -156,15 +168,33 @@ class MusicPlayer {
 
           const base = getBaseMusicPath();
           for (const name of manifest) {
-            if (typeof name !== 'string') continue;
-            const filename = name.split('/').pop();
-            // If manifest provides absolute HTTP(S) URLs, add them directly (user requested direct links)
-            if (name.startsWith('http://') || name.startsWith('https://')) {
-              const url = name;
-              this.playlist.push({ title: this.formatTitle(filename), url, filename });
-              console.log('🎵 Added from manifest (absolute):', url);
+            let track;
+
+            if (typeof name === 'string') {
+              const filename = name.split('/').pop();
+              track = {
+                title: this.formatTitle(filename),
+                url: name,
+                artist: "SxlentS",
+                album: "",
+                cover: "",
+                filename
+              };
+            } else if (typeof name === 'object' && name.url) {
+              track = {
+                title: name.title || this.formatTitle(name.url.split('/').pop()),
+                url: name.url,
+                artist: name.artist || "SxlentS",
+                album: name.album || "",
+                cover: name.cover || "",
+                filename: name.url.split('/').pop()
+              };
+            } else {
               continue;
             }
+
+            this.playlist.push(track);
+            console.log('🎵 Added:', track.url);
 
             const url = name.startsWith('/') ? name : `${base}${filename}`;
             const ok = await validateUrl(url);
@@ -447,6 +477,8 @@ class MusicPlayer {
     }
     
     this.audio.src = track.url;
+    updateMediaSession(track);
+    this.setupMediaSessionControls();
     this.audio.play().catch(err => console.log('Playback error:', err));
     this.isPlaying = true;
     this.updateUI();
@@ -738,4 +770,22 @@ if (document.readyState === 'loading') {
   });
 } else {
   window.musicPlayer = new MusicPlayer();
+}
+
+function updateMediaSession(track) {
+  if (track.cover && !track.cover.startsWith('https')) return;
+  if ('mediaSession' in navigator && track) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: track.title || "Unknown",
+      artist: track.artist || "SxlentS",
+      album: track.album || "SxlentS",
+      artwork: track.cover ? [
+        { src: track.cover, sizes: '96x96', type: 'image/png' },
+        { src: track.cover, sizes: '128x128', type: 'image/png' },
+        { src: track.cover, sizes: '192x192', type: 'image/png' },
+        { src: track.cover, sizes: '256x256', type: 'image/png' },
+        { src: track.cover, sizes: '512x512', type: 'image/png' }
+      ] : []
+    });
+  }
 }
