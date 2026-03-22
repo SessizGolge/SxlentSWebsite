@@ -257,23 +257,8 @@ class MusicPlayer {
             }
             if (this.playlist.length > 0) console.log(`🎵 Loaded ${this.playlist.length} music file(s) from ../music/ listing`);
           } else {
-            // Fallback: search raw HTML for audio file references
-            const rawMatches = Array.from(new Set((html.match(/([\w-:\/.]+\.(?:mp3|m4a|wav|ogg))/gi) || [])));
-            if (rawMatches.length > 0) {
-              for (const match of rawMatches) {
-                const parts = match.split('/');
-                const filename = parts[parts.length - 1];
-                const url = match.startsWith('http') ? match : `../music/${filename}`;
-                const ok = await validateUrl(url);
-                if (ok) {
-                  this.playlist.push({ title: this.formatTitle(filename), url, filename });
-                  console.log('🎵 Validated:', url);
-                } else {
-                  console.log('⛔ Skipped (not reachable):', url);
-                }
-              }
-              if (this.playlist.length > 0) console.log(`🎵 Fallback: found ${this.playlist.length} music file(s) via HTML scan`);
-            }
+            // No actual links in /music/ index, skip text-based raw scanning to avoid false paths (e.g. 1.mp3 from example text)
+            console.log('⚠️ /music/ listing contained no file links; skipping raw-text fallback (prevents false candidate 1.mp3 etc).');
           }
         } catch (err) {
           // Directory fetch failed; nothing else to do beyond manifest attempt
