@@ -181,28 +181,33 @@ class MusicPlayer {
                 filename
               };
             } else if (typeof name === 'object' && name.url) {
+              const filename = name.url.split('/').pop();
               track = {
-                title: name.title || this.formatTitle(name.url.split('/').pop()),
+                title: name.title || this.formatTitle(filename),
                 url: name.url,
                 artist: name.artist || "SxlentS",
                 album: name.album || "",
                 cover: name.cover || "",
-                filename: name.url.split('/').pop()
+                filename
               };
             } else {
               continue;
             }
 
-            this.playlist.push(track);
-            console.log('🎵 Added:', track.url);
+            // Resolve final URL for validation: preserve absolute URLs, resolve relative paths to base 
+            let resolvedUrl = track.url;
+            if (!resolvedUrl.startsWith('http://') && !resolvedUrl.startsWith('https://') && !resolvedUrl.startsWith('/')) {
+              resolvedUrl = `${base}${track.filename}`;
+            }
 
-            const url = name.startsWith('/') ? name : `${base}${filename}`;
-            const ok = await validateUrl(url);
+            // Validate the resolved candidate URL before adding to playlist
+            const ok = await validateUrl(resolvedUrl);
             if (ok) {
-              this.playlist.push({ title: this.formatTitle(filename), url, filename });
-              console.log('🎵 Validated:', url);
+              track.url = resolvedUrl;
+              this.playlist.push(track);
+              console.log('🎵 Added and validated:', track.url);
             } else {
-              console.log('⛔ Skipped (not reachable):', url);
+              console.log('⛔ Skipped (not reachable):', resolvedUrl);
             }
           }
           if (this.playlist.length > 0) {
