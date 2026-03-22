@@ -74,6 +74,10 @@ class MusicPlayer {
   createPlayerUI() {
     const playerHTML = `
       <div id="musicPlayer" class="music-player collapsed">
+        <div class="player-cover">
+          <img class="player-cover-img" src="" alt="cover">
+        </div>
+
         <div class="player-track-info">
           <span class="player-song-title">No song loaded</span>
         </div>
@@ -538,6 +542,7 @@ play(trackOrIndex = 0) {
     const playIcon = document.querySelector('.player-play-icon');
     const pauseIcon = document.querySelector('.player-pause-icon');
     const titleDisplay = document.querySelector('.player-song-title');
+    const coverImg = document.querySelector('.player-cover-img');
 
     if (this.isPlaying) {
       playIcon.classList.add('hidden');
@@ -548,10 +553,30 @@ play(trackOrIndex = 0) {
     }
 
     if (this.playlist.length > 0) {
-      // Get the current playlist (shuffled or normal)
       const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
-      if (this.currentIndex < currentPlaylist.length) {
-        titleDisplay.textContent = currentPlaylist[this.currentIndex].title;
+      const track = currentPlaylist[this.currentIndex];
+
+      if (track) {
+        titleDisplay.textContent = track.title;
+
+        // 🔥 BURASI FIX
+        if (coverImg && track.cover) {
+          const track = currentPlaylist[this.currentIndex];
+
+          if (track) {
+            titleDisplay.textContent = track.title;
+
+            if (coverImg && track.cover) {
+              coverImg.style.opacity = 0;
+
+              setTimeout(() => {
+                coverImg.src = track.cover + '?t=' + Date.now();
+                coverImg.style.opacity = 1;
+              }, 150);
+            }
+          }
+          // cache kırmak için (çok önemli)
+        }
       }
     }
   }

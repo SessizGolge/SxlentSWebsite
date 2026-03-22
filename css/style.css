@@ -539,6 +539,10 @@ body::after{
   opacity: 0.5;
 }
 
+.player-cover-img {
+  transition: opacity 0.2s ease;
+}
+
 /* ==========================
    Posts Single Column List
    ========================== */
