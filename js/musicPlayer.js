@@ -163,7 +163,7 @@ class MusicPlayer {
 
     const jsonsBaseCandidates = [
       new URL('jsons/music.json', window.location.href).href,
-      new URL('../jsons/music.json', window.location.href).href,
+      new URL('https://sxlents.website/jsons/music.json', window.location.href).href,
       new URL('/jsons/music.json', window.location.origin).href
     ];
 
