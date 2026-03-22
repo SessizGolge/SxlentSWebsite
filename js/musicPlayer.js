@@ -458,26 +458,22 @@ class MusicPlayer {
   }
 
   play(trackOrIndex = 0) {
-    if (this.playlist.length === 0) {
-      console.log('No music files available');
-      return;
-    }
-
-    let track;
+    if (this.playlist.length === 0) return;
     
-    // If it's a track object, use it directly
+    let track;
     if (typeof trackOrIndex === 'object' && trackOrIndex.url) {
       track = trackOrIndex;
     } else {
-      // It's an index - get from appropriate playlist
-      const index = trackOrIndex;
       const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
-      this.currentIndex = index % currentPlaylist.length;
+      this.currentIndex = trackOrIndex % currentPlaylist.length;
       track = currentPlaylist[this.currentIndex];
     }
-    
-    this.audio.src = track.url;
-    updateMediaSession(track);
+
+    if (track.url !== this.audio.src) {
+      this.audio.src = track.url;
+    }
+
+    updateMediaSession(track); // media session metadata
     this.setupMediaSessionControls();
     this.audio.play().catch(err => console.log('Playback error:', err));
     this.isPlaying = true;
@@ -509,18 +505,19 @@ class MusicPlayer {
 
   playNext() {
     if (this.playlist.length === 0) return;
-
-    // Use shuffled playlist if shuffle is on, otherwise use normal playlist
     const currentPlaylist = this.isShuffled ? this.shuffledPlaylist : this.playlist;
-    
+
     if (this.currentIndex < currentPlaylist.length - 1) {
       this.currentIndex++;
     } else {
-      // Restart from beginning
       this.currentIndex = 0;
-      // If shuffle is on and we've reached the end, reshuffle
       if (this.isShuffled) {
-        this.shuffledPlaylist = this.shuffleArray(this.playlist);
+        // sadece yeni şarkı eklenmişse shuffle et
+        const savedShuffled = localStorage.getItem('musicShuffledPlaylist');
+        if (!savedShuffled || this.shuffledPlaylist.length !== this.playlist.length) {
+          this.shuffledPlaylist = this.shuffleArray(this.playlist);
+          localStorage.setItem('musicShuffledPlaylist', JSON.stringify(this.shuffledPlaylist));
+        }
       }
     }
 
@@ -546,15 +543,13 @@ class MusicPlayer {
     this.isShuffled = !this.isShuffled;
     
     if (this.isShuffled) {
-      // Shuffle is ON - create a shuffled playlist
       this.shuffledPlaylist = this.shuffleArray(this.playlist);
-      // Reset to beginning of shuffled playlist
       this.currentIndex = 0;
+      localStorage.setItem('musicShuffledPlaylist', JSON.stringify(this.shuffledPlaylist));
     } else {
-      // Shuffle is OFF - restore original order
       this.shuffledPlaylist = [];
-      // Reset to beginning of original playlist
       this.currentIndex = 0;
+      localStorage.removeItem('musicShuffledPlaylist');
     }
     
     document.getElementById('playerShuffle').classList.toggle('active', this.isShuffled);
@@ -685,6 +680,10 @@ class MusicPlayer {
       loopMode: this.loopMode,
       volume: this.audio.volume * 100
     }));
+
+    if (this.isShuffled) {
+      localStorage.setItem('musicShuffledPlaylist', JSON.stringify(this.shuffledPlaylist));
+    }
   }
 
   loadPlayerState() {
@@ -701,9 +700,22 @@ class MusicPlayer {
       document.getElementById('playerLoop').classList.toggle('active', this.loopMode > 0);
       document.getElementById('playerLoop').dataset.mode = this.loopMode;
       
-      // If shuffle is on, create shuffled playlist
+      // If shuffle is on and previous shuffled order exists in localStorage, restore it
       if (this.isShuffled && this.playlist.length > 0) {
-        this.shuffledPlaylist = this.shuffleArray(this.playlist);
+        const savedShuffled = localStorage.getItem('musicShuffledPlaylist');
+        if (savedShuffled) {
+          const parsed = JSON.parse(savedShuffled);
+          // Ensure all current playlist tracks exist in saved shuffle
+          this.shuffledPlaylist = parsed.filter(track => this.playlist.some(t => t.url === track.url));
+          // Add any new tracks that weren’t in saved shuffle
+          this.playlist.forEach(track => {
+            if (!this.shuffledPlaylist.some(t => t.url === track.url)) {
+              this.shuffledPlaylist.push(track);
+            }
+          });
+        } else {
+          this.shuffledPlaylist = this.shuffleArray(this.playlist);
+        }
       }
     }
 
