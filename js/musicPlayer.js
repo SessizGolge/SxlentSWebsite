@@ -150,13 +150,25 @@ class MusicPlayer {
     };
 
     const getBaseMusicPath = () => {
-      const path = window.location.pathname || '/';
-      if (path.startsWith('/posts') || path.startsWith('/posts/')) return '../music/';
-      return '/music/';
+      const currentPath = window.location.pathname || '/';
+
+      // GitHub Pages and subpath-aware: we want an absolute URL to the music folder.
+      if (currentPath.includes('/posts/')) {
+        return new URL('../music/', window.location.href).href;
+      }
+
+      // Prefer project-relative music folder (works with root domain and GitHub Pages repo path).
+      return new URL('./music/', window.location.href).href;
     };
 
+    const jsonsBaseCandidates = [
+      new URL('jsons/music.json', window.location.href).href,
+      new URL('../jsons/music.json', window.location.href).href,
+      new URL('/jsons/music.json', window.location.origin).href
+    ];
+
     // Try manifest candidates first (prioritize explicit playlist).
-    const manifestCandidates = ['../jsons/music.json', '/jsons/music.json', 'jsons/music.json', './jsons/music.json'];
+    const manifestCandidates = [...new Set(jsonsBaseCandidates)];
     try {
       let manifestUsed = false;
       for (const candidate of manifestCandidates) {
