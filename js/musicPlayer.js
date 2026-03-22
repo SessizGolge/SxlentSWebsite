@@ -1,12 +1,14 @@
 // Music Player - Persistent across all pages
 class MusicPlayer {
-  constructor() {
+  constructor(playlistPath = '/jsons/music.json') {
     // Use persistent audio element stored on window
     if (!window.globalAudio) {
       window.globalAudio = new Audio();
       window.globalAudio.crossOrigin = 'anonymous';
     }
     this.audio = window.globalAudio;
+    
+    this.playlistPath = playlistPath; // Store the playlist path
     
     this.playlist = [];
     this.shuffledPlaylist = []; // Will hold the shuffled order when shuffle is active
@@ -133,15 +135,15 @@ class MusicPlayer {
 
   async loadMusicFiles() {
     try {
-      // Sayfa root'u baz alarak fetch
-      const resp = await fetch('/jsons/music.json'); // <- ../ kaldırıldı
+      // Use the provided playlist path
+      const resp = await fetch(this.playlistPath);
       const tracks = await resp.json();
 
       this.playlist = tracks.map(track => ({
         title: track.title,
         artist: track.artist,
         album: track.album,
-        url: track.url,   // <- artık direkt JSON'daki url kullanılıyor
+        url: track.url,
         cover: track.cover
       }));
 
