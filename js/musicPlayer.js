@@ -133,7 +133,7 @@ class MusicPlayer {
 
   async loadMusicFiles() {
     try {
-        const resp = await fetch('jsons/music.json');
+        const resp = await fetch('../jsons/music.json');
         const tracks = await resp.json();
         // HEAD / relative path check yok
         this.playlist = tracks.map(track => ({
