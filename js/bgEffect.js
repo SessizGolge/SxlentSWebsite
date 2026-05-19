@@ -17,7 +17,7 @@ function animate() {
 
   ctx.clearRect(0, 0, w, h);
 
-  // neon fog için 3 kademeli renkli blur blob
+  // White & cyan glowing effect with multiple layers for enhanced glow
   for (let i = 0; i < 3; i++) {
     const x =
       w / 2 +
@@ -30,9 +30,23 @@ function animate() {
 
     const radius = (w + h) * 0.25;
 
+    // Main glow layers - using white and light cyan with higher opacity
     const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, "hsla(280, 100%, 70%, 0.4)");
-    gradient.addColorStop(1, "hsla(280, 100%, 50%, 0)");
+    
+    // Create multiple color stops for enhanced glow effect
+    if (i === 0) {
+      gradient.addColorStop(0, "hsla(0, 100%, 100%, 0.5)");    // Bright white center
+      gradient.addColorStop(0.5, "hsla(180, 100%, 80%, 0.3)"); // Light cyan mid
+      gradient.addColorStop(1, "hsla(180, 100%, 70%, 0)");     // Transparent
+    } else if (i === 1) {
+      gradient.addColorStop(0, "hsla(180, 100%, 85%, 0.4)");   // Cyan center
+      gradient.addColorStop(0.6, "hsla(0, 0%, 90%, 0.2)");     // Light gray mid
+      gradient.addColorStop(1, "hsla(0, 0%, 80%, 0)");         // Transparent
+    } else {
+      gradient.addColorStop(0, "hsla(0, 0%, 95%, 0.35)");      // Very light white
+      gradient.addColorStop(0.7, "hsla(180, 100%, 75%, 0.15"); // Subtle cyan
+      gradient.addColorStop(1, "hsla(180, 100%, 70%, 0)");     // Transparent
+    }
 
     ctx.fillStyle = gradient;
     ctx.globalCompositeOperation = "lighter";

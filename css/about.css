@@ -16,8 +16,8 @@
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #e754ff;
-  box-shadow: 0 0 12px #e754ff, 0 0 28px #ff8aff50;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 28px rgba(255, 255, 255, 0.3);
   animation: pfpFloat 3s ease-in-out infinite alternate;
 }
 
@@ -134,29 +134,29 @@
 
 /* Text glow */
 .full-name {
-  color: #ff8aff;
-  text-shadow: 0 0 6px #ff8aff, 0 0 12px #e754ff50;
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6), 0 0 12px rgba(184, 243, 241, 0.3);
   transition: 0.3s;
 }
 
 .profile-block:hover .full-name {
-  text-shadow: 0 0 12px #ff8aff, 0 0 28px #e754ff, 0 0 40px #ff66d8;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8), 0 0 28px rgba(184, 243, 241, 0.6), 0 0 40px rgba(224, 224, 224, 0.4);
   transform: scale(1.05);
 }
 
 .nav a {
-  color: #ff8aff;
+  color: #ffffff;
   font-weight: bold;
   text-decoration: none;
   margin-left: 20px;
   font-size: 17px;
   transition: 0.2s;
-  text-shadow: 0 0 5px #ff8aff50; /* glow mor-pembe */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
 
 .nav a:hover {
-  color: #ff66ff;
-  text-shadow: 0 0 12px #ff8aff, 0 0 24px #e754ff;
+  color: #b8f3f1;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.6), 0 0 24px rgba(184, 243, 241, 0.5);
   transform: translateY(-2px) scale(1.05);
 }
 
@@ -169,14 +169,14 @@
 .home-icon {
   width: 18px;
   height: 18px;
-  color: #ff66ff; /* hafif neon mavi */
-  filter: drop-shadow(0 0 4px #ff66ff);
+  color: #b8f3f1;
+  filter: drop-shadow(0 0 4px rgba(184, 243, 241, 0.6));
   transition: 0.2s ease;
 }
 
 .home-link:hover .home-icon {
-  color: #ff66ff;
-  filter: drop-shadow(0 0 6px #ff66ff);
+  color: #e0f8f7;
+  filter: drop-shadow(0 0 6px rgba(184, 243, 241, 0.8));
   transform: scale(1.1);
 }
 

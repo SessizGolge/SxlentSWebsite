@@ -8,12 +8,12 @@
   right: 20px;
   z-index: 500;
   width: 320px;
-  background: linear-gradient(135deg, rgba(40, 0, 70, 0.95), rgba(15, 0, 30, 0.95));
-  border: 1px solid rgba(255, 138, 255, 0.3);
+  background: linear-gradient(135deg, rgba(40, 40, 50, 0.95), rgba(15, 15, 25, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 16px;
   padding: 16px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(231, 84, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3);
   animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transition: all 0.3s ease, width 0.3s ease, height 0.3s ease;
   max-height: 220px;
@@ -29,7 +29,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(231, 84, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.4);
 }
 
 .music-player.collapsed .player-track-info,
@@ -41,9 +41,16 @@
 
 .music-player.collapsed::before {
   content: "♫";
-  font-size: 24px;
-  color: #ff8aff;
-  text-shadow: 0 0 12px #ff8aff;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  text-shadow: 0 0 10px rgba(255,255,255,0.9);
+  z-index: 2;
+  pointer-events: none;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -69,12 +76,32 @@
   overflow: hidden;
 }
 
+.player-cover {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
+}
+
 .player-song-title {
   display: block;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ff9cff;
-  text-shadow: 0 0 6px #ff7aff60;
+  color: #ffffff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -88,13 +115,13 @@
   gap: 6px;
   margin-bottom: 12px;
   font-size: 0.7rem;
-  color: rgba(255, 138, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .player-progress-bar {
   flex: 1;
   height: 6px;
-  background: rgba(255, 138, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 3px;
   cursor: pointer;
   overflow: visible;
@@ -103,10 +130,10 @@
 
 .player-progress {
   height: 100%;
-  background: linear-gradient(90deg, #ff8aff, #e754ff);
+  background: linear-gradient(90deg, #ffffff, #e0e0e0);
   width: 0%;
   border-radius: 3px;
-  box-shadow: 0 0 8px #ff8aff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
   transition: width 0.05s linear;
   position: relative;
 }
@@ -120,9 +147,9 @@
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: #ff8aff;
+  background: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 0 8px #ff8aff, 0 0 16px rgba(255, 138, 255, 0.6);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.6);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -141,10 +168,10 @@
 }
 
 .player-btn {
-  background: rgba(255, 138, 255, 0.1);
-  border: 1px solid rgba(255, 138, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
-  color: #ff8aff;
+  color: #ffffff;
   cursor: pointer;
   padding: 6px;
   width: 32px;
@@ -157,15 +184,15 @@
 }
 
 .player-btn:hover {
-  background: rgba(255, 138, 255, 0.2);
-  box-shadow: 0 0 12px rgba(255, 138, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
   transform: scale(1.05);
 }
 
 .player-btn.active {
-  background: rgba(231, 84, 255, 0.3);
-  border-color: #e754ff;
-  box-shadow: 0 0 12px rgba(231, 84, 255, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #e0e0e0;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
 }
 
 .player-btn svg {
@@ -176,8 +203,8 @@
 .player-play-btn {
   width: 40px;
   height: 40px;
-  background: rgba(231, 84, 255, 0.2);
-  border-color: #e754ff;
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #e0e0e0;
 }
 
 /* Loop button indicator dot for loop-one mode */
@@ -188,14 +215,14 @@
   right: 4px;
   width: 6px;
   height: 6px;
-  background: #ff8aff;
+  background: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 0 4px #ff8aff;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
 .player-play-btn:hover {
-  background: rgba(231, 84, 255, 0.3);
-  box-shadow: 0 0 16px rgba(231, 84, 255, 0.6);
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
 }
 
 .player-play-btn svg {
@@ -218,14 +245,14 @@
 .player-volume-icon {
   width: 16px;
   height: 16px;
-  color: #ff8aff;
+  color: #ffffff;
   flex-shrink: 0;
 }
 
 .player-volume-slider {
   flex: 1;
   height: 4px;
-  background: rgba(255, 138, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   outline: none;
   -webkit-appearance: none;
@@ -238,20 +265,20 @@
   appearance: none;
   width: 12px;
   height: 12px;
-  background: #ff8aff;
+  background: #ffffff;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 8px #ff8aff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .player-volume-slider::-moz-range-thumb {
   width: 12px;
   height: 12px;
-  background: #ff8aff;
+  background: #ffffff;
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  box-shadow: 0 0 8px #ff8aff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .player-volume-slider::-moz-range-track {
@@ -275,13 +302,39 @@
   }
 
   .music-player.collapsed {
-    width: 56px;
-    height: 56px;
-    bottom: 16px;
-    right: 16px;
-    left: auto;
-    border-radius: 50%;
+    width: 64px;
+    height: 64px;
     padding: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+  }
+
+  .music-player.collapsed .player-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.15); /* küçük zoom cinematic vibe */
+  }
+
+  .music-player.collapsed .player-cover-img {
+    width: 110%;
+    height: 110%;
+    object-fit: cover;
+    transform: scale(1.15); /* küçük zoom cinematic vibe */
+  }
+
+  .music-player.collapsed::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1;
+    pointer-events: none;
   }
 
   @keyframes slideUpMobile {
@@ -401,41 +454,41 @@
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  background: radial-gradient(circle, rgba(255, 138, 255, 0.1), transparent);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
   animation: playingRing 1.5s ease-out infinite;
   pointer-events: none;
 }
 
 @keyframes playingPulse {
   0%, 100% {
-    box-shadow: 0 8px 32px rgba(231, 84, 255, 0.3),
-                inset 0 0 20px rgba(255, 138, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3),
+                inset 0 0 20px rgba(255, 255, 255, 0.05);
   }
   50% {
-    box-shadow: 0 8px 32px rgba(231, 84, 255, 0.6),
-                inset 0 0 20px rgba(255, 138, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.6),
+                inset 0 0 20px rgba(255, 255, 255, 0.15);
   }
 }
 
 @keyframes playingPulseNote {
   0%, 100% {
-    text-shadow: 0 0 12px #ff8aff;
-    filter: drop-shadow(0 0 2px #ff8aff);
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
   }
   50% {
-    text-shadow: 0 0 20px #ff8aff, 0 0 30px #e754ff;
-    filter: drop-shadow(0 0 4px #e754ff);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(224, 224, 224, 0.8);
+    filter: drop-shadow(0 0 4px rgba(224, 224, 224, 0.8));
   }
 }
 
 @keyframes playingRing {
   0% {
-    border: 1px solid rgba(255, 138, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
   100% {
-    border: 1px solid rgba(255, 138, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
     transform: translate(-50%, -50%) scale(1.4);
     opacity: 0;
   }

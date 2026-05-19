@@ -9,17 +9,47 @@ const modalLink = document.getElementById("modalLink");
 const modalClose = document.querySelector(".post-modal-close");
 const modalOverlay = document.querySelector(".post-modal-overlay");
 
+// 🎨 ColorThief
+const colorThief = new ColorThief();
+
+function applyPostColor(postEl, imgEl) {
+  function setColor() {
+    try {
+      const color = colorThief.getColor(imgEl);
+      const [r, g, b] = color;
+
+      postEl.style.setProperty("--post-color", `${r}, ${g}, ${b}`);
+    } catch (e) {
+      console.log("color extract fail:", e);
+      postEl.style.setProperty("--post-color", "120,120,120");
+    }
+  }
+
+  if (!imgEl) return;
+
+  // 🚨 CRITICAL FIX
+  imgEl.crossOrigin = "anonymous";
+
+  if (imgEl.complete) {
+    setColor();
+  } else {
+    imgEl.addEventListener("load", setColor);
+  }
+}
+
+// ===============================
+// POSTS LOAD
+// ===============================
+
 fetch("/jsons/posts.json?v=" + Date.now())
   .then(res => res.json())
   .then(posts => {
 
     posts.forEach((p, i) => {
-      // Use time field if available, otherwise fall back to date
       p._dateObj = new Date(p.time || p.timestamp || p.date);
       p._i = i;
     });
 
-    // Sort by time (newest first), then by original index for ties
     posts.sort((a, b) => {
       const d = b._dateObj - a._dateObj;
       return d !== 0 ? d : a._i - b._i;
@@ -28,15 +58,19 @@ fetch("/jsons/posts.json?v=" + Date.now())
     postsContainer.innerHTML = "";
 
     posts.forEach((post, index) => {
+
       const postDiv = document.createElement("div");
       postDiv.className = "post-row";
+
+      // default fallback color
+      postDiv.style.setProperty("--post-color", "120,120,120");
+
       postDiv.style.animation = `postFadeUp 0.5s forwards`;
       postDiv.style.animationDelay = `${index * 0.1}s`;
 
-      // 🔥 NEW POST KONTROLÜ
+      // NEW POST CHECK
       const today = new Date();
-      const isNewPost =
-        post._dateObj.toDateString() === today.toDateString();
+      const isNewPost = post._dateObj.toDateString() === today.toDateString();
 
       if (isNewPost) {
         postDiv.classList.add("is-new");
@@ -55,7 +89,7 @@ fetch("/jsons/posts.json?v=" + Date.now())
 
       const fullDateTime = `${displayDate} at ${displayTime}`;
 
-      // LISTEDE EMBED YOK
+      // THUMB
       let thumbHTML = "";
       if (post.img) {
         thumbHTML = `<img src="${post.img}" class="post-thumb">`;
@@ -73,26 +107,34 @@ fetch("/jsons/posts.json?v=" + Date.now())
         </div>
       `;
 
+      // 🎨 COLOR APPLY (KRİTİK FIX BURASI)
+      const imgEl = postDiv.querySelector(".post-thumb");
+      if (imgEl) {
+        applyPostColor(postDiv, imgEl);
+      }
+
+      // MODAL CLICK
       postDiv.addEventListener("click", () => {
+
         modalMedia.innerHTML = "";
 
-      if (post.embed) {
-        modalMedia.innerHTML = `
-          <div class="modal-embed">
-            ${post.embed}
-          </div>
-        `;
-      } else if (post.img) {
-        modalMedia.innerHTML = `<img src="${post.img}">`;
-      }
+        if (post.embed) {
+          modalMedia.innerHTML = `
+            <div class="modal-embed">
+              ${post.embed}
+            </div>
+          `;
+        } else if (post.img) {
+          modalMedia.innerHTML = `<img src="${post.img}">`;
+        }
 
-      // 🔗 LINK KONTROLÜ AYRI
-      if (post.link) {
-        modalLink.href = post.link;
-        modalLink.style.display = "inline-block";
-      } else {
-        modalLink.style.display = "none";
-      }
+        if (post.link) {
+          modalLink.href = post.link;
+          modalLink.style.display = "inline-block";
+        } else {
+          modalLink.style.display = "none";
+        }
+
         modalTitle.textContent = post.title || "Update";
         modalDesc.textContent = post.description || "";
         modalDate.textContent = fullDateTime;
@@ -109,6 +151,10 @@ fetch("/jsons/posts.json?v=" + Date.now())
     });
   });
 
+// ===============================
+// MODAL CLOSE
+// ===============================
+
 modalClose.onclick = closeModal;
 modalOverlay.onclick = closeModal;
 
@@ -117,6 +163,10 @@ function closeModal() {
   modalMedia.innerHTML = "";
   document.body.style.overflow = "";
 }
+
+// ===============================
+// SERVICE WORKER
+// ===============================
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
@@ -131,7 +181,7 @@ if ("serviceWorker" in navigator) {
 }
 
 // ===============================
-// 🔔 PUSH NOTIFICATION TOGGLE (CLEAN VERSION)
+// NOTIFICATIONS
 // ===============================
 
 const notifBtn = document.getElementById("notifToggle");
@@ -147,11 +197,11 @@ const VAPID_KEY = "BGU2enzMZuJIvMvBgbRIlb2Xqvs0z7Bg1B8EAIXwYynJYzi_FwKnV8Gdb65Xk
 
 function setUI(enabled) {
   if (enabled) {
-    notifCheck.classList.remove('hidden');
-    notifBtn.title = 'Disable notifications';
+    notifCheck.classList.remove("hidden");
+    notifBtn.title = "Disable notifications";
   } else {
-    notifCheck.classList.add('hidden');
-    notifBtn.title = 'Enable notifications';
+    notifCheck.classList.add("hidden");
+    notifBtn.title = "Enable notifications";
   }
 }
 
@@ -166,7 +216,7 @@ async function getCurrentToken() {
     });
     return token;
   } catch (e) {
-    console.error('Error getting token:', e);
+    console.error("Error getting token:", e);
     return null;
   }
 }
@@ -175,7 +225,6 @@ async function enableNotifications() {
   console.log("📢 Enabling notifications...");
 
   const permission = await Notification.requestPermission();
-  console.log("Permission result:", permission);
 
   if (permission !== "granted") {
     console.warn("Notification permission denied");
@@ -183,7 +232,6 @@ async function enableNotifications() {
   }
 
   const token = await getCurrentToken();
-  console.log("Got token:", token);
 
   if (!token) {
     console.error("Failed to get messaging token");
@@ -205,18 +253,15 @@ async function enableNotifications() {
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           userAgent: navigator.userAgent
         });
-      console.log("✅ Token saved to Firestore!");
-    } else {
-      console.log("✓ Token already exists in Firestore");
     }
 
     setUI(true);
-    localStorage.setItem('notificationsEnabled', 'true');
+    localStorage.setItem("notificationsEnabled", "true");
+
   } catch (e) {
     console.error("Firestore write error:", e);
   }
 }
-
 
 async function disableNotifications() {
   console.log("🔕 Disabling notifications...");
@@ -229,17 +274,16 @@ async function disableNotifications() {
         .collection("tokens")
         .doc(token)
         .delete();
-      console.log("✓ Token removed from Firestore");
 
       await messaging.deleteToken();
-      console.log("✓ Token deleted from messaging");
+
     } catch (e) {
       console.error("Error disabling notifications:", e);
     }
   }
 
   setUI(false);
-  localStorage.setItem('notificationsEnabled', 'false');
+  localStorage.setItem("notificationsEnabled", "false");
 }
 
 async function initNotificationState() {
@@ -251,13 +295,10 @@ notifBtn.addEventListener("click", async () => {
   const token = await getCurrentToken();
 
   if (!token) {
-    // Notifications disabled → enable them
     await enableNotifications();
   } else {
-    // Notifications enabled → disable them
     await disableNotifications();
   }
 });
 
-// Sayfa açılınca gerçek state’i belirle
 initNotificationState();

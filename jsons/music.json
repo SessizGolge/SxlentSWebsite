@@ -75,5 +75,54 @@
         "artist": "SxlentS",
         "album": "Oddity",
         "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/8c0fd7f4-4501-4f23-a90b-95d74a5316d0/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/aphelion..mp3",
+        "title": "aphelion.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/e5980291-08e1-4d49-8d41-f1c8037ca68e/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/blooming_dawn..mp3",
+        "title": "blooming dawn.",
+        "artist": "SxlentS",
+        "album": "Single",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/53562b6d-7f57-4ecd-bc43-d69d88026819/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/soft_echoes..mp3",
+        "title": "soft echoes.",
+        "artist": "SxlentS",
+        "album": "Single",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/29f077b2-2579-4089-9aff-fdfa696bd104/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/A_Future_Called_Aika..mp3",
+        "title": "A Future Called Aika.",
+        "artist": "SxlentS",
+        "album": "SEKKAI",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/fff8c62a-4245-4bd4-9a3c-98eed904c69e/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/flashback..mp3",
+        "title": "flashback.",
+        "artist": "SxlentS",
+        "album": "Oddity",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/097d610d-d0ae-4a48-a748-04c2258631be/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/null_harmony..mp3",
+        "title": "null harmony.",
+        "artist": "SxlentS",
+        "album": "Single",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/80ef7435-5bda-4887-a09a-c7b9e8bf4f09/1080x1080"
+    },
+    {
+        "url": "https://sxlents.website/music/dissociate..mp3",
+        "title": "dissociate.",
+        "artist": "SxlentS",
+        "album": "Single",
+        "cover": "https://bl-prod-images.azureedge.net/v1.3/songs/7517aabe-7df0-46cb-9e59-9abb81c9c9a7/1080x1080"
     }
 ]
